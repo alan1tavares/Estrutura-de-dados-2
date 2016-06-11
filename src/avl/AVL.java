@@ -114,14 +114,20 @@ public class AVL {
 
 	// Compara a altura de dois nos e retorna a altura maio
 	public int maiorAltura(Node a, Node b) {
-		if(a == null && b == null)
+		if(altura(a) >= altura(b))
+			return altura(a);
+		return altura(b);
+	}
+	
+	// Retorna o fator de balanceamento de um no
+	public int fatorBalanceamento(Node node){
+		return altura(node.getLeft()) - altura(node.getRight());
+		
+	}
+	
+	private int altura (Node node){
+		if (node == null)
 			return 0;
-		if(a == null &&  b != null)
-			return b.getAltura();
-		if (a != null && b == null)
-			return a.getAltura();
-		if(a.getAltura() > b.getAltura())
-			return a.getAltura();
-		return b.getAltura();
+		return node.getAltura();
 	}
 }
