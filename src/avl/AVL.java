@@ -20,44 +20,51 @@ public class AVL {
 	}
 
 	private void insertNode(Node node, int value) {
-		// Inserir na direita
+		// Inserir pela direita
 		if (value > node.getValue()) {
 			if (node.getRight() == null) {
 
-				node.setRight(new Node(value));
+				node.setRight(new Node(value)); // insere o no na direita
+				node.getRight().setAltura(1); // atualiza altura
 
-				// Atualizar altura
-				node.getRight().setAltura(1);
-				if (node.getAltura() == 1)
-					node.setAltura(2);
-
-			} else {
+			} else
 				insertNode(node.getRight(), value);
-				// Atualiza altura
-				if (node.getRight().getAltura()+1 > node.getAltura())
-					node.setAltura(node.getRight().getAltura() + 1);
-			}
-		}
+		} // Fim do inseirir na direita
 
-		// Inserir na esquerda
+		// Inserir pela esquerda
 		else if (value < node.getValue()) {
 			if (node.getLeft() == null) {
-				node.setLeft(new Node(value));
-				
-				node.getLeft().setAltura(1);
-				
-				if(node.getAltura() == 1)
-					node.setAltura(2);
+
+				node.setLeft(new Node(value)); // insere o no na esquerda
+				node.getLeft().setAltura(1); // alutalia a altura
 			}
 
-			else{
+			else
 				insertNode(node.getLeft(), value);
-			
-				// Atualiza altura
-				if(node.getLeft().getAltura() + 1 > node.getAltura())
-					node.setAltura(node.getLeft().getAltura() + 1);
-			}
-		}
+		} // Fim do inserir na esquerda
+
+		// Atualizar a altura
+		node.setAltura(maiorAltura(node.getLeft(), node.getRight()) + 1);
+	}
+
+	// Rotação a direita
+	private void fazerRotacaoDireita(Node node){
+		Node raiz = node.getLeft();
+		node.setLeft(raiz.getRight());
+		raiz.setRight(node);
+		// Atualizar altura
+		raiz.setAltura(maiorAltura(raiz.getLeft(), raiz.getRight()) + 1);
+		node.setAltura(maiorAltura(node.getLeft(), node.getRight()) + 1);
+	}
+	
+	//Rotacao a esquerda
+	private void fazerRotacaoEsquerda(Node node){
+		Node raiz = node.getRight();
+		node.setRight(raiz.getLeft());
+		raiz.setLeft(node);
+		// Atualiza altura
+		raiz.setAltura(maiorAltura(raiz.getLeft(), raiz.getRight()) + 1);
+		node.setAltura(maiorAltura(node.getLeft(), node.getRight()) + 1);
 	}
 
 	// Deleta um no na arvore
@@ -67,11 +74,6 @@ public class AVL {
 
 	// Busca um nó na arvora
 	public void search() {
-
-	}
-
-	// Balanceia a árvore
-	public void balance() {
 
 	}
 
@@ -90,7 +92,7 @@ public class AVL {
 	public void pre_ordem(Node n) {
 		if (n != null) {
 			// Visita a raiz.
-			System.out.print(n.getValue()+"["+n.getAltura()+"]" + " ");
+			System.out.print(n.getValue() + "[" + n.getAltura() + "]" + " ");
 			// Percorrer a sua subárvore esquerda em pré-ordem.
 			pre_ordem(n.getLeft());
 			// Percorrer a sua subárvore direita em pré-ordem.
@@ -98,7 +100,14 @@ public class AVL {
 		}
 	}
 
-	public void atualizarAlturaDoNo(Node n) {
-
+	// Compara a altura de dois nos e retorna a altura maior
+	public int maiorAltura(Node a, Node b) {
+		if(a == null && b == null)
+			return 0;
+		if (b == null || a.getAltura() >= b.getAltura())
+			return a.getAltura();
+		if (a == null || b.getAltura() >= a.getAltura())
+			return b.getAltura();
+		return 0;
 	}
 }
