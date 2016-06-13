@@ -17,6 +17,7 @@ public class AVL {
 
 		// Se tiver uma raiz
 		insertNode(root, value);
+		root = balancear(root);
 	}
 
 	private void insertNode(Node node, int value) {
@@ -45,38 +46,71 @@ public class AVL {
 
 		// Atualizar a altura
 		node.setAltura(maiorAltura(node.getLeft(), node.getRight()) + 1);
+
+		// Verificar e fazer balanceamento
+		node.setLeft(balancear(node.getLeft()));
+		node.setRight(balancear(node.getRight()));
+	}
+
+	private Node balancear(Node node) {
+		if (node == null)
+			return node;
+		if (fatorBalanceamento(node) == 2) {
+			// Rotacao a direita
+			if (fatorBalanceamento(node.getLeft()) == 1)
+				node = fazerRotacaoDireita(node);
+
+			// Rotacao dupla a direita
+			else if (fatorBalanceamento(node.getLeft()) == -1)
+				node = fazerRotacaoEsquerdaDireita(node);
+		} else {
+
+			if (fatorBalanceamento(node) == -2) {
+				// Rotacao a esquerda
+				if (fatorBalanceamento(node.getRight()) == -1)
+					node = fazerRotacaoEsquerda(node);
+				// Rotacao dupla a esquerda
+				else if (fatorBalanceamento(node.getRight()) == 1)
+					node = fazerRotacaoDireitaEsquerda(node);
+			}
+		} // Fim do else
+
+		node.setAltura(maiorAltura(node.getLeft(), node.getRight()) + 1);
+		return node;
 	}
 
 	// Rotação a direita
-	private void fazerRotacaoDireita(Node node){
+	private Node fazerRotacaoDireita(Node node) {
 		Node raiz = node.getLeft();
 		node.setLeft(raiz.getRight());
 		raiz.setRight(node);
 		// Atualizar altura
 		raiz.setAltura(maiorAltura(raiz.getLeft(), raiz.getRight()) + 1);
 		node.setAltura(maiorAltura(node.getLeft(), node.getRight()) + 1);
+		return raiz;
 	}
-	
+
 	// Rotacao a esquerda
-	private void fazerRotacaoEsquerda(Node node){
+	private Node fazerRotacaoEsquerda(Node node) {
 		Node raiz = node.getRight();
 		node.setRight(raiz.getLeft());
 		raiz.setLeft(node);
 		// Atualiza altura
 		raiz.setAltura(maiorAltura(raiz.getLeft(), raiz.getRight()) + 1);
 		node.setAltura(maiorAltura(node.getLeft(), node.getRight()) + 1);
+		return raiz;
 	}
-	
-	// Rotacao a esquerda-direita
-	private void fazerRotacaoEsquerdaDireita(Node node){
-		fazerRotacaoEsquerda(node.getLeft());
-		fazerRotacaoDireita(node);
+
+	// Rotacao dupla a direita
+	private Node fazerRotacaoEsquerdaDireita(Node node) {
+		node.setLeft(fazerRotacaoEsquerda(node.getLeft()));
+		return fazerRotacaoDireita(node);
 	}
-	
-	// Rotacao a direita-esquerda
-	private void fazerRotacaoDireitaEsquerda(Node node){
-		fazerRotacaoDireita(node.getRight());
-		fazerRotacaoEsquerda(node);
+
+	// Rotacao duplae a esquerda
+	private Node fazerRotacaoDireitaEsquerda(Node node) {
+		node.setRight(fazerRotacaoDireita(node.getRight()));
+		return fazerRotacaoEsquerda(node);
 	}
 
 	// Deleta um no na arvore
@@ -89,8 +123,34 @@ public class AVL {
 
 	}
 
+	// Compara a altura de dois nos e retorna a altura maio
+	public int maiorAltura(Node a, Node b) {
+		if (altura(a) >= altura(b))
+			return altura(a);
+		return altura(b);
+	}
+
+	// Retorna o fator de balanceamento de um no
+	public int fatorBalanceamento(Node node) {
+		if (node == null)
+			return 0;
+		return altura(node.getLeft()) - altura(node.getRight());
+
+	}
+
+	private int altura(Node node) {
+		if (node == null)
+			return 0;
+		return node.getAltura();
+	}
+
+	/**
+	 * Metodos de exibicao da avl
+	 */
+
 	public void imprimir() {
 		pre_ordem(root);
+		System.out.println();
 	}
 
 	public void pos_ordem(Node n) {
@@ -110,24 +170,5 @@ public class AVL {
 			// Percorrer a sua subárvore direita em pré-ordem.
 			pre_ordem(n.getRight());
 		}
-	}
-
-	// Compara a altura de dois nos e retorna a altura maio
-	public int maiorAltura(Node a, Node b) {
-		if(altura(a) >= altura(b))
-			return altura(a);
-		return altura(b);
-	}
-	
-	// Retorna o fator de balanceamento de um no
-	public int fatorBalanceamento(Node node){
-		return altura(node.getLeft()) - altura(node.getRight());
-		
-	}
-	
-	private int altura (Node node){
-		if (node == null)
-			return 0;
-		return node.getAltura();
 	}
 }
