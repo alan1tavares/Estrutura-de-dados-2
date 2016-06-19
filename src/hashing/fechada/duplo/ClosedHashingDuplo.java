@@ -1,7 +1,12 @@
 package hashing.fechada.duplo;
 
 import auxiliar.Primo;
-
+/**
+ * f(0) = CHAVE mod TH,
+ * f(i) = i * hd(CHAVE) mod TH
+ * hd(ChAVE) = r - (CHAVE mod r)
+ * r é um primo menor que TAM_HASH
+ * */
 public class ClosedHashingDuplo {
 	private Integer[] tabelaHash;
 	private int tamHash;
@@ -55,7 +60,8 @@ public class ClosedHashingDuplo {
 	public int funcaoHash(int valor) {
 		return valor % tamHash;
 	}
-
+	
+	// Funcao hashing
 	public int funcaoHash(int valor, int r) {
 		return valor % r;
 	}
