@@ -144,6 +144,9 @@ public class AVL {
 		return node.getAltura();
 	}
 
+	public int getAltura(){
+		return altura(root);
+	}
 	/**
 	 * Metodos de exibicao da avl
 	 */
