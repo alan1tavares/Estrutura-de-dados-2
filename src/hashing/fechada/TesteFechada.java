@@ -1,4 +1,7 @@
-package hashing.fechada.tentativa.linear;
+package hashing.fechada;
+
+import hashing.fechada.tentativa.linear.ClosedHashingLinear;
+import hashing.fechada.tentativa.quadratica.ClosedHashingQuadratica;
 
 public class TesteFechada {
 
@@ -9,9 +12,9 @@ public class TesteFechada {
 		cl.inserir(49);
 		cl.inserir(60);
 		cl.inserir(69);
-		
+
 		cl.exibir();
 		System.out.println();
-	}
 
+	}
 }

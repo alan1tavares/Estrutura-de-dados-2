@@ -1,18 +1,10 @@
-package hashing.fechada.tentativa.linear;
+package hashing.fechada.tentativa.quadratica;
 
-import java.util.LinkedList;
-
-/**
- * f(i), e
- * h(x) = (x + i) mod TH,
- * i = 0, ..., TH-1
- * */
-public class ClosedHashingLinear {
-
+public class ClosedHashingQuadratica {
 	private Integer[] tabelaHash;
 	private int tamHash;
 
-	public ClosedHashingLinear(int tamanho) {
+	public ClosedHashingQuadratica(int tamanho) {
 		tabelaHash = new Integer[tamanho];
 		tamHash = tabelaHash.length;
 	}
@@ -21,8 +13,8 @@ public class ClosedHashingLinear {
 	public void inserir(int valor) {
 		int indice;
 
-		for (int i = 0; i < tabelaHash.length; i++) {
-			indice = funcaoHash(valor + i);
+		for (int i = 0; i < tabelaHash.length/2; i++) {
+			indice = funcaoHash(valor + i*i);
 			// Se nao existe elemento nessa posicao
 			if (tabelaHash[indice] == null) {
 				tabelaHash[indice] = valor; // Insere o elemento
@@ -36,7 +28,7 @@ public class ClosedHashingLinear {
 		int indice;
 		
 		for (int i = 0; i < tabelaHash.length; i++) {
-			indice = funcaoHash(valor + i);
+			indice = funcaoHash(valor + i*i);
 			
 			// Se existe algum numero nesse indice e 
 			// se nesse indice e igual ao valor a se deletado
