@@ -28,7 +28,18 @@ public class ClosedHashingLinear {
 
 	// Deleta um elemento na tabela
 	public void deletar(int valor) {
-
+		int indice;
+		
+		for (int i = 0; i < tabelaHash.length; i++) {
+			indice = funcaoHash(valor + i);
+			
+			// Se existe algum numero nesse indice e 
+			// se nesse indice e igual ao valor a se deletado
+			if(tabelaHash[i] != null && tabelaHash[i] == valor){
+				tabelaHash[i] = null;
+				break;
+			}
+		}
 
 	}
 
