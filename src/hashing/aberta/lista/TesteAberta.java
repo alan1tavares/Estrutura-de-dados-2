@@ -24,5 +24,6 @@ public class TesteAberta {
 		System.out.println();
 		System.out.println("Fator de carga " + op.getFatorDeCarga());
 		System.out.println("Fator de balanceamento " + op.fatorDeBalanceamento());
+		
 	}
 }

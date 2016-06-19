@@ -3,7 +3,10 @@ package hashing.aberta.avl;
 import java.util.LinkedList;
 
 import avl.AVL;
-
+/**
+ * Se comporta como uma estrtura de busca.
+ * Nao pode ter elementos repetidos.
+ * */
 public class OpenHashingAvl {
 	private AVL tabelaHash[];
 	private int tamHash;
@@ -31,7 +34,9 @@ public class OpenHashingAvl {
 
 	// Deleta um elemento na tabela
 	public void deletar() {
-
+		/*
+		 * Falta implementar
+		 */
 	}
 
 	// Retorna a carga do indice na tabela

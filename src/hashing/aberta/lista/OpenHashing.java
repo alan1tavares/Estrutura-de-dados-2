@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 /*
- * É a quantidade de elementos na maior lista interna
+ * Fator de carga é a quantidade de elementos na maior lista interna.
+ * Aceita elementos repetidos
  * */
 public class OpenHashing {
 	private LinkedList<Integer>[] tabelaHash;
