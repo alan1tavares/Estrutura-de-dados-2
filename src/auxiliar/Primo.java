@@ -22,4 +22,11 @@ public class Primo {
 		}
 		return 2;
 	}
+	
+	public static int proximoPrimo(int n){
+		for (int i = n;;i++) {
+			if(isPrime(i))
+				return i;
+		}
+	}
 }

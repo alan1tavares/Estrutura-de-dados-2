@@ -70,6 +70,8 @@ public class Main {
 			// Exibição da AVL
 			case 2:
 				avl.imprimir();
+				System.out.println();
+				System.out.println(avl.getTotalElementos());
 				break;
 			default:
 				break;
