@@ -8,7 +8,7 @@ import java.util.Stack;
 
 public class TesteAberta {
 	public static void main(String[] args) {
-		OpenHashing op = new OpenHashing(7);
+		OpenHashingLista op = new OpenHashingLista(7);
 		op.inserir(0);
 		op.inserir(1);
 		op.inserir(85);

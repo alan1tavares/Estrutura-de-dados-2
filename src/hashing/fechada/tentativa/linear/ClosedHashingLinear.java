@@ -2,12 +2,12 @@ package hashing.fechada.tentativa.linear;
 
 import java.util.LinkedList;
 
+import hashing.fechada.HashingFechada;
+
 /**
- * f(i), e
- * h(x) = (x + i) mod TH,
- * i = 0, ..., TH-1
- * */
-public class ClosedHashingLinear {
+ * f(i), e h(x) = (x + i) mod TH, i = 0, ..., TH-1
+ */
+public class ClosedHashingLinear extends HashingFechada {
 
 	private Integer[] tabelaHash;
 	private int tamHash;
@@ -21,8 +21,17 @@ public class ClosedHashingLinear {
 	public void inserir(int valor) {
 		int indice;
 
+		// Passo a passo
+		System.out.println("\nInserir (" + valor + ")");
+		// -----------//
+
 		for (int i = 0; i < tabelaHash.length; i++) {
 			indice = funcaoHash(valor + i);
+
+			// Passo a passo
+			System.out.println("(" + valor + "+" + i + ")" + " mod " + tamHash + " = " + indice);
+			// ------------//
+
 			// Se nao existe elemento nessa posicao
 			if (tabelaHash[indice] == null) {
 				tabelaHash[indice] = valor; // Insere o elemento
@@ -34,13 +43,17 @@ public class ClosedHashingLinear {
 	// Deleta um elemento na tabela
 	public void deletar(int valor) {
 		int indice;
-		
+
 		for (int i = 0; i < tabelaHash.length; i++) {
 			indice = funcaoHash(valor + i);
-			
-			// Se existe algum numero nesse indice e 
+
+			// Passo a passo
+			System.out.println("(" + valor + "+" + i + ")" + " mod " + tamHash + " = " + indice);
+			// -----------//
+
+			// Se existe algum numero nesse indice e
 			// se nesse indice e igual ao valor a se deletado
-			if(tabelaHash[indice] != null && tabelaHash[indice] == valor){
+			if (tabelaHash[indice] != null && tabelaHash[indice] == valor) {
 				tabelaHash[indice] = null;
 				break;
 			}

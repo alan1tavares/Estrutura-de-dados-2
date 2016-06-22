@@ -1,13 +1,14 @@
 package hashing.fechada.duplo;
 
 import auxiliar.Primo;
+import hashing.fechada.HashingFechada;
+
 /**
- * f(0) = CHAVE mod TH,
- * f(i) = i * hd(CHAVE) mod TH
+ * f(0) = CHAVE mod TH, f(i) = i * hd(CHAVE) mod TH 
  * hd(ChAVE) = r - (CHAVE mod r)
  * r é um primo menor que TAM_HASH
- * */
-public class ClosedHashingDuplo {
+ */
+public class ClosedHashingDuplo extends HashingFechada {
 	private Integer[] tabelaHash;
 	private int tamHash;
 
@@ -23,6 +24,12 @@ public class ClosedHashingDuplo {
 		int r = Primo.primoAnterior(tamHash); // um primo menor que tamHash
 		int funcao = r - funcaoHash(valor, r); // 2a funcao hash - hd(x)
 
+		// Passo a passo
+		System.out.println("\nInserir(" + valor + ")");
+		System.out.println("funcao2 = " + r + "-" + "(" + valor + " mod " + r + ") = " + funcao);
+		System.out.println("1a tentaiva = " + valor + " mod " + tamHash + " = " + indice);
+		// ------------//
+
 		for (int i = 1; i < tabelaHash.length; i++) {
 
 			// Se nao existe elemento nessa posicao
@@ -32,6 +39,10 @@ public class ClosedHashingDuplo {
 			}
 			// Calcula outro indice com outra funcao
 			indice = funcaoHash(i * funcao);
+
+			// Passo a passo
+			System.out.println("(" + i + "*" + funcao + ") mod " + tamHash + " = " + indice);
+			// ------------//
 		}
 	}
 
@@ -42,8 +53,14 @@ public class ClosedHashingDuplo {
 		int r = Primo.primoAnterior(tamHash); // um primo menor que tamHash
 		int funcao = r - funcaoHash(valor, r); // 2a funcao hash - hd(x)
 
+		// Passo a passo
+		System.out.println("\nDeletar(" + valor + ")");
+		System.out.println("funcao2 = " + r + "-" + "(" + valor + " mod " + r + ") = " + funcao);
+		System.out.println("1a tentaiva = " + valor + " mod " + tamHash + " = " + indice);
+		// ------------//
+
 		for (int i = 0; i < tabelaHash.length; i++) {
-			indice = funcaoHash(valor + i);
+			// indice = funcaoHash(valor + i);
 
 			// Se existe algum numero nesse indice e
 			// se nesse indice e igual ao valor a se deletado
@@ -52,6 +69,9 @@ public class ClosedHashingDuplo {
 				break;
 			}
 			indice = funcaoHash(i * funcao);
+			// Passo a passo
+			System.out.println("(" + i + "*" + funcao + ") mod " + tamHash + " = " + indice);
+			// ------------//
 		}
 
 	}
@@ -60,7 +80,7 @@ public class ClosedHashingDuplo {
 	public int funcaoHash(int valor) {
 		return valor % tamHash;
 	}
-	
+
 	// Funcao hashing
 	public int funcaoHash(int valor, int r) {
 		return valor % r;

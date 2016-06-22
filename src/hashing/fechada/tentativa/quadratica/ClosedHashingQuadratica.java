@@ -1,6 +1,8 @@
 package hashing.fechada.tentativa.quadratica;
 
-public class ClosedHashingQuadratica {
+import hashing.fechada.HashingFechada;
+
+public class ClosedHashingQuadratica extends HashingFechada {
 	private Integer[] tabelaHash;
 	private int tamHash;
 
@@ -13,8 +15,17 @@ public class ClosedHashingQuadratica {
 	public void inserir(int valor) {
 		int indice;
 
-		for (int i = 0; i < tabelaHash.length/2; i++) {
-			indice = funcaoHash(valor + i*i);
+		// Passo a passo
+		System.out.println("\nInserir("+valor+")");
+		//------------//
+		
+		for (int i = 0; i < tabelaHash.length / 2; i++) {
+			indice = funcaoHash(valor + i * i);
+
+			// Passo a passo
+			System.out.println("(" + valor + "+" + i + "^2)" + " mod " + tamHash + " = " + indice);
+			// -----------//
+
 			// Se nao existe elemento nessa posicao
 			if (tabelaHash[indice] == null) {
 				tabelaHash[indice] = valor; // Insere o elemento
@@ -26,13 +37,17 @@ public class ClosedHashingQuadratica {
 	// Deleta um elemento na tabela
 	public void deletar(int valor) {
 		int indice;
-		
+
 		for (int i = 0; i < tabelaHash.length; i++) {
-			indice = funcaoHash(valor + i*i);
-			
-			// Se existe algum numero nesse indice e 
+			indice = funcaoHash(valor + i * i);
+
+			// Passo a passo
+			System.out.println("(" + valor + "+" + i + "^2)" + " mod " + tamHash + " = " + indice);
+			// -----------//
+
+			// Se existe algum numero nesse indice e
 			// se nesse indice e igual ao valor a se deletado
-			if(tabelaHash[indice] != null && tabelaHash[indice] == valor){
+			if (tabelaHash[indice] != null && tabelaHash[indice] == valor) {
 				tabelaHash[indice] = null;
 				break;
 			}

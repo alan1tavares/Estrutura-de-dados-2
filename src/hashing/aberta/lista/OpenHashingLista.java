@@ -1,19 +1,19 @@
 package hashing.aberta.lista;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
+import hashing.aberta.*;
 /*
  * Fator de carga é a quantidade de elementos na maior lista interna.
  * Aceita elementos repetidos
  * */
-public class OpenHashing {
+public class OpenHashingLista extends HashingAberta{
 	private LinkedList<Integer>[] tabelaHash;
 	private int tamHash;
 
 	private int fatorDeCarga;
 
-	public OpenHashing(int tamanho) {
+	public OpenHashingLista(int tamanho) {
 		tabelaHash = new LinkedList[tamanho];
 		tamHash = tabelaHash.length;
 	}
@@ -21,6 +21,11 @@ public class OpenHashing {
 	// Insere um elemento na tabela
 	public void inserir(int valor) {
 		int indice = funcaoHash(valor);
+		
+		// Passo a passo
+		System.out.println(valor+"%"+this.tamHash+" = "+indice);
+		//------------//
+		
 		if (tabelaHash[indice] == null)
 			tabelaHash[indice] = new LinkedList<>();
 

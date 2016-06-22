@@ -13,6 +13,10 @@ public class AVL {
 
 	// Insere um novo no na arvore
 	public int insert(int value) {
+		// Passo a passo
+		System.out.println("------AVL------");
+		System.out.println("Inserir (" + value + ") ->");
+		// ------------//
 
 		// Se nao tiver uma raiz
 		if (root == null) {
@@ -25,6 +29,11 @@ public class AVL {
 		int r = insertNode(root, value);
 		root = balancear(root);
 
+		// Passo a passo
+		imprimir();
+		System.out.println("---------------");
+		// ------------//
+
 		return r;
 	}
 
@@ -33,9 +42,12 @@ public class AVL {
 	// retorno = -1 -> o valor a ser inserido ha existe
 	private int insertNode(Node node, int value) {
 		int retorno = 0;
+
 		// Se ja possui esse elemento
-		if (value == node.getValue())
+		if (value == node.getValue()){
+			System.out.println(value + " ja existe na arvore");
 			return -1;
+		}
 
 		// Inserir pela direita
 		if (value > node.getValue()) {
@@ -55,7 +67,7 @@ public class AVL {
 			if (node.getLeft() == null) {
 
 				node.setLeft(new Node(value)); // insere o no na esquerda
-				node.getLeft().setAltura(1); // alutalia a altura
+				node.getLeft().setAltura(1); // alutaliza a altura
 
 				// -------//
 				totalElementos++;
@@ -79,22 +91,63 @@ public class AVL {
 		if (node == null)
 			return node;
 		if (fatorBalanceamento(node) == 2) {
+			
+			// Passo a passo
+			System.out.println("Arvore antes -> ");
+			imprimir();
+			//------------//
+			
 			// Rotacao a direita
-			if (fatorBalanceamento(node.getLeft()) == 1)
+			if (fatorBalanceamento(node.getLeft()) == 1) {
+				
+				// Passo a passo
+				System.out.println("RS (" + node.getValue() + ")");
+				// ------------ //
+				
 				node = fazerRotacaoDireita(node);
+			}
 
 			// Rotacao dupla a direita
-			else if (fatorBalanceamento(node.getLeft()) == -1)
+			else if (fatorBalanceamento(node.getLeft()) == -1) {
+				// Passo a passo
+				System.out.println("RD (" + node.getValue() + ")");
+				// ------------//
 				node = fazerRotacaoEsquerdaDireita(node);
+			}
+			
+			//Passo a passo
+			System.out.println("Arvore depois -> ");
+			imprimir();
+			//-----------//
 		} else {
 
 			if (fatorBalanceamento(node) == -2) {
+				
+				// Passo a passo
+				System.out.print("Arvore antes -> ");
+				pre_ordem(root);
+				System.out.println();
+				//------------//
+				
 				// Rotacao a esquerda
-				if (fatorBalanceamento(node.getRight()) == -1)
+				if (fatorBalanceamento(node.getRight()) == -1) {
+					// Passo a passo
+					System.out.println("RS (" + node.getValue() + ")");
+					// -----------//
 					node = fazerRotacaoEsquerda(node);
+				}
 				// Rotacao dupla a esquerda
-				else if (fatorBalanceamento(node.getRight()) == 1)
+				else if (fatorBalanceamento(node.getRight()) == 1) {
+					// Passo a passo
+					System.out.println("RD (" + node.getValue() + ")");
+					// --------------//
 					node = fazerRotacaoDireitaEsquerda(node);
+				}
+				
+				//Passo a passo
+				System.out.print("Arvore depois -> ");
+				pre_ordem(root);
+				
 			}
 		} // Fim do else
 

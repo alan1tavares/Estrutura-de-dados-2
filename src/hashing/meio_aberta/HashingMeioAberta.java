@@ -3,6 +3,10 @@ package hashing.meio_aberta;
 import auxiliar.Primo;
 import avl.AVL;
 
+/**
+ * Hash(x) = (x + i2) mod THk Duplicar a tabela THk = ProximoPrimo(2*THk-1), TH0
+ * é um primo arbitrário
+ */
 public class HashingMeioAberta {
 	private AVL tabelaHash[];
 	private int tamHash;
@@ -17,47 +21,79 @@ public class HashingMeioAberta {
 		for (int i = 0; i <= lambda; i++) {
 			maximoElementos += (int) Math.pow(2, i);
 		}
-		
+
 	}
 
 	// Insere um elemento na tabela
 	public void inserir(int valor) {
+		// Passo a passo
+		System.out.println("Inserir (" + valor + ")");
+		// -----------//
+
 		int indice;
 		boolean foiInserido = false;
-		
+
 		for (int i = 0; i < tabelaHash.length / 2; i++) {
 			indice = funcaoHash(valor + i * i); // Calcula a posicao do indice
+
+			// Passo a passo
+			System.out.println(valor + "+" + i + "^2" + " mod " + this.tamHash + " = " + indice);
+			// -----------//
 
 			// Se nao sxiste uma arvore nessa posicao
 			if (tabelaHash[indice] == null) {
 				tabelaHash[indice] = new AVL(); // Cria a arvore
 				tabelaHash[indice].insert(valor); // Insere o valor
-				foiInserido = true;
+				foiInserido = true; // valor inserido
+
+				// Passo a passo
+				exibir();
+				System.out.println();
+				// -----------//
+
 				break;
 			}
 
-			// Se a quantidade de elementos for menor que a quantidade maxima de
-			// elementos
+			// Se não se a quantidade de elementos for menor que a quantidade
+			// maxima de elementos
 			else if (tabelaHash[indice].getTotalElementos() < maximoElementos) {
-				
-				if(tabelaHash[indice].insert(valor) == -1) // Insere o elemento
-					continue;
-				
+
+				if (tabelaHash[indice].insert(valor) == -1) // Insere o elemento
+					continue; // Coninua tentando
+
 				// Se a posicao chegou no seu limite maximo
 				if (tabelaHash[indice].getTotalElementos() == maximoElementos)
 					quantidadePreencida++; // Incremente +1 na quantidade de
 											// valores ja preenchido na tabela
-				foiInserido = true;
+				foiInserido = true; // valor inserido
+
+				// Passo a passo
+				exibir();
+				System.out.println();
+				// -----------//
+
 				break;
-			}
+			}else if(this.tabelaHash[indice].getTotalElementos() >= maximoElementos)
+				continue;
 		}
-		
+
 		// Se nao conseguiu inserir o elemento
-		if(foiInserido != true){
+		if (!foiInserido) {
+
+			// Passo a passo
+			System.out.println("--------Rehashing--------");
+			// ------------//
+
 			rehashing(); // Faz rehashing
+
+			// Passo a passo
+			System.out.println("-------------------------");
+			exibir();
+			// -----------//
+
 			inserir(valor); // Insere o elemento
 		}
-		
+
 		// Se a tabela esta metade cheia + 1
 		if (quantidadePreencida > (tamHash / 2) + 1)
 			rehashing(); // faça rehashing
@@ -65,7 +101,8 @@ public class HashingMeioAberta {
 
 	// Rehashing
 	private void rehashing() {
-		AVL tabelaAntiga[] = this.tabelaHash; // tabela aux recebe a antiga tabela
+		AVL tabelaAntiga[] = this.tabelaHash; // tabela aux recebe a antiga
+												// tabela
 		// Cria uma nova tabela
 		tabelaHash = new AVL[Primo.proximoPrimo(2 * this.tamHash)];
 		tamHash = tabelaHash.length;
