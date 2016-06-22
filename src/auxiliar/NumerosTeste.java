@@ -1,3 +1,4 @@
+package auxiliar;
 import java.util.Random;
 
 public class NumerosTeste {
