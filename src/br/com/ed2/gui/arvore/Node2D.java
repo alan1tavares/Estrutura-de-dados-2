@@ -60,6 +60,16 @@ public class Node2D{
 	}
 	
 	/**
+	 * Método que coloca o Nó nas coordenadas (x, y).
+	 * @param x coordenada do eixo X.
+	 * @param y coordanada do eixo Y.
+	 */
+	public void setCoordenadas(int x, int y){
+		this.desenho.setTranslateX(x);
+		this.desenho.setTranslateY(y);
+	}
+	
+	/**
 	 * Metodo que retorna o desenho do Nó.
 	 * @return retorna um objeto do tipo Node, que é um container que está o Nó.
 	 */
