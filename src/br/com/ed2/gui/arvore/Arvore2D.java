@@ -1,70 +1,98 @@
 package br.com.ed2.gui.arvore;
 
+import java.util.ArrayList;
+
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Line;
 
+/**
+ * Classe que ira representar uma árvore em duas dimensões.
+ * 
+ * @author Alan Tavares
+ *
+ */
 public class Arvore2D {
-	private String[] noArrays;
+
+	private String[] todosOsNos;
 	private Pane arvore;
-	private int totalDeFolhas;
-	private int largura;
+	private Node2D raiz;
+	private int larguraDaArvore;
 	private int raioDasFolhas;
 
-	// Arvore
-	Node2D raiz;
+	public Pane getArvore() {
+		return arvore;
+	}
 
 	public Pane arvorePreOrdem(String arvore, int altura, int raio, int x, int y) {
-		this.noArrays = arvore.split(" ");
-		this.totalDeFolhas = new Double(Math.pow(2, altura - 1)).intValue();
+		this.todosOsNos = arvore.split(" ");
 		this.raioDasFolhas = raio;
-		this.largura = raio * (totalDeFolhas * 2) - raio;
-		System.out.println(largura);
+		int numeroDeFolhasNaMaiorAltura = new Double(Math.pow(2, altura - 1)).intValue();
+		this.larguraDaArvore = raio * (numeroDeFolhasNaMaiorAltura * 2) - raio;
 		this.arvore = new Pane();
-		
-		inserir(raiz, Integer.parseInt(noArrays[0]), x, y);
-		for (String string : noArrays) {
-			if(noArrays[0] == string) continue;
-			inserir(raiz, Integer.parseInt(string), x, y);
-		}
 
+		for (String string : todosOsNos) 
+			inserir(raiz, Integer.parseInt(string), x, y, this.larguraDaArvore);
+			
 		return this.arvore;
 	}
 
-	int f = this.largura;
-	private void inserir(Node2D node2D, int valor, int x, int y) {
+	private void inserir(Node2D node2D, int valor, int x, int y, int h) {
 		// Inserindo um no na raiz
-		
 		if (this.raiz == null) {
 			this.raiz = new Node2D(this.raioDasFolhas, valor);
-			this.raiz.setX(x);
-			this.raiz.setY(y);
+			this.raiz.desenho().setTranslateX(x);
+			this.raiz.desenho().setTranslateY(y);
 			this.arvore.getChildren().add(raiz.desenho());
 			return;
 		}
-		y += (y / 2);
+		//Apagar isso
+		int x2 = x + this.raioDasFolhas;
+		int y2 = y + this.raioDasFolhas*2;
+		//-----------
+		
+		h /= 2;
+		y += h;
 
 		if (valor < node2D.getValor()) {
-			x -= this.largura / 2;
+			x -= h;
 			if (node2D.getEsquerda() == null) {
 				Node2D aux = new Node2D(this.raioDasFolhas, valor);
-				aux.setX(x);
-				aux.setY(y);
-				System.out.println(y + ", " + valor);
+				aux.desenho().setTranslateX(x);
+				aux.desenho().setTranslateY(y);
 				node2D.setEsquerda(aux);
-				this.arvore.getChildren().add(aux.desenho());
+
+				
+				//Apagar isso
+				int x1 = x + this.raioDasFolhas;
+				int y1 = y + this.raioDasFolhas;
+				Line line = new Line(x2,y2, x1, y1);
+				//
+								
+				this.arvore.getChildren().addAll(line, aux.desenho());				
+				
 			} else {
-				inserir(node2D.getEsquerda(), valor, x, y);
+				inserir(node2D.getEsquerda(), valor, x, y,h);
 			}
 		} else {
-			x += this.largura / 2;
+			x += h;
 			if (node2D.getDireita() == null) {
 				Node2D aux = new Node2D(this.raioDasFolhas, valor);
-				aux.setX(x);
-				aux.setY(y);
+				aux.desenho().setTranslateX(x);
+				aux.desenho().setTranslateY(y);
 				node2D.setDireita(aux);
-				this.arvore.getChildren().add(aux.desenho());
+				
+				//Apagar isso
+				int x1 = x + this.raioDasFolhas;
+				int y1 = y + this.raioDasFolhas;
+				Line line = new Line(x2,y2, x1, y1);
+				//
+				
+				this.arvore.getChildren().addAll(line,aux.desenho());
+				
+				
 			} else
-				inserir(node2D.getDireita(), valor, x, y);
+				inserir(node2D.getDireita(), valor, x, y,h);
 		}
 	}
 }

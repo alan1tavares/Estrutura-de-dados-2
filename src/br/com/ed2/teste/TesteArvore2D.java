@@ -2,6 +2,7 @@ package br.com.ed2.teste;
 
 import avl.AVL;
 import br.com.ed2.gui.arvore.Arvore2D;
+import br.com.ed2.gui.arvore.Node2D;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -19,9 +20,10 @@ public class TesteArvore2D extends Application {
 		Pane root = new Pane();
 
 		Arvore2D arvore2d = new Arvore2D();
+		//Node2D node2d = new Node2D(24, 5);
 
 		String s = "50 17 12 9 14 23 19 72 54 67 76";
-		root.getChildren().add(arvore2d.arvorePreOrdem(s, 4, 24, 400, 0));
+		root.getChildren().addAll(arvore2d.arvorePreOrdem(s, 4, 24, 600, 0));
 
 		Scene scene = new Scene(root, 800, 600);
 

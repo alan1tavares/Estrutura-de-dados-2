@@ -15,7 +15,7 @@ public class CirculoTeste extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Node2D circulo = new Node2D(24, 100);
-		circulo.setX(100);
+		circulo.desenho().setTranslateX(100);
 		
 		Pane root = new Pane();
 		root.getChildren().add(circulo.desenho());
