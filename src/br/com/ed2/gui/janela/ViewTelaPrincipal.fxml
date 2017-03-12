@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="br.com.ed2.gui.janela.ControllerTelaPrincipal">
+  <!-- TODO Add Nodes -->
+  <children>
+    <BorderPane prefHeight="377.0" prefWidth="600.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0">
+      <center>
+        <Pane prefHeight="-1.0" prefWidth="-1.0" style="-fx-background-color: #ffffff;&#10;">
+          <padding>
+            <Insets />
+          </padding>
+          <BorderPane.margin>
+            <Insets left="5.0" right="5.0" fx:id="x2" />
+          </BorderPane.margin>
+        </Pane>
+      </center>
+      <top>
+        <VBox prefHeight="112.0" prefWidth="600.0">
+          <children>
+            <HBox id="inserir" prefHeight="-1.0" prefWidth="200.0">
+              <children>
+                <Label text="Inserção:" HBox.hgrow="ALWAYS">
+                  <font>
+                    <Font size="14.0" fx:id="x1" />
+                  </font>
+                  <HBox.margin>
+                    <Insets left="5.0" top="2.0" />
+                  </HBox.margin>
+                </Label>
+                <TextField fx:id="tfInserir" prefHeight="25.0" prefWidth="-1.0" HBox.hgrow="SOMETIMES">
+                  <HBox.margin>
+                    <Insets left="4.0" right="5.0" />
+                  </HBox.margin>
+                </TextField>
+                <Button id="inserir" fx:id="btInserir" contentDisplay="LEFT" disable="true" font="$x1" mnemonicParsing="false" onAction="#botaoInserir" prefHeight="25.0" prefWidth="69.0" text="Inserir">
+                  <HBox.margin>
+                    <Insets right="5.0" fx:id="x3" />
+                  </HBox.margin>
+                </Button>
+              </children>
+              <VBox.margin>
+                <Insets bottom="5.0" top="5.0" />
+              </VBox.margin>
+            </HBox>
+            <HBox minHeight="25.0" prefHeight="-1.0" prefWidth="-1.0">
+              <children>
+                <HBox id="deletar" prefHeight="-1.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
+                  <children>
+                    <Label font="$x1" prefHeight="25.0" text="Deleção:">
+                      <HBox.margin>
+                        <Insets left="5.0" />
+                      </HBox.margin>
+                    </Label>
+                    <TextField alignment="TOP_LEFT" prefHeight="25.0" prefWidth="-1.0" HBox.hgrow="SOMETIMES">
+                      <HBox.margin>
+                        <Insets left="5.0" right="5.0" fx:id="x2" />
+                      </HBox.margin>
+                    </TextField>
+                    <Button id="deletar" fx:id="btDeletar" cancelButton="false" defaultButton="false" disable="true" font="$x1" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="Deletar">
+                      <HBox.margin>
+                        <Insets right="5.0" fx:id="x3" />
+                      </HBox.margin>
+                    </Button>
+                  </children>
+                </HBox>
+                <HBox id="buscar" alignment="TOP_LEFT" prefHeight="-1.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
+                  <children>
+                    <Label font="$x1" prefHeight="24.0" prefWidth="40.0" text="Busca:">
+                      <HBox.margin>
+                        <Insets left="5.0" />
+                      </HBox.margin>
+                    </Label>
+                    <TextField alignment="TOP_LEFT" prefHeight="25.0" prefWidth="168.0" HBox.hgrow="ALWAYS" HBox.margin="$x2" />
+                    <Button id="buscar" fx:id="btBuscar" disable="true" font="$x1" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="Buscar" HBox.margin="$x3" />
+                  </children>
+                </HBox>
+              </children>
+              <padding>
+                <Insets top="5.0" />
+              </padding>
+            </HBox>
+            <Label fx:id="textoTitulo" alignment="TOP_CENTER" contentDisplay="LEFT" prefWidth="-1.0" text="Escolha uma estrutura" textAlignment="CENTER" textOverrun="ELLIPSIS" VBox.vgrow="ALWAYS">
+              <font>
+                <Font name="System Bold" size="22.0" />
+              </font>
+              <VBox.margin>
+                <Insets left="5.0" top="8.0" />
+              </VBox.margin>
+            </Label>
+          </children>
+        </VBox>
+      </top>
+    </BorderPane>
+    <MenuBar layoutY="0.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <menus>
+        <Menu mnemonicParsing="false" text="Estruturas">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#menuAvl" text="Avl" />
+            <Menu mnemonicParsing="false" text="Hashing Aberta">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Lista" />
+                <MenuItem mnemonicParsing="false" text="Avl" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Hashing Fechada">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Duplo Hashing" />
+                <MenuItem mnemonicParsing="false" text="Tentativa Linear" />
+                <MenuItem mnemonicParsing="false" text="Tentaiva Quadratica" />
+              </items>
+            </Menu>
+            <MenuItem mnemonicParsing="false" text="Hashing Meio Aberta" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Close" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Edit">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Delete" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+          <items>
+            <MenuItem mnemonicParsing="false" text="About" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+  </children>
+</AnchorPane>
