@@ -152,4 +152,8 @@ public class Arvore2D {
 				posicionarNo(node2D.getDireita(), valor, x, y, largura);
 		}
 	}
+
+	public int getLarguraDaArvore() {
+		return larguraDaArvore;
+	}
 }

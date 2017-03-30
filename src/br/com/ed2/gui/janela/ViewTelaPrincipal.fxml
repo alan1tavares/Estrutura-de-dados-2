@@ -12,14 +12,11 @@
   <children>
     <BorderPane prefHeight="377.0" prefWidth="600.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0">
       <center>
-        <Pane prefHeight="-1.0" prefWidth="-1.0" style="-fx-background-color: #ffffff;&#10;">
-          <padding>
-            <Insets />
-          </padding>
-          <BorderPane.margin>
-            <Insets left="5.0" right="5.0" fx:id="x2" />
-          </BorderPane.margin>
-        </Pane>
+        <ScrollPane id="containerDasEstruturas2D" prefHeight="200.0" prefWidth="200.0">
+          <content>
+            <AnchorPane id="Content" fx:id="containerDasEstruturas2D" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+          </content>
+        </ScrollPane>
       </center>
       <top>
         <VBox prefHeight="112.0" prefWidth="600.0">
