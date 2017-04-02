@@ -3,28 +3,33 @@ package br.com.ed2.estruturas.avl;
 import br.com.ed2.estruturas.Estrutura;
 import br.com.ed2.estruturas.relatorio.Relatorio;
 import br.com.ed2.estruturas.relatorio.RelatorioAvl;
+import br.com.ed2.estruturas.relatorio.RotuloRelatorioAvl;
 
 public class AvlTree<Type extends Comparable<? super Type>> implements Estrutura<Type> {
 	private AvlNode<Type> raiz;
-	//String log = "";
+	// String log = "";
 	Relatorio log;
 	private boolean passoRotacaoSimplesLog = true;
 
 	private static final int ALLOWED_IMBALANCE = 1;
 
-	public AvlTree(boolean relatorio){
-		if(relatorio == true) log = new RelatorioAvl();
+	public AvlTree(boolean relatorio) {
+		if (relatorio == true)
+			log = new RelatorioAvl();
 	}
-	
-	public AvlTree(){
-		
+
+	public AvlTree() {
+
 	}
-	
+
 	@Override
 	public void inserir(Type elemento) {
-		this.log. += "Entrada: " + elemento + "\n";
+		this.log.adicionar(RotuloRelatorioAvl.ENTRADA + elemento + RotuloRelatorioAvl.FINAL_TEXTO);
+
 		this.raiz = inserir(elemento, raiz);
-		this.log += "Saida: " + preOrdem();
+
+		this.log.adicionar(String.format("%s%s%d%s", RotuloRelatorioAvl.SAIDA, preOrdem(), RotuloRelatorioAvl.ALTURA,
+				raiz.altura + 1, RotuloRelatorioAvl.FINAL_TEXTO));
 
 	}
 
@@ -41,7 +46,7 @@ public class AvlTree<Type extends Comparable<? super Type>> implements Estrutura
 		else if (resultadoComparado > 0)
 			t.filhoDireto = inserir(elemento, t.filhoDireto);
 		else
-			this.log += "Elemento " + elemento + "ja sexiste\n";
+			this.log.adicionar("Elemento " + elemento + "ja sexiste");
 
 		// Balanceia o no
 		return balancear(t);
@@ -79,9 +84,9 @@ public class AvlTree<Type extends Comparable<? super Type>> implements Estrutura
 	}
 
 	private AvlNode<Type> rotacaoDuplaDireita(AvlNode<Type> k3) {
-		this.log += "Árovre desbalanceada: " + preOrdem();
-		this.log += "Rotação dupla direita involvendo os elementos: " + k3.elemento + " " + k3.filhoDireto.elemento
-				+ " " + k3.filhoDireto.filhoEsquerdo.elemento + "\n";
+		this.log.adicionar("Árovre desbalanceada: " + preOrdem() + "Rotação dupla direita involvendo os elementos: "
+				+ k3.elemento + " " + k3.filhoDireto.elemento + " " + k3.filhoDireto.filhoEsquerdo.elemento
+				+ RotuloRelatorioAvl.FINAL_TEXTO);
 		// ---------------------
 		k3.filhoDireto = rotacaoSimplesEsquerda(k3.filhoDireto);
 		return rotacaoSimplesDireita(k3);
@@ -89,9 +94,9 @@ public class AvlTree<Type extends Comparable<? super Type>> implements Estrutura
 
 	// Rotacao Dupla (direita-esquerda)
 	private AvlNode<Type> rotacaoDuplaEsquerda(AvlNode<Type> k3) {
-		this.log += "Árvore desbalanceada: " + preOrdem();
-		this.log += "Rotação dupla esquerda involvendo os elementos: " + k3.elemento + " " + k3.filhoEsquerdo.elemento
-				+ " " + k3.filhoEsquerdo.filhoDireto.elemento + "\n";
+		this.log.adicionar("Árvore desbalanceada: " + preOrdem() + "Rotação dupla esquerda involvendo os elementos: "
+				+ k3.elemento + " " + k3.filhoEsquerdo.elemento + " " + k3.filhoEsquerdo.filhoDireto.elemento
+				+ RotuloRelatorioAvl.FINAL_TEXTO);
 		// --------------------
 		k3.filhoEsquerdo = rotacaoSimplesDireita(k3.filhoEsquerdo);
 		return rotacaoSimplesEsquerda(k3);
@@ -99,9 +104,9 @@ public class AvlTree<Type extends Comparable<? super Type>> implements Estrutura
 
 	private AvlNode<Type> rotacaoSimplesDireita(AvlNode<Type> k2) {
 		if (this.passoRotacaoSimplesLog == true) {
-			this.log += "Árvore desbalanceada: " + preOrdem();
-			this.log += "Rotacao simples direita involvendo os elementos: " + k2.elemento + " "
-					+ k2.filhoDireto.elemento + "\n";
+			this.log.adicionar(
+					"Árvore desbalanceada: " + preOrdem() + "Rotacao simples direita involvendo os elementos: "
+							+ k2.elemento + " " + k2.filhoDireto.elemento + RotuloRelatorioAvl.FINAL_TEXTO);
 		}
 		// --------------------
 		AvlNode<Type> k1 = k2.filhoDireto;
@@ -114,9 +119,9 @@ public class AvlTree<Type extends Comparable<? super Type>> implements Estrutura
 
 	private AvlNode<Type> rotacaoSimplesEsquerda(AvlNode<Type> k2) {
 		if (this.passoRotacaoSimplesLog == true) {
-			this.log += "Árvore desbalanceada: " + preOrdem();
-			this.log += "Rotacao simples esquerda involvendo os elementos: " + k2.elemento + " "
-					+ k2.filhoEsquerdo.elemento + "\n";
+			this.log.adicionar(
+					"Árvore desbalanceada: " + preOrdem() + "Rotacao simples esquerda involvendo os elementos: "
+							+ k2.elemento + " " + k2.filhoEsquerdo.elemento + RotuloRelatorioAvl.FINAL_TEXTO);
 		}
 		// --------------------
 		AvlNode<Type> k1 = k2.filhoEsquerdo;
@@ -208,9 +213,10 @@ public class AvlTree<Type extends Comparable<? super Type>> implements Estrutura
 		}
 		return a;
 	}
-	
+
 	/**
 	 * Retorna a Raiz da árvore
+	 * 
 	 * @return nó raiz
 	 */
 	public AvlNode<Type> getRaiz() {
