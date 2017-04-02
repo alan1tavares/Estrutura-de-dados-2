@@ -1,5 +1,6 @@
-package br.com.ed2.gui.arvore;
+package br.com.ed2.desenho.arvore;
 
+import br.com.ed2.gui.estrutura.Desenho;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 
@@ -10,21 +11,13 @@ import javafx.scene.shape.Line;
  * @author Alan Tavares
  *
  */
-public class Arvore2D {
+public class Arvore2D implements Desenho {
 
 	private String[] todosOsNos;
 	private Pane arvore;
 	private Node2D raiz;
 	private int larguraDaArvore;
 	private int raioDasFolhas;
-
-	/**
-	 * 
-	 * @return Desenho da árvore dentro de um Pane
-	 */
-	public Pane getArvore() {
-		return arvore;
-	}
 
 	/**
 	 * Montar uma árvore a partir de uma lista de elementos em pre-ordem.
@@ -56,6 +49,11 @@ public class Arvore2D {
 
 		return this.arvore;
 	}
+	
+	public Pane arvorePreOrdem(String arvore, int altura, int raio) {
+		return arvorePreOrdem(arvore, altura, raio, 0, 0);
+	}
+	
 
 	/*
 	 * Método privado que será chamado para montar a árvore. Se a classe não
@@ -155,5 +153,10 @@ public class Arvore2D {
 
 	public int getLarguraDaArvore() {
 		return larguraDaArvore;
+	}
+
+	@Override // Desenho da árvore dentro de um pane
+	public Pane desenho() {
+		return this.arvore;
 	}
 }

@@ -1,6 +1,6 @@
 package br.com.ed2.teste;
 
-import br.com.ed2.gui.arvore.Node2D;
+import br.com.ed2.desenho.arvore.Node2D;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;

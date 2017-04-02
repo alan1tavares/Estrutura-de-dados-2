@@ -1,7 +1,7 @@
 package br.com.ed2.gui.janela;
 
+import br.com.ed2.desenho.arvore.Arvore2D;
 import br.com.ed2.estruturas.avl.AvlTree;
-import br.com.ed2.gui.arvore.Arvore2D;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

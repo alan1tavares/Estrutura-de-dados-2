@@ -1,17 +1,28 @@
 package br.com.ed2.estruturas.avl;
 
 import br.com.ed2.estruturas.Estrutura;
+import br.com.ed2.estruturas.relatorio.Relatorio;
+import br.com.ed2.estruturas.relatorio.RelatorioAvl;
 
 public class AvlTree<Type extends Comparable<? super Type>> implements Estrutura<Type> {
 	private AvlNode<Type> raiz;
-	String log = "";
+	//String log = "";
+	Relatorio log;
 	private boolean passoRotacaoSimplesLog = true;
 
 	private static final int ALLOWED_IMBALANCE = 1;
 
+	public AvlTree(boolean relatorio){
+		if(relatorio == true) log = new RelatorioAvl();
+	}
+	
+	public AvlTree(){
+		
+	}
+	
 	@Override
 	public void inserir(Type elemento) {
-		this.log += "Entrada: " + elemento + "\n";
+		this.log. += "Entrada: " + elemento + "\n";
 		this.raiz = inserir(elemento, raiz);
 		this.log += "Saida: " + preOrdem();
 
