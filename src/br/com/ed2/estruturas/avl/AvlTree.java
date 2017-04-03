@@ -7,8 +7,9 @@ import br.com.ed2.estruturas.relatorio.RotuloRelatorioAvl;
 
 public class AvlTree<Type extends Comparable<? super Type>> implements Estrutura<Type> {
 	private AvlNode<Type> raiz;
-	// String log = "";
-	Relatorio log;
+	
+	private Relatorio log;
+	
 	private boolean passoRotacaoSimplesLog = true;
 
 	private static final int ALLOWED_IMBALANCE = 1;
@@ -28,9 +29,8 @@ public class AvlTree<Type extends Comparable<? super Type>> implements Estrutura
 
 		this.raiz = inserir(elemento, raiz);
 
-		this.log.adicionar(String.format("%s%s%d%s", RotuloRelatorioAvl.SAIDA, preOrdem(), RotuloRelatorioAvl.ALTURA,
+		this.log.adicionar(String.format("%s%s%s%d%s", RotuloRelatorioAvl.SAIDA, preOrdem(), RotuloRelatorioAvl.ALTURA,
 				raiz.altura + 1, RotuloRelatorioAvl.FINAL_TEXTO));
-
 	}
 
 	private AvlNode<Type> inserir(Type elemento, AvlNode<Type> t) {
@@ -223,4 +223,11 @@ public class AvlTree<Type extends Comparable<? super Type>> implements Estrutura
 		return raiz;
 	}
 
+	public String getLog() {
+		return log.getTexto();
+	}
+	
+	public Relatorio getRelatorio(){
+		return this.log;
+	}
 }

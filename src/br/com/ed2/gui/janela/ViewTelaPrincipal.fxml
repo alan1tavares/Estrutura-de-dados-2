@@ -11,6 +11,24 @@
   <!-- TODO Add Nodes -->
   <children>
     <BorderPane prefHeight="377.0" prefWidth="600.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0">
+      <bottom>
+        <HBox alignment="TOP_RIGHT" disable="false" focusTraversable="false" minHeight="-1.0" prefHeight="-1.0" prefWidth="-1.0" spacing="5.0" BorderPane.alignment="TOP_LEFT">
+          <children>
+            <Button mnemonicParsing="false" text="Anterior">
+              <font>
+                <Font size="14.0" fx:id="x1" />
+              </font>
+            </Button>
+            <Button font="$x1" mnemonicParsing="false" onAction="#btProximo" text="Proximo" />
+          </children>
+          <padding>
+            <Insets right="10.0" />
+          </padding>
+          <BorderPane.margin>
+            <Insets bottom="10.0" />
+          </BorderPane.margin>
+        </HBox>
+      </bottom>
       <center>
         <ScrollPane id="containerDasEstruturas2D" prefHeight="200.0" prefWidth="200.0">
           <content>
@@ -23,10 +41,7 @@
           <children>
             <HBox id="inserir" prefHeight="-1.0" prefWidth="200.0">
               <children>
-                <Label text="Inserção:" HBox.hgrow="ALWAYS">
-                  <font>
-                    <Font size="14.0" fx:id="x1" />
-                  </font>
+                <Label font="$x1" text="Inserção:" HBox.hgrow="ALWAYS">
                   <HBox.margin>
                     <Insets left="5.0" top="2.0" />
                   </HBox.margin>

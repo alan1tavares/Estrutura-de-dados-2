@@ -1,5 +1,7 @@
 package br.com.ed2.gui.janela;
 
+import java.util.List;
+
 import br.com.ed2.desenho.arvore.Arvore2D;
 import br.com.ed2.estruturas.avl.AvlTree;
 import javafx.application.Application;
@@ -37,6 +39,8 @@ public class ControllerTelaPrincipal extends Application {
 	@FXML
 	private Pane containerDasEstruturas2D = new AnchorPane();
 	private HBox vB = new HBox();
+	private List<Pane> desenhos;
+	private int indexDesenhos;
 	
 	//private Estrutura estruturaEscolhida;
 	
@@ -62,7 +66,7 @@ public class ControllerTelaPrincipal extends Application {
 		// Verifica se existe valores para serem inseridos
 		if(tfInserir.getText() != null){
 			// Cria a estrutura de uma árvore
-			AvlTree<Integer> tree = new AvlTree<>();
+			AvlTree<Integer> tree = new AvlTree<>(true);
 			
 			// Separa os valores em um array
 			String[] valores = tfInserir.getText().split(" ");
@@ -80,16 +84,26 @@ public class ControllerTelaPrincipal extends Application {
 			p.setLayoutX(tree2D.getLarguraDaArvore());
 			
 			vB.getChildren().addAll(p);
-			containerDasEstruturas2D.getChildren().add(p);
+			
+			desenhos = tree.getRelatorio().getDesenhos();
+			indexDesenhos = 0;
+			containerDasEstruturas2D.getChildren().add(desenhos.get(indexDesenhos));
 		}
 		
 	}
 	
 	// Evento dos Menu
 	public void menuAvl() {
-		//this.estruturaEscolhida = new AVL();
 		ativarBotoes();
 		textoTitulo.setText("AVL");
-		
+	}
+	
+	public void btProximo(){
+		if(indexDesenhos < desenhos.size()-1){
+			indexDesenhos += 1;
+			containerDasEstruturas2D.getChildren().clear();
+			containerDasEstruturas2D.getChildren().add(desenhos.get(indexDesenhos));
+			System.out.println(desenhos.get(indexDesenhos));
+		}
 	}
 }

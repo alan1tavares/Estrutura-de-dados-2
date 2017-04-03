@@ -3,6 +3,7 @@ package br.com.ed2.estruturas.relatorio;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.ed2.gui.estrutura.Desenho;
 import javafx.scene.layout.Pane;
 
 /**
@@ -13,12 +14,12 @@ import javafx.scene.layout.Pane;
  *
  */
 public class Relatorio {
-	protected List<Pane> figuras; // São os desenhos
+	protected List<Pane> desenhos; // São os desenhos
 	protected List<String> texto; // As interações efetuadas
 
 	public Relatorio() {
 		this.texto = new ArrayList<>();
-		this.figuras = new ArrayList<>();
+		this.desenhos = new ArrayList<>();
 	}
 
 	/**
@@ -29,5 +30,17 @@ public class Relatorio {
 	 */
 	public void adicionar(String texto) {
 		this.texto.add(texto);
+	}
+	
+	public String getTexto(){
+		String str = "";
+		for (String s : texto) {
+			str += s + "\n";
+		}
+		return str;
+	}
+	
+	public List<Pane> getDesenhos() {
+		return desenhos;
 	}
 }
