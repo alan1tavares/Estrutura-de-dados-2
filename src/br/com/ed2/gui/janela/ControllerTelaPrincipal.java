@@ -1,8 +1,10 @@
 package br.com.ed2.gui.janela;
 
+import java.io.IOException;
 import java.util.List;
 
 import br.com.ed2.desenho.arvore.Arvore2D;
+import br.com.ed2.estruturas.InserirDeletarBuscar;
 import br.com.ed2.estruturas.avl.AvlTree;
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -24,7 +26,7 @@ import javafx.stage.Stage;
  * @author Alan Tavares
  *
  */
-public class ControllerTelaPrincipal extends Application {
+public class ControllerTelaPrincipal {
 
 	@FXML
 	private Button btInserir;
@@ -38,20 +40,11 @@ public class ControllerTelaPrincipal extends Application {
 	private Label textoTitulo;
 	@FXML
 	private Pane containerDasEstruturas2D = new AnchorPane();
-	private HBox vB = new HBox();
+	
 	private List<Pane> desenhos;
 	private int indexDesenhos;
 	
-	//private Estrutura estruturaEscolhida;
-	
-	
-	public void start(Stage primaryStage) throws Exception {
-		String caminho = "/br/com/ed2/gui/janela/ViewTelaPrincipal.fxml";
-		Parent root = FXMLLoader.load(getClass().getResource(caminho));		
-		Scene scene = new Scene(root);
-		primaryStage.setScene(scene);
-		primaryStage.show();
-	}
+	InserirDeletarBuscar<Integer> estruturaEscolhida;
 
 	/**
 	 * Método usado para ativar os botões de inserir, deletar e buscar.
@@ -65,42 +58,47 @@ public class ControllerTelaPrincipal extends Application {
 	public void botaoInserir() {
 		// Verifica se existe valores para serem inseridos
 		if(tfInserir.getText() != null){
-			// Cria a estrutura de uma árvore
-			AvlTree<Integer> tree = new AvlTree<>(true);
 			
 			// Separa os valores em um array
 			String[] valores = tfInserir.getText().split(" ");
 			// Vai inseindo cada valor na estrutura
 			for (String string : valores) {
 				int valor = Integer.parseInt(string);
-				tree.inserir(valor);
+				this.estruturaEscolhida.inserir(valor);
 			} //else{
 				// Alert "insira alguma coisa".
 			//}
-			
-			int altura = AvlTree.alturaDo(tree.getRaiz())+1;
-			Arvore2D tree2D = new Arvore2D();
-			Pane p = tree2D.arvorePreOrdem(tree.preOrdem(), altura, 24, 0, 0);
-			p.setLayoutX(tree2D.getLarguraDaArvore());
-			
-			vB.getChildren().addAll(p);
-			
-			desenhos = tree.getRelatorio().getDesenhos();
-			indexDesenhos = 0;
-			containerDasEstruturas2D.getChildren().add(desenhos.get(indexDesenhos));
+					
+			this.desenhos = ((AvlTree<Integer>) this.estruturaEscolhida).getRelatorio().getDesenhos();
+			this.indexDesenhos = 0;
+			this.containerDasEstruturas2D.getChildren().add(this.desenhos.get(this.indexDesenhos));
 		}
 		
 	}
 	
 	// Evento dos Menu
-	public void menuAvl() {
+	public void menuAvl() {	
 		ativarBotoes();
 		textoTitulo.setText("AVL");
+
+		// Incializa variáveis
+		// Cria o modelo de árvore
+		this.estruturaEscolhida = new AvlTree<>(true);
 	}
 	
+	// Eventos de botao
 	public void btProximo(){
 		if(indexDesenhos < desenhos.size()-1){
 			indexDesenhos += 1;
+			containerDasEstruturas2D.getChildren().clear();
+			containerDasEstruturas2D.getChildren().add(desenhos.get(indexDesenhos));
+			System.out.println(desenhos.get(indexDesenhos));
+		}
+	}
+	
+	public void btAnterior(){
+		if(indexDesenhos > 0){
+			indexDesenhos -= 1;
 			containerDasEstruturas2D.getChildren().clear();
 			containerDasEstruturas2D.getChildren().add(desenhos.get(indexDesenhos));
 			System.out.println(desenhos.get(indexDesenhos));

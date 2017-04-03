@@ -14,7 +14,7 @@
       <bottom>
         <HBox alignment="TOP_RIGHT" disable="false" focusTraversable="false" minHeight="-1.0" prefHeight="-1.0" prefWidth="-1.0" spacing="5.0" BorderPane.alignment="TOP_LEFT">
           <children>
-            <Button mnemonicParsing="false" text="Anterior">
+            <Button mnemonicParsing="false" onAction="#btAnterior" text="Anterior">
               <font>
                 <Font size="14.0" fx:id="x1" />
               </font>
