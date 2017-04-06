@@ -1,4 +1,3 @@
-import br.com.ed2.gui.janela.ControllerTelaPrincipal;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

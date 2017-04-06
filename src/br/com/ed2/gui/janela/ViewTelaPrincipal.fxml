@@ -12,27 +12,46 @@
   <children>
     <BorderPane prefHeight="377.0" prefWidth="600.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0">
       <bottom>
-        <HBox alignment="TOP_RIGHT" disable="false" focusTraversable="false" minHeight="-1.0" prefHeight="-1.0" prefWidth="-1.0" spacing="5.0" BorderPane.alignment="TOP_LEFT">
+        <VBox minHeight="43.0" prefHeight="50.0" prefWidth="600.0">
           <children>
-            <Button mnemonicParsing="false" onAction="#btAnterior" text="Anterior">
-              <font>
-                <Font size="14.0" fx:id="x1" />
-              </font>
-            </Button>
-            <Button font="$x1" mnemonicParsing="false" onAction="#btProximo" text="Proximo" />
+            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0" VBox.margin="$x5">
+              <children>
+                <Label text="Passo:" wrapText="false">
+                  <font>
+                    <Font name="System Bold" size="14.0" fx:id="x1" />
+                  </font>
+                </Label>
+                <Label fx:id="passoAtual" text="00">
+                  <font>
+                    <Font size="14.0" fx:id="x4" />
+                  </font>
+                </Label>
+                <Label font="$x1" text="/" />
+                <Label fx:id="totalDePassos" font="$x4" text="00" />
+              </children>
+              <padding>
+                <Insets fx:id="x5" />
+              </padding>
+            </HBox>
+            <HBox alignment="TOP_RIGHT" padding="$x5" prefHeight="30.0" prefWidth="600.0" spacing="10.0" VBox.margin="$x5">
+              <children>
+                <Button font="$x4" mnemonicParsing="false" onAction="#btAnterior" text="Anterior" />
+                <Button font="$x4" mnemonicParsing="false" onAction="#btProximo" text="Proximo" />
+              </children>
+            </HBox>
           </children>
           <padding>
-            <Insets right="10.0" />
+            <Insets bottom="8.0" right="8.0" top="8.0" />
           </padding>
           <BorderPane.margin>
-            <Insets bottom="10.0" />
+            <Insets bottom="8.0" />
           </BorderPane.margin>
-        </HBox>
+        </VBox>
       </bottom>
       <center>
-        <ScrollPane id="containerDasEstruturas2D" prefHeight="200.0" prefWidth="200.0">
+        <ScrollPane id="containerDasEstruturas2D" hbarPolicy="ALWAYS" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS">
           <content>
-            <AnchorPane id="Content" fx:id="containerDasEstruturas2D" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+            <Pane fx:id="containerDasEstruturas2D" prefHeight="200.0" prefWidth="200.0" />
           </content>
         </ScrollPane>
       </center>
@@ -41,7 +60,7 @@
           <children>
             <HBox id="inserir" prefHeight="-1.0" prefWidth="200.0">
               <children>
-                <Label font="$x1" text="Inserção:" HBox.hgrow="ALWAYS">
+                <Label font="$x4" text="Inserção:" HBox.hgrow="ALWAYS">
                   <HBox.margin>
                     <Insets left="5.0" top="2.0" />
                   </HBox.margin>
@@ -51,7 +70,7 @@
                     <Insets left="4.0" right="5.0" />
                   </HBox.margin>
                 </TextField>
-                <Button id="inserir" fx:id="btInserir" contentDisplay="LEFT" disable="true" font="$x1" mnemonicParsing="false" onAction="#botaoInserir" prefHeight="25.0" prefWidth="69.0" text="Inserir">
+                <Button id="inserir" fx:id="btInserir" contentDisplay="LEFT" disable="true" font="$x4" mnemonicParsing="false" onAction="#botaoInserir" prefHeight="25.0" prefWidth="69.0" text="Inserir">
                   <HBox.margin>
                     <Insets right="5.0" fx:id="x3" />
                   </HBox.margin>
@@ -65,7 +84,7 @@
               <children>
                 <HBox id="deletar" prefHeight="-1.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
                   <children>
-                    <Label font="$x1" prefHeight="25.0" text="Deleção:">
+                    <Label font="$x4" prefHeight="25.0" text="Deleção:">
                       <HBox.margin>
                         <Insets left="5.0" />
                       </HBox.margin>
@@ -75,7 +94,7 @@
                         <Insets left="5.0" right="5.0" fx:id="x2" />
                       </HBox.margin>
                     </TextField>
-                    <Button id="deletar" fx:id="btDeletar" cancelButton="false" defaultButton="false" disable="true" font="$x1" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="Deletar">
+                    <Button id="deletar" fx:id="btDeletar" cancelButton="false" defaultButton="false" disable="true" font="$x4" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="Deletar">
                       <HBox.margin>
                         <Insets right="5.0" fx:id="x3" />
                       </HBox.margin>
@@ -84,13 +103,13 @@
                 </HBox>
                 <HBox id="buscar" alignment="TOP_LEFT" prefHeight="-1.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
                   <children>
-                    <Label font="$x1" prefHeight="24.0" prefWidth="40.0" text="Busca:">
+                    <Label font="$x4" prefHeight="24.0" prefWidth="40.0" text="Busca:">
                       <HBox.margin>
                         <Insets left="5.0" />
                       </HBox.margin>
                     </Label>
                     <TextField alignment="TOP_LEFT" prefHeight="25.0" prefWidth="168.0" HBox.hgrow="ALWAYS" HBox.margin="$x2" />
-                    <Button id="buscar" fx:id="btBuscar" disable="true" font="$x1" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="Buscar" HBox.margin="$x3" />
+                    <Button id="buscar" fx:id="btBuscar" disable="true" font="$x4" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="Buscar" HBox.margin="$x3" />
                   </children>
                 </HBox>
               </children>

@@ -43,6 +43,8 @@ public class Arvore2D implements Desenho {
 		this.larguraDaArvore = raio * (numeroDeFolhasNaMaiorAltura * 2) - raio;
 		// Cria o container onde será montada a árvore
 		this.arvore = new Pane();
+		// Dfine o tamnho da tela que tem a árvore dentro
+		this.arvore.resize(this.larguraDaArvore*2, this.larguraDaArvore);
 
 		// Chama um método que irá montar a árvore
 		montarArvore(x, y);
@@ -51,7 +53,9 @@ public class Arvore2D implements Desenho {
 	}
 	
 	public Pane arvorePreOrdem(String arvore, int altura, int raio) {
-		return arvorePreOrdem(arvore, altura, raio, 0, 0);
+		Pane p = arvorePreOrdem(arvore, altura, raio, 0, 0);
+		System.out.println(p.getHeight());
+		return p;
 	}
 	
 
