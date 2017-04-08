@@ -1,23 +1,16 @@
 package br.com.ed2.gui.janela;
 
-import java.io.IOException;
 import java.util.List;
 
-import br.com.ed2.desenho.arvore.Arvore2D;
 import br.com.ed2.estruturas.InserirDeletarBuscar;
 import br.com.ed2.estruturas.avl.AvlTree;
-import javafx.application.Application;
+import br.com.ed2.estruturas.relatorio.Relatorio;
+import br.com.ed2.estruturas.relatorio.RotuloRelatorioAvl;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
 /**
  * Classe controller da Tela principal. Tela que irá fazer a maiorias das
@@ -28,23 +21,31 @@ import javafx.stage.Stage;
  */
 public class ControllerTelaPrincipal {
 
+	// Botoes
 	@FXML
 	private Button btInserir;
-	@FXML
-	private TextField tfInserir;
 	@FXML
 	private Button btDeletar;
 	@FXML
 	private Button btBuscar;
+
+	// Labels
 	@FXML
 	private Label textoTitulo;
-	@FXML
-	private Pane containerDasEstruturas2D;
 	@FXML
 	private Label totalDePassos;
 	@FXML
 	private Label passoAtual;
+	@FXML
+	private Label lbInformacaoPassoAPasso;
 
+	// Outros
+	@FXML
+	private TextField tfInserir;
+	@FXML
+	private Pane containerDasEstruturas2D;
+
+	private Relatorio relatorio;
 	private List<Pane> desenhos;
 	private int indexDesenhos;
 
@@ -68,7 +69,8 @@ public class ControllerTelaPrincipal {
 				// Alert "insira alguma coisa".
 				// }
 
-			this.desenhos = ((AvlTree<Integer>) this.estruturaEscolhida).getRelatorio().getDesenhos();
+			this.relatorio = ((AvlTree<Integer>) this.estruturaEscolhida).getRelatorio();
+			this.desenhos = this.relatorio.getDesenhos();
 			this.indexDesenhos = 0;
 			this.containerDasEstruturas2D.getChildren().clear();
 			this.containerDasEstruturas2D.getChildren().add(this.desenhos.get(this.indexDesenhos));
@@ -77,7 +79,9 @@ public class ControllerTelaPrincipal {
 			this.containerDasEstruturas2D.setPrefWidth(this.desenhos.get(this.desenhos.size() - 1).getWidth());
 
 			atulizaLbTotalPasso();
-			atualizaLbPassoAtual();
+			atualizaPassoAPasso();
+			
+			System.out.println(this.relatorio.relatorioTextual());
 		}
 
 	}
@@ -113,7 +117,7 @@ public class ControllerTelaPrincipal {
 			Pane arvore = desenhos.get(indexDesenhos);
 			containerDasEstruturas2D.getChildren().add(arvore);
 		}
-		atualizaLbPassoAtual();
+		atualizaPassoAPasso();
 	}
 
 	// Método que volta uma passo da estrutura.
@@ -123,7 +127,7 @@ public class ControllerTelaPrincipal {
 			containerDasEstruturas2D.getChildren().clear();
 			containerDasEstruturas2D.getChildren().add(desenhos.get(indexDesenhos));
 		}
-		atualizaLbPassoAtual();
+		atualizaPassoAPasso();
 	}
 
 	/*
@@ -146,7 +150,12 @@ public class ControllerTelaPrincipal {
 
 	// Método usado para atualizar a label que informa o número do passo que
 	// está a estrutura.
-	private void atualizaLbPassoAtual() {
+	private void atualizaPassoAPasso() {
 		this.passoAtual.setText("0" + (this.indexDesenhos + 1));
+
+		if (this.relatorio != null)
+			// Autliza a lbl informando o que aconterceu nesse passo a passo
+			this.lbInformacaoPassoAPasso
+					.setText(this.relatorio.relatorioSemEsse(RotuloRelatorioAvl.SAIDA).get(this.indexDesenhos));
 	}
 }

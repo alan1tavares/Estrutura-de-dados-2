@@ -1,19 +1,31 @@
 package br.com.ed2.estruturas.avl;
 
+import br.com.ed2.desenho.arvore.Arvore2D;
 import br.com.ed2.estruturas.InserirDeletarBuscar;
+import br.com.ed2.estruturas.relatorio.Pagina;
 import br.com.ed2.estruturas.relatorio.Relatorio;
 import br.com.ed2.estruturas.relatorio.RelatorioAvl;
 import br.com.ed2.estruturas.relatorio.RotuloRelatorioAvl;
+import javafx.scene.layout.Pane;
 
-public class AvlTree<Type extends Comparable<? super Type>> implements InserirDeletarBuscar<Type>{
+public class AvlTree<Type extends Comparable<? super Type>> implements InserirDeletarBuscar<Type> {
 	private AvlNode<Type> raiz;
-	
+
 	private Relatorio relatorio;
-	
+
 	private boolean passoRotacaoSimplesLog = true;
 
 	private static final int ALLOWED_IMBALANCE = 1;
 
+	// Construtores
+
+	/**
+	 * Construtor que indica se realiza uma relatóio ou não.
+	 * 
+	 * @param possuiRelatorio
+	 *            Verdadeiro se é pra criar o relatório. Falso se não é pra
+	 *            fazer o relatório.
+	 */
 	public AvlTree(boolean possuiRelatorio) {
 		if (possuiRelatorio == true)
 			this.relatorio = new RelatorioAvl();
@@ -23,16 +35,45 @@ public class AvlTree<Type extends Comparable<? super Type>> implements InserirDe
 
 	}
 
+	// Métodos públicos
+
 	@Override
 	public void inserir(Type elemento) {
-		this.relatorio.adicionar(RotuloRelatorioAvl.ENTRADA + elemento + RotuloRelatorioAvl.FINAL_TEXTO);
+		try {
+			this.raiz = inserir(elemento, raiz); // Tenta inseirir o elemento na
+													// árvore
+		} catch (Exception e) {
+			// Caso o elemento seje repetido, coloca isso no relatório.
+			if (this.relatorio != null) {
+				colocaNoRelatorio(RotuloRelatorioAvl.ENTRADA + elemento + RotuloRelatorioAvl.FINAL_TEXTO
+						+ "\nElemento repetido" + RotuloRelatorioAvl.FINAL_TEXTO);
+			}
+		}
+		// Caso o elemento são seje repetido, coloca isso no relatório.
+		if (this.relatorio != null) {
+			colocaNoRelatorio(RotuloRelatorioAvl.ENTRADA + elemento + RotuloRelatorioAvl.FINAL_TEXTO);
+		}
 
-		this.raiz = inserir(elemento, raiz);
-
-		this.relatorio.adicionar(String.format("%s%s%s%d%s", RotuloRelatorioAvl.SAIDA, preOrdem(), RotuloRelatorioAvl.ALTURA,
-				raiz.altura + 1, RotuloRelatorioAvl.FINAL_TEXTO));
+		/*
+		 * this.relatorio.adicionar(String.format("%s%s%s%d%s",
+		 * RotuloRelatorioAvl.SAIDA, preOrdem(), RotuloRelatorioAvl.ALTURA,
+		 * raiz.altura + 1, RotuloRelatorioAvl.FINAL_TEXTO));
+		 */
 	}
 
+	// Métodos privado da árvores.
+
+	/**
+	 * Insere um elemento em uma subárvore e depois retorna essa subávore
+	 * balanceadas.
+	 * 
+	 * @param elemento
+	 *            Elemento a ser colocado na árvore. Se ele ja existir irá
+	 *            lançar uma exceção.
+	 * @param t
+	 *            Subárvore que ira receber o @param elemento.
+	 * @return Retorna a subárvore @param t balanceada.
+	 */
 	private AvlNode<Type> inserir(Type elemento, AvlNode<Type> t) {
 		if (t == null)
 			return new AvlNode<Type>(elemento);
@@ -45,8 +86,10 @@ public class AvlTree<Type extends Comparable<? super Type>> implements InserirDe
 			t.filhoEsquerdo = inserir(elemento, t.filhoEsquerdo);
 		else if (resultadoComparado > 0)
 			t.filhoDireto = inserir(elemento, t.filhoDireto);
-		else
-			this.relatorio.adicionar("Elemento " + elemento + "ja sexiste");
+		else {
+			// this.relatorio.adicionar("Elemento " + elemento + "ja sexiste");
+			throw new IllegalArgumentException("Esse elemento ja está inserido na árvore");
+		}
 
 		// Balanceia o no
 		return balancear(t);
@@ -84,9 +127,11 @@ public class AvlTree<Type extends Comparable<? super Type>> implements InserirDe
 	}
 
 	private AvlNode<Type> rotacaoDuplaDireita(AvlNode<Type> k3) {
-		this.relatorio.adicionar("Árovre desbalanceada: " + preOrdem() + "Rotação dupla direita involvendo os elementos: "
-				+ k3.elemento + " " + k3.filhoDireto.elemento + " " + k3.filhoDireto.filhoEsquerdo.elemento
-				+ RotuloRelatorioAvl.FINAL_TEXTO);
+		if (this.relatorio != null) {
+			String str = RotuloRelatorioAvl.ARVORE_DESBALANCEADA + preOrdem()
+					+ "Rotação dupla direita involvendo os elementos: " + k3.elemento + " " + k3.filhoDireto.elemento
+					+ " " + k3.filhoDireto.filhoEsquerdo.elemento + RotuloRelatorioAvl.FINAL_TEXTO;
+		}
 		// ---------------------
 		k3.filhoDireto = rotacaoSimplesEsquerda(k3.filhoDireto);
 		return rotacaoSimplesDireita(k3);
@@ -94,9 +139,9 @@ public class AvlTree<Type extends Comparable<? super Type>> implements InserirDe
 
 	// Rotacao Dupla (direita-esquerda)
 	private AvlNode<Type> rotacaoDuplaEsquerda(AvlNode<Type> k3) {
-		this.relatorio.adicionar("Árvore desbalanceada: " + preOrdem() + "Rotação dupla esquerda involvendo os elementos: "
-				+ k3.elemento + " " + k3.filhoEsquerdo.elemento + " " + k3.filhoEsquerdo.filhoDireto.elemento
-				+ RotuloRelatorioAvl.FINAL_TEXTO);
+		this.relatorio.adicionar(RotuloRelatorioAvl.ARVORE_DESBALANCEADA + preOrdem()
+				+ "Rotação dupla esquerda involvendo os elementos: " + k3.elemento + " " + k3.filhoEsquerdo.elemento
+				+ " " + k3.filhoEsquerdo.filhoDireto.elemento + RotuloRelatorioAvl.FINAL_TEXTO);
 		// --------------------
 		k3.filhoEsquerdo = rotacaoSimplesDireita(k3.filhoEsquerdo);
 		return rotacaoSimplesEsquerda(k3);
@@ -104,9 +149,9 @@ public class AvlTree<Type extends Comparable<? super Type>> implements InserirDe
 
 	private AvlNode<Type> rotacaoSimplesDireita(AvlNode<Type> k2) {
 		if (this.passoRotacaoSimplesLog == true) {
-			this.relatorio.adicionar(
-					"Árvore desbalanceada: " + preOrdem() + "Rotacao simples direita involvendo os elementos: "
-							+ k2.elemento + " " + k2.filhoDireto.elemento + RotuloRelatorioAvl.FINAL_TEXTO);
+			this.relatorio.adicionar(RotuloRelatorioAvl.ARVORE_DESBALANCEADA + preOrdem()
+					+ "Rotacao simples direita involvendo os elementos: " + k2.elemento + " " + k2.filhoDireto.elemento
+					+ RotuloRelatorioAvl.FINAL_TEXTO);
 		}
 		// --------------------
 		AvlNode<Type> k1 = k2.filhoDireto;
@@ -119,9 +164,9 @@ public class AvlTree<Type extends Comparable<? super Type>> implements InserirDe
 
 	private AvlNode<Type> rotacaoSimplesEsquerda(AvlNode<Type> k2) {
 		if (this.passoRotacaoSimplesLog == true) {
-			this.relatorio.adicionar(
-					"Árvore desbalanceada: " + preOrdem() + "Rotacao simples esquerda involvendo os elementos: "
-							+ k2.elemento + " " + k2.filhoEsquerdo.elemento + RotuloRelatorioAvl.FINAL_TEXTO);
+			this.relatorio.adicionar(RotuloRelatorioAvl.ARVORE_DESBALANCEADA + preOrdem()
+					+ "Rotacao simples esquerda involvendo os elementos: " + k2.elemento + " "
+					+ k2.filhoEsquerdo.elemento + RotuloRelatorioAvl.FINAL_TEXTO);
 		}
 		// --------------------
 		AvlNode<Type> k1 = k2.filhoEsquerdo;
@@ -223,11 +268,22 @@ public class AvlTree<Type extends Comparable<? super Type>> implements InserirDe
 		return raiz;
 	}
 
-	public String getLog() {
-		return relatorio.getTexto();
-	}
-	
-	public Relatorio getRelatorio(){
+	public Relatorio getRelatorio() {
 		return this.relatorio;
+	}
+
+	/*
+	 * Métodos privados
+	 */
+
+	/*
+	 * Método auxiliar para colocar uma página no relatório
+	 */
+	private void colocaNoRelatorio(String str) {
+		// Monta o desenho da árvore e coloca em um Pane
+		Arvore2D arvore2D = new Arvore2D();
+		Pane desenho = arvore2D.arvorePreOrdem(preOrdem(), this.raiz.altura, 20);
+		// --------------
+		this.relatorio.inserirPagina(new Pagina(str, desenho));
 	}
 }

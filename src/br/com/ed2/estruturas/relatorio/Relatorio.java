@@ -3,44 +3,59 @@ package br.com.ed2.estruturas.relatorio;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.ed2.gui.estrutura.Desenho;
-import javafx.scene.layout.Pane;
-
 /**
- * Classe feita para criar um relatório que armazene as interações das
- * estruturas
+ * Classe feita para criar um relatório que armazena todas as interações feito
+ * nas estruras. Elas possui usa uma Lista de Páginas. Nesse arraylist é
+ * aramazenado textos e imagens que representa esses textos.
  * 
  * @author Alan Tavares
  *
  */
 public class Relatorio {
-	protected List<Pane> desenhos; // São os desenhos
-	protected List<String> texto; // As interações efetuadas
+	protected List<Pagina> paginas;
 
+	// Construtor que inicializa a Lista
 	public Relatorio() {
-		this.texto = new ArrayList<>();
-		this.desenhos = new ArrayList<>();
+		this.paginas = new ArrayList<>();
 	}
 
 	/**
-	 * Adiciona um texto ao relatório
+	 * Insere uma página a esse relatório. Se o objeto passado for nulo, ira
+	 * lançar uma exception.
+	 * 
+	 * @param pagina
+	 *            a ser inserida
+	 */
+	public void inserirPagina(Pagina pagina) {
+		isNull(pagina);
+		this.paginas.add(pagina); // Insere a página na lista.
+	}
+
+	/**
+	 * Cria uma página com esse texto e insere no relatório. Esse texto não
+	 * possuirá uma imagem representando ele. Se o objeto for nulo ira lançar
+	 * uma exception.
 	 * 
 	 * @param texto
-	 *            um texto que é colocado no relatório
+	 *            Coloca esse texto no relatório
 	 */
-	public void adicionar(String texto) {
-		this.texto.add(texto);
+	public void inserirTexto(String texto) {
+		isNull(texto);
+		Pagina pagina = new Pagina(texto); // Cria a página que possui só texto.
+		inserirPagina(pagina); // Insere a página na lista.
+
 	}
-	
-	public String getTexto(){
-		String str = "";
-		for (String s : texto) {
-			str += s + "\n";
-		}
-		return str;
-	}
-	
-	public List<Pane> getDesenhos() {
-		return desenhos;
+
+	/*
+	 * Métodos auxiliares
+	 */
+
+	/*
+	 * Método auxiliar que verifica se um objeto é nulo se sim, irá lançar uma
+	 * exception.
+	 */
+	private void isNull(Object o) {
+		if (o == null)
+			throw new IllegalArgumentException("Objeto passado foi um valo nulo");
 	}
 }

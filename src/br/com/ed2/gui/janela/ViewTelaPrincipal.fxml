@@ -51,7 +51,15 @@
       <center>
         <ScrollPane id="containerDasEstruturas2D" hbarPolicy="ALWAYS" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS">
           <content>
-            <Pane fx:id="containerDasEstruturas2D" prefHeight="200.0" prefWidth="200.0" />
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+              <children>
+                <Label fx:id="lbInformacaoPassoAPasso" font="$x4" text="Label" />
+                <Pane fx:id="containerDasEstruturas2D" prefHeight="200.0" prefWidth="200.0" />
+              </children>
+              <padding>
+                <Insets left="5.0" top="4.0" />
+              </padding>
+            </VBox>
           </content>
         </ScrollPane>
       </center>
