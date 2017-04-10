@@ -1,4 +1,4 @@
-package br.com.ed2.gui.janela;
+package br.com.ed2.gui.principal;
 
 import java.util.List;
 

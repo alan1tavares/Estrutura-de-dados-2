@@ -20,7 +20,7 @@ public class TestaAvl {
 		inserir(t);
 		t.preOrdem();
 		System.out.println();
-		System.out.println(t.log);
+		//System.out.println(t.log);
 	}
 
 	private static void inserir(AvlTree<Integer> t) {

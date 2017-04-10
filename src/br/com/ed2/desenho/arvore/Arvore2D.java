@@ -49,12 +49,13 @@ public class Arvore2D implements Desenho {
 		// Chama um método que irá montar a árvore
 		montarArvore(x, y);
 
+		this.arvore.setLayoutX(getLarguraDaArvore());
 		return this.arvore;
 	}
 	
 	public Pane arvorePreOrdem(String arvore, int altura, int raio) {
 		Pane p = arvorePreOrdem(arvore, altura, raio, 0, 0);
-		System.out.println(p.getHeight());
+		//System.out.println(p.getHeight());
 		return p;
 	}
 	

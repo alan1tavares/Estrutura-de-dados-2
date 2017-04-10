@@ -45,6 +45,18 @@ public class Relatorio {
 		inserirPagina(pagina); // Insere a página na lista.
 
 	}
+	
+	public Pagina escolherPagina(int numero){
+		if(this.paginas == null)
+			return null;
+		if(numero <= totalDePaginas())
+			return this.paginas.get(numero);
+		return null;
+	}
+	
+	public int totalDePaginas(){
+		return this.paginas.size()-1;
+	}
 
 	/*
 	 * Métodos auxiliares
