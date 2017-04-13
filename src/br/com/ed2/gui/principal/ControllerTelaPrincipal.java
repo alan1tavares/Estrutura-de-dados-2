@@ -1,15 +1,21 @@
 package br.com.ed2.gui.principal;
 
-import java.util.List;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-import br.com.ed2.estruturas.InserirDeletarBuscar;
+import br.com.ed2.estruturas.PassoaAPasso;
 import br.com.ed2.estruturas.avl.AvlTree;
 import br.com.ed2.estruturas.relatorio.Relatorio;
-import br.com.ed2.estruturas.relatorio.RotuloRelatorioAvl;
+import br.com.ed2.gui.relatorio.ControllerRelatorio;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 /**
@@ -19,7 +25,7 @@ import javafx.scene.layout.Pane;
  * @author Alan Tavares
  *
  */
-public class ControllerTelaPrincipal {
+public class ControllerTelaPrincipal implements Initializable {
 
 	// Botoes
 	@FXML
@@ -46,10 +52,7 @@ public class ControllerTelaPrincipal {
 	private Pane containerDasEstruturas2D;
 
 	private Relatorio relatorio;
-	private List<Pane> desenhos;
-	private int indexDesenhos;
-
-	InserirDeletarBuscar<Integer> estruturaEscolhida;
+	PassoaAPasso<Integer> estruturaEscolhida;
 
 	/*
 	 * Métodos
@@ -69,19 +72,10 @@ public class ControllerTelaPrincipal {
 				// Alert "insira alguma coisa".
 				// }
 
-			this.relatorio = ((AvlTree<Integer>) this.estruturaEscolhida).getRelatorio();
-			this.desenhos = this.relatorio.getDesenhos();
-			this.indexDesenhos = 0;
-			this.containerDasEstruturas2D.getChildren().clear();
-			this.containerDasEstruturas2D.getChildren().add(this.desenhos.get(this.indexDesenhos));
-			// Atualiza a largura e altura do container
-			this.containerDasEstruturas2D.setPrefHeight(this.desenhos.get(this.desenhos.size() - 1).getHeight());
-			this.containerDasEstruturas2D.setPrefWidth(this.desenhos.get(this.desenhos.size() - 1).getWidth());
+			this.relatorio = this.estruturaEscolhida.getRelatorio();
+			ControllerRelatorio.relatorio = this.relatorio;
+			inicializarJanelaDoRelaorio();
 
-			atulizaLbTotalPasso();
-			atualizaPassoAPasso();
-			
-			System.out.println(this.relatorio.relatorioTextual());
 		}
 
 	}
@@ -92,9 +86,9 @@ public class ControllerTelaPrincipal {
 
 	// Barra de menu -> Estrutura -> AVL
 
-	/*
+	/**
 	 * Ativa os botões de inserir, deletar e buscar. Muda o tituloa para AVL.
-	 * Instancia a AVL como a estrutura escolhhidas
+	 * Instancia a AVL como a estrutura escolhidas
 	 */
 	public void menuAvl() {
 		ativarBotoes();
@@ -105,29 +99,9 @@ public class ControllerTelaPrincipal {
 		this.estruturaEscolhida = new AvlTree<>(true);
 	}
 
-	/*
-	 * Essa parte possui os evenos de botoes
-	 */
-
-	// Método que avança um passo da estrutura.
-	public void btProximo() {
-		if (indexDesenhos < desenhos.size() - 1) {
-			indexDesenhos += 1;
-			containerDasEstruturas2D.getChildren().clear();
-			Pane arvore = desenhos.get(indexDesenhos);
-			containerDasEstruturas2D.getChildren().add(arvore);
-		}
-		atualizaPassoAPasso();
-	}
-
-	// Método que volta uma passo da estrutura.
-	public void btAnterior() {
-		if (indexDesenhos > 0) {
-			indexDesenhos -= 1;
-			containerDasEstruturas2D.getChildren().clear();
-			containerDasEstruturas2D.getChildren().add(desenhos.get(indexDesenhos));
-		}
-		atualizaPassoAPasso();
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		inicializarJanelaDoRelaorio();
 	}
 
 	/*
@@ -141,21 +115,19 @@ public class ControllerTelaPrincipal {
 		btBuscar.setDisable(false);
 	}
 
-	// Método usado para atualizar label que informa o numero total de passos
-	// que tem a estrura.
-	private void atulizaLbTotalPasso() {
-		if (this.desenhos != null)
-			this.totalDePassos.setText("0" + this.desenhos.size());
-	}
-
-	// Método usado para atualizar a label que informa o número do passo que
-	// está a estrutura.
-	private void atualizaPassoAPasso() {
-		this.passoAtual.setText("0" + (this.indexDesenhos + 1));
-
-		if (this.relatorio != null)
-			// Autliza a lbl informando o que aconterceu nesse passo a passo
-			this.lbInformacaoPassoAPasso
-					.setText(this.relatorio.relatorioSemEsse(RotuloRelatorioAvl.SAIDA).get(this.indexDesenhos));
+	private void inicializarJanelaDoRelaorio() {
+		String caminho = "/br/com/ed2/gui/relatorio/ViewRelatorio.fxml";
+		try {
+			Node bp = FXMLLoader.load(getClass().getResource(caminho));
+			containerDasEstruturas2D.getChildren().clear();
+			containerDasEstruturas2D.getChildren().add(bp);
+			AnchorPane.setTopAnchor(bp, 0.0);
+			AnchorPane.setLeftAnchor(bp, 0.0);
+			AnchorPane.setRightAnchor(bp, 0.0);
+			AnchorPane.setBottomAnchor(bp, 0.0);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

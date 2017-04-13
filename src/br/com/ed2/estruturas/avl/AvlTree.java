@@ -1,13 +1,13 @@
 package br.com.ed2.estruturas.avl;
 
 import br.com.ed2.desenho.arvore.Arvore2D;
-import br.com.ed2.estruturas.InserirDeletarBuscar;
+import br.com.ed2.estruturas.PassoaAPasso;
 import br.com.ed2.estruturas.relatorio.Pagina;
 import br.com.ed2.estruturas.relatorio.Relatorio;
 import br.com.ed2.estruturas.relatorio.RotuloRelatorioAvl;
 import javafx.scene.layout.Pane;
 
-public class AvlTree<Type extends Comparable<? super Type>> implements InserirDeletarBuscar<Type> {
+public class AvlTree<Type extends Comparable<? super Type>> implements PassoaAPasso<Type> {
 	private AvlNode<Type> raiz;
 
 	private Relatorio relatorio;
