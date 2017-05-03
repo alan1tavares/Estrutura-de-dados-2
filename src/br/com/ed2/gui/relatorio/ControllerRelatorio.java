@@ -24,7 +24,7 @@ public class ControllerRelatorio implements Initializable {
 	private Pane paneDesenhoEstrutura;
 
 	// Atributos da "Normais"
-	private int indexPaginaAtual;
+	private static int indexPaginaAtual = 0;
 	public static Relatorio relatorio;
 
 	// Variáveis para teste
@@ -36,13 +36,14 @@ public class ControllerRelatorio implements Initializable {
 	 */
 	public void btProximo() {
 		if (ControllerRelatorio.relatorio != null) {
-			if (this.indexPaginaAtual < ControllerRelatorio.relatorio.totalDePaginas()) {
-				indexPaginaAtual += 1;
-				this.lbRelatorio
-						.setText("" + ControllerRelatorio.relatorio.escolherPagina(this.indexPaginaAtual).getTexto());
-				this.lbPaginaAtual.setText("" + this.indexPaginaAtual);
+			if (ControllerRelatorio.indexPaginaAtual < ControllerRelatorio.relatorio.totalDePaginas()) {
+				ControllerRelatorio.indexPaginaAtual += 1;
+				this.lbRelatorio.setText("" + ControllerRelatorio.relatorio
+						.escolherPagina(ControllerRelatorio.indexPaginaAtual).getTexto());
+				this.lbPaginaAtual.setText("" + ControllerRelatorio.indexPaginaAtual);
 				this.paneDesenhoEstrutura.getChildren().clear();
-				Pane desenho = ControllerRelatorio.relatorio.escolherPagina(this.indexPaginaAtual).getImagem();
+				Pane desenho = ControllerRelatorio.relatorio.escolherPagina(ControllerRelatorio.indexPaginaAtual)
+						.getImagem();
 				this.paneDesenhoEstrutura.getChildren().add(desenho);
 
 			}
@@ -55,13 +56,14 @@ public class ControllerRelatorio implements Initializable {
 	 */
 	public void btAnterior() {
 		if (ControllerRelatorio.relatorio != null) {
-			if (this.indexPaginaAtual > 0) {
+			if (ControllerRelatorio.indexPaginaAtual > 0) {
 				indexPaginaAtual -= 1;
-				this.lbRelatorio
-						.setText("" + ControllerRelatorio.relatorio.escolherPagina(this.indexPaginaAtual).getTexto());
-				this.lbPaginaAtual.setText("" + this.indexPaginaAtual);
+				this.lbRelatorio.setText("" + ControllerRelatorio.relatorio
+						.escolherPagina(ControllerRelatorio.indexPaginaAtual).getTexto());
+				this.lbPaginaAtual.setText("" + ControllerRelatorio.indexPaginaAtual);
 				this.paneDesenhoEstrutura.getChildren().clear();
-				Pane desenho = ControllerRelatorio.relatorio.escolherPagina(this.indexPaginaAtual).getImagem();
+				Pane desenho = ControllerRelatorio.relatorio.escolherPagina(ControllerRelatorio.indexPaginaAtual)
+						.getImagem();
 				this.paneDesenhoEstrutura.getChildren().add(desenho);
 
 			}
@@ -75,15 +77,20 @@ public class ControllerRelatorio implements Initializable {
 		this.lbRelatorio.setText("");
 		if (ControllerRelatorio.relatorio != null) {
 
-			// Atualizar as labels
+			// Atualiza a label que exibe o total de páginas
 			this.lbTotalDePaginas.setText("" + ControllerRelatorio.relatorio.totalDePaginas());
-			this.lbPaginaAtual.setText("0");
 
-			// Mostra a primeira página do relatório
-			this.lbRelatorio.setText(ControllerRelatorio.relatorio.escolherPagina(this.indexPaginaAtual).getTexto());
+			// Atualiza a label que mosta o número da página atual que está
+			// sendo exbida
+			if (ControllerRelatorio.indexPaginaAtual > ControllerRelatorio.relatorio.totalDePaginas())
+				ControllerRelatorio.indexPaginaAtual = ControllerRelatorio.relatorio.totalDePaginas();
+			this.lbPaginaAtual.setText("" + ControllerRelatorio.indexPaginaAtual);
+
+			this.lbRelatorio.setText(
+					ControllerRelatorio.relatorio.escolherPagina(ControllerRelatorio.indexPaginaAtual).getTexto());
 			this.paneDesenhoEstrutura.getChildren().clear();
-			this.paneDesenhoEstrutura.getChildren()
-					.add(ControllerRelatorio.relatorio.escolherPagina(this.indexPaginaAtual).getImagem());
+			this.paneDesenhoEstrutura.getChildren().add(
+					ControllerRelatorio.relatorio.escolherPagina(ControllerRelatorio.indexPaginaAtual).getImagem());
 
 			atualizaAlturaLarguraPaneEstrutura();
 
@@ -97,12 +104,13 @@ public class ControllerRelatorio implements Initializable {
 	public void atualizaJanela() {
 		if (ControllerRelatorio.relatorio != null) {
 			this.lbTotalDePaginas.setText("" + ControllerRelatorio.relatorio.totalDePaginas());
-			this.lbPaginaAtual.setText("0");
+			this.lbPaginaAtual.setText(ControllerRelatorio.indexPaginaAtual + "");
 
-			this.lbRelatorio.setText(ControllerRelatorio.relatorio.escolherPagina(this.indexPaginaAtual).getTexto());
+			this.lbRelatorio.setText(
+					ControllerRelatorio.relatorio.escolherPagina(ControllerRelatorio.indexPaginaAtual).getTexto());
 			this.paneDesenhoEstrutura.getChildren().clear();
-			this.paneDesenhoEstrutura.getChildren()
-					.add(ControllerRelatorio.relatorio.escolherPagina(this.indexPaginaAtual).getImagem());
+			this.paneDesenhoEstrutura.getChildren().add(
+					ControllerRelatorio.relatorio.escolherPagina(ControllerRelatorio.indexPaginaAtual).getImagem());
 		} else {
 			System.out.println("Erro relatorio não foi instanciado");
 		}
@@ -113,11 +121,11 @@ public class ControllerRelatorio implements Initializable {
 	 */
 
 	/**
-	 * Méodo usado para atualizar a altura e largura do Pane que recebe as
+	 * Métsodo usado para atualizar a altura e largura do Pane que recebe as
 	 * estruturas.
 	 */
 	private void atualizaAlturaLarguraPaneEstrutura() {
-		Pane desenho = ControllerRelatorio.relatorio.escolherPagina(this.indexPaginaAtual).getImagem();
+		Pane desenho = ControllerRelatorio.relatorio.escolherPagina(ControllerRelatorio.indexPaginaAtual).getImagem();
 		this.paneDesenhoEstrutura.setPrefSize(desenho.getWidth() * 1.1, desenho.getHeight() * 1.1);
 	}
 }
