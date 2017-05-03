@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="br.com.ed2.gui.principal.ControllerTelaPrincipal">
+<AnchorPane fx:id="conitanerPai" disable="false" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="br.com.ed2.gui.principal.ControllerTelaPrincipal">
   <!-- TODO Add Nodes -->
   <children>
     <BorderPane id="containerDasEstruturas2D" prefHeight="377.0" prefWidth="600.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0">
@@ -93,6 +93,18 @@
     </BorderPane>
     <MenuBar layoutY="0.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
       <menus>
+        <Menu mnemonicParsing="false" text="Arquivo">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Salvar" />
+            <MenuItem mnemonicParsing="false" text="Abrir" />
+            <Menu mnemonicParsing="false" text="Exportar">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#menuExportaPNG" text="PNG" />
+              </items>
+            </Menu>
+            <MenuItem mnemonicParsing="false" text="Sair" />
+          </items>
+        </Menu>
         <Menu mnemonicParsing="false" text="Estruturas">
           <items>
             <MenuItem mnemonicParsing="false" onAction="#menuAvl" text="Avl" />
@@ -110,11 +122,6 @@
               </items>
             </Menu>
             <MenuItem mnemonicParsing="false" text="Hashing Meio Aberta" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="File">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Close" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Edit">

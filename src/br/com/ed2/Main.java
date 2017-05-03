@@ -1,3 +1,4 @@
+package br.com.ed2;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

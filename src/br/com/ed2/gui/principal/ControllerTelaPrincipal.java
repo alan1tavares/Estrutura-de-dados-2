@@ -4,19 +4,25 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import br.com.ed2.Main;
 import br.com.ed2.estruturas.PassoaAPasso;
 import br.com.ed2.estruturas.avl.AvlTree;
 import br.com.ed2.estruturas.relatorio.Relatorio;
+import br.com.ed2.gui.exportar.png.ControllerExportaPng;
 import br.com.ed2.gui.relatorio.ControllerRelatorio;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 /**
  * Classe controller da Tela principal. Tela que irá fazer a maiorias das
@@ -50,9 +56,12 @@ public class ControllerTelaPrincipal implements Initializable {
 	private TextField tfInserir;
 	@FXML
 	private Pane containerDasEstruturas2D;
+	@FXML
+	private Pane conitanerPai;
 
 	private Relatorio relatorio;
 	PassoaAPasso<Integer> estruturaEscolhida;
+	private Node bp;
 
 	/*
 	 * Métodos
@@ -99,6 +108,46 @@ public class ControllerTelaPrincipal implements Initializable {
 		this.estruturaEscolhida = new AvlTree<>(true);
 	}
 
+	// Barra de menu -> Arquivo -> Exporta -> PNG
+	/**
+	 * Chama a janela que ira salvar os passos da estrutura em vários arquivos
+	 * png em uma pasta escolhida. Cada passo será uma imagem
+	 */
+	public void menuExportaPNG() {
+		// Carrega a view
+		FXMLLoader fxmlLoader = new FXMLLoader();
+		fxmlLoader.setLocation(Main.class.getResource("/br/com/ed2/gui/exportar/png/ViewExportaPng.fxml"));
+		try {
+			AnchorPane menuExportaPNG = (AnchorPane) fxmlLoader.load();
+
+			// Cria o palco
+			Stage stage = new Stage();
+			// Cria cena
+			Scene scene = new Scene(menuExportaPNG);
+			stage.setScene(scene);
+			// Impede da jane ser redimensionada
+			stage.setResizable(false);
+			// Desabilito a janela pricipal
+			this.conitanerPai.setDisable(true);
+
+			ControllerExportaPng controllerPNG = fxmlLoader.getController();
+			// controllerPNG.setNode(this.relatorio.escolherPagina(0).getImagem());
+
+			controllerPNG.setNode(this.containerDasEstruturas2D);
+			// Mostra a janela de exportar png e espero ela ser fechada e
+			// retornar para o chamador
+			stage.showAndWait();
+			// Abilito a janela principal
+			this.conitanerPai.setDisable(false);
+			// Carrega o controller da janela
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		inicializarJanelaDoRelaorio();
@@ -118,13 +167,14 @@ public class ControllerTelaPrincipal implements Initializable {
 	private void inicializarJanelaDoRelaorio() {
 		String caminho = "/br/com/ed2/gui/relatorio/ViewRelatorio.fxml";
 		try {
-			Node bp = FXMLLoader.load(getClass().getResource(caminho));
+			bp = FXMLLoader.load(getClass().getResource(caminho));
 			containerDasEstruturas2D.getChildren().clear();
 			containerDasEstruturas2D.getChildren().add(bp);
 			AnchorPane.setTopAnchor(bp, 0.0);
 			AnchorPane.setLeftAnchor(bp, 0.0);
 			AnchorPane.setRightAnchor(bp, 0.0);
 			AnchorPane.setBottomAnchor(bp, 0.0);
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -70,4 +70,8 @@ public class Relatorio {
 		if (o == null)
 			throw new IllegalArgumentException("Objeto passado foi um valo nulo");
 	}
+	
+	public List<Pagina> getPaginas() {
+		return paginas;
+	}
 }

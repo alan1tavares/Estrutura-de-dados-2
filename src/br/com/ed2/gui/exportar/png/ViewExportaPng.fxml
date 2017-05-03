@@ -1,8 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
+<AnchorPane disable="false" padding="$x2" prefHeight="80.0" prefWidth="400.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="br.com.ed2.gui.exportar.png.ControllerExportaPng">
+  <!-- TODO Add Nodes -->
+  <children>
+    <VBox layoutY="5.0" prefHeight="65.0" prefWidth="390.0" spacing="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
+      <children>
+        <HBox prefHeight="28.0" prefWidth="288.0">
+          <children>
+            <TextField id="lblURL" fx:id="tfURL" alignment="BOTTOM_LEFT" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+            <Button alignment="BOTTOM_LEFT" mnemonicParsing="false" onAction="#selecionarPasta" text="Selecionar Pasta" textAlignment="LEFT">
+              <font>
+                <Font size="14.0" fx:id="x1" />
+              </font>
+              <HBox.margin>
+                <Insets left="5.0" />
+              </HBox.margin>
+            </Button>
+          </children>
+        </HBox>
+        <HBox alignment="TOP_LEFT" prefHeight="28.0" prefWidth="390.0" spacing="0.0">
+          <children>
+            <Button font="$x1" mnemonicParsing="false" onAction="#salvarPNGS" text="Salvar como PNG" />
+          </children>
+          <padding>
+            <Insets top="10.0" />
+          </padding>
+        </HBox>
+      </children>
+      <padding>
+        <Insets fx:id="x2" />
+      </padding>
+    </VBox>
+  </children>
 </AnchorPane>
-

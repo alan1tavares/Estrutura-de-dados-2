@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import br.com.ed2.estruturas.relatorio.Relatorio;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
@@ -128,4 +129,5 @@ public class ControllerRelatorio implements Initializable {
 		Pane desenho = ControllerRelatorio.relatorio.escolherPagina(ControllerRelatorio.indexPaginaAtual).getImagem();
 		this.paneDesenhoEstrutura.setPrefSize(desenho.getWidth() * 1.1, desenho.getHeight() * 1.1);
 	}
+
 }
