@@ -104,7 +104,7 @@ public class Arvore2D implements Desenho {
 
 		// Atualiza a coordenada do Nó a ser inserido no eixo Y.
 		largura /= 2;
-		y += largura;
+		y += 50;
 
 		// Verifica qual lado da raiza é pra criar o nó.
 		// Verifica se é do lado esquerdo, se não vai para o direito.

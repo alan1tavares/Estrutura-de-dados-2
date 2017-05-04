@@ -10,15 +10,16 @@ import javax.imageio.ImageIO;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
 import javafx.scene.image.WritableImage;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
+
 
 public class SalvarEstruturaPNG {
-	public void savarComoPNG(Pane node) {
-		if (node != null) {
-			WritableImage snapshot = node.getScene().snapshot(null);
-
-			File file = new File("teste.png");
+	
+	private File file;
+	
+	public void savarComoPNG(Scene scene, File file) {
+		if (scene != null && file != null) {
+			WritableImage snapshot = scene.snapshot(null);
+			this.file = file;
 
 			try {
 				ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", file);
@@ -26,6 +27,7 @@ public class SalvarEstruturaPNG {
 				Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
 				e.printStackTrace();
 			}
-		} else System.out.println("nulo");
+		} else
+			System.out.println("nulo");
 	}
 }

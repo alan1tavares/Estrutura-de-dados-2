@@ -6,8 +6,8 @@ import java.util.ResourceBundle;
 import br.com.ed2.estruturas.relatorio.Relatorio;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
 public class ControllerRelatorio implements Initializable {
@@ -20,9 +20,10 @@ public class ControllerRelatorio implements Initializable {
 	private Label lbPaginaAtual;
 	@FXML
 	private Label lbTotalDePaginas;
-
 	@FXML
 	private Pane paneDesenhoEstrutura;
+	@FXML
+	private BorderPane borderPane;
 
 	// Atributos da "Normais"
 	private static int indexPaginaAtual = 0;
@@ -117,6 +118,24 @@ public class ControllerRelatorio implements Initializable {
 		}
 	}
 
+	/**
+	 * Retorna um border pane que á o nó raiz
+	 * 
+	 * @return BorderPane
+	 */
+	public BorderPane getBorderPane() {
+		return borderPane;
+	}
+
+	/**
+	 * Retorna o pane que está armazenada o desenho da estrutura
+	 * 
+	 * @return Pane
+	 */
+	public Pane getPaneDesenhoEstrutura() {
+		return paneDesenhoEstrutura;
+	}
+
 	/*
 	 * Métodos privados auxiliares
 	 */
@@ -129,5 +148,4 @@ public class ControllerRelatorio implements Initializable {
 		Pane desenho = ControllerRelatorio.relatorio.escolherPagina(ControllerRelatorio.indexPaginaAtual).getImagem();
 		this.paneDesenhoEstrutura.setPrefSize(desenho.getWidth() * 1.1, desenho.getHeight() * 1.1);
 	}
-
 }
