@@ -43,15 +43,18 @@ public class ControllerExportaPng implements Initializable {
 
 		String caminhoView = "/br/com/ed2/gui/relatorio/ViewRelatorio.fxml";
 		try {
+			// Carrega a view do relatória mas não exibe ela
 			FXMLLoader fxmlLoader = new FXMLLoader();
 			fxmlLoader.setLocation(getClass().getResource(caminhoView));
+			// Coloca a view em um pane
 			Pane pane = fxmlLoader.load();
-
+			// controllerRelatorio armazena o controller da view que foi carregada
 			ControllerRelatorio controllerRelatorio = fxmlLoader.getController();
 			double largura = controllerRelatorio.getPaneDesenhoEstrutura().getPrefWidth();
 			double altura = controllerRelatorio.getPaneDesenhoEstrutura().getPrefHeight();
+			// Adiciona a Pane na scene
 			Scene sc = new Scene(pane);
-
+			// configura a alura e lagura
 			pane.setMaxSize(largura+1000, altura+1000);
 			pane.setPrefSize(largura, altura+200);
 
@@ -59,8 +62,9 @@ public class ControllerExportaPng implements Initializable {
 			// tipo
 			// file com esse caminho
 			if (tfURL.getText() != null) {
+				controllerRelatorio.btProximo();
 				this.file = new File(tfURL.getText());
-				new SalvarEstruturaPNG().savarComoPNG(sc, this.file);
+				new SalvarEstruturaPNG().salvarComoPNG(sc, this.file);
 			}
 
 		} catch (IOException e) {

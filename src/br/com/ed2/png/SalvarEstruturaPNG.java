@@ -16,7 +16,7 @@ public class SalvarEstruturaPNG {
 	
 	private File file;
 	
-	public void savarComoPNG(Scene scene, File file) {
+	public void salvarComoPNG(Scene scene, File file) {
 		if (scene != null && file != null) {
 			WritableImage snapshot = scene.snapshot(null);
 			this.file = file;

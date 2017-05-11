@@ -1,16 +1,21 @@
 package br.com.ed2.gui.relatorio;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import br.com.ed2.estruturas.relatorio.Relatorio;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
-public class ControllerRelatorio implements Initializable {
+/**
+ * 
+ * Classe Controller da View relatorio. Ela tem o ojetivo de exibir as paginas
+ * do Relatório. Esse relatório seria o passo a passo de alguma estrutra
+ * específica, os passos seria as páginas.
+ * 
+ * @author Alan Tavares
+ * 
+ */
+public class ControllerRelatorio /* implements Initializable */ {
 
 	// Atributos utilizado na view
 
@@ -26,28 +31,25 @@ public class ControllerRelatorio implements Initializable {
 	private BorderPane borderPane;
 
 	// Atributos da "Normais"
-	private static int indexPaginaAtual = 0;
-	public static Relatorio relatorio;
+	// Indice que indica em qual passo está a View em relação ao que está no
+	// relatório.
+	private int indexPaginaAtual = 0;
+	private Relatorio relatorio;
 
 	// Variáveis para teste
 	// private String entrada = "46 39 22 5 25 36 3 45 1 43 8 28 57 47 10 21 48
 	// 4 53 32";
 
+	// Eventos de Botões da View {
+
 	/**
 	 * Evento do botão que avança para o proximo passo
 	 */
 	public void btProximo() {
-		if (ControllerRelatorio.relatorio != null) {
-			if (ControllerRelatorio.indexPaginaAtual < ControllerRelatorio.relatorio.totalDePaginas()) {
-				ControllerRelatorio.indexPaginaAtual += 1;
-				this.lbRelatorio.setText("" + ControllerRelatorio.relatorio
-						.escolherPagina(ControllerRelatorio.indexPaginaAtual).getTexto());
-				this.lbPaginaAtual.setText("" + ControllerRelatorio.indexPaginaAtual);
-				this.paneDesenhoEstrutura.getChildren().clear();
-				Pane desenho = ControllerRelatorio.relatorio.escolherPagina(ControllerRelatorio.indexPaginaAtual)
-						.getImagem();
-				this.paneDesenhoEstrutura.getChildren().add(desenho);
-
+		if (this.relatorio != null) {
+			if (this.indexPaginaAtual < this.relatorio.totalDePaginas()) {
+				this.indexPaginaAtual += 1;
+				atualizaPagina();
 			}
 			atualizaAlturaLarguraPaneEstrutura();
 		}
@@ -57,62 +59,46 @@ public class ControllerRelatorio implements Initializable {
 	 * Evento do botão que volta para o passo anterior
 	 */
 	public void btAnterior() {
-		if (ControllerRelatorio.relatorio != null) {
-			if (ControllerRelatorio.indexPaginaAtual > 0) {
+		if (this.relatorio != null) {
+			if (this.indexPaginaAtual > 0) {
 				indexPaginaAtual -= 1;
-				this.lbRelatorio.setText("" + ControllerRelatorio.relatorio
-						.escolherPagina(ControllerRelatorio.indexPaginaAtual).getTexto());
-				this.lbPaginaAtual.setText("" + ControllerRelatorio.indexPaginaAtual);
-				this.paneDesenhoEstrutura.getChildren().clear();
-				Pane desenho = ControllerRelatorio.relatorio.escolherPagina(ControllerRelatorio.indexPaginaAtual)
-						.getImagem();
-				this.paneDesenhoEstrutura.getChildren().add(desenho);
+				atualizaPagina();
 
 			}
 			atualizaAlturaLarguraPaneEstrutura();
 		}
 	}
 
-	// Método que será chamado quando a view for inicializada
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		this.lbRelatorio.setText("");
-		if (ControllerRelatorio.relatorio != null) {
+	// } Fim dos eventos de Botões
 
-			// Atualiza a label que exibe o total de páginas
-			this.lbTotalDePaginas.setText("" + ControllerRelatorio.relatorio.totalDePaginas());
-
-			// Atualiza a label que mosta o número da página atual que está
-			// sendo exbida
-			if (ControllerRelatorio.indexPaginaAtual > ControllerRelatorio.relatorio.totalDePaginas())
-				ControllerRelatorio.indexPaginaAtual = ControllerRelatorio.relatorio.totalDePaginas();
-			this.lbPaginaAtual.setText("" + ControllerRelatorio.indexPaginaAtual);
-
-			this.lbRelatorio.setText(
-					ControllerRelatorio.relatorio.escolherPagina(ControllerRelatorio.indexPaginaAtual).getTexto());
-			this.paneDesenhoEstrutura.getChildren().clear();
-			this.paneDesenhoEstrutura.getChildren().add(
-					ControllerRelatorio.relatorio.escolherPagina(ControllerRelatorio.indexPaginaAtual).getImagem());
-
-			atualizaAlturaLarguraPaneEstrutura();
-
+	/**
+	 * Escolhe o passo a ser exibido na view.
+	 * 
+	 * @param i
+	 *            Indicação do passo a ser exibido.
+	 * @return Retorna a pane que possui todos os nós da View
+	 */
+	public Pane escolherPagina(int i) {
+		if (this.relatorio != null) {
+			boolean iValido = i < this.relatorio.totalDePaginas() && i >= 0;
+			if (iValido) {
+				this.indexPaginaAtual = i;
+				atualiza();
+			}
 		}
+		return getBorderPane();
 	}
 
 	/**
-	 * Métudo utilizado para atualizar a janela. Se exisitir um relatorio a
-	 * janela é atualizada para a pimeira página do relatório.
+	 * Método utilizado para atualizar a janela. Se exisitir um relatorio a
+	 * janela é atualizada.
 	 */
-	public void atualizaJanela() {
-		if (ControllerRelatorio.relatorio != null) {
-			this.lbTotalDePaginas.setText("" + ControllerRelatorio.relatorio.totalDePaginas());
-			this.lbPaginaAtual.setText(ControllerRelatorio.indexPaginaAtual + "");
+	public void atualiza() {
+		if (this.relatorio != null) {
 
-			this.lbRelatorio.setText(
-					ControllerRelatorio.relatorio.escolherPagina(ControllerRelatorio.indexPaginaAtual).getTexto());
-			this.paneDesenhoEstrutura.getChildren().clear();
-			this.paneDesenhoEstrutura.getChildren().add(
-					ControllerRelatorio.relatorio.escolherPagina(ControllerRelatorio.indexPaginaAtual).getImagem());
+			atualizaPagina();
+			atualizaAlturaLarguraPaneEstrutura();
+
 		} else {
 			System.out.println("Erro relatorio não foi instanciado");
 		}
@@ -136,16 +122,52 @@ public class ControllerRelatorio implements Initializable {
 		return paneDesenhoEstrutura;
 	}
 
-	/*
-	 * Métodos privados auxiliares
+	/**
+	 * Define o relatorio que será exibido na View
+	 * 
+	 * @param relatorio
+	 *            Objeto relatório que será definido para ser ebido na view
 	 */
+	public void setRelatorio(Relatorio relatorio) {
+		this.relatorio = relatorio;
+		this.indexPaginaAtual = 0;
+		atualiza();
+	}
+
+	// Métodos privados auxiliares
 
 	/**
-	 * Métsodo usado para atualizar a altura e largura do Pane que recebe as
+	 * Atualiza o desenho, a numeração e o texto. A atualização é relizada
+	 * baseda no indexPaginaAtual
+	 */
+	private void atualizaPagina() {
+		// Verifica se o indice atual está dentro dos limites, se não tiver
+		// ecoclhe-se uma página dentro dos limites.
+		boolean indexMaior = this.indexPaginaAtual > this.relatorio.totalDePaginas();
+		boolean indexMenor = this.indexPaginaAtual < 0;
+		if (indexMenor)
+			this.indexPaginaAtual = 0;
+		else if (indexMaior)
+			this.indexPaginaAtual = this.relatorio.totalDePaginas();
+
+		// Atualiza o texto do passo a passo
+		this.lbRelatorio.setText(this.relatorio.escolherPagina(this.indexPaginaAtual).getTexto());
+
+		// Atualiza o desenho
+		this.paneDesenhoEstrutura.getChildren().clear();
+		this.paneDesenhoEstrutura.getChildren().add(this.relatorio.escolherPagina(this.indexPaginaAtual).getImagem());
+
+		// Atualiza o indicador da numeração das páginas
+		this.lbTotalDePaginas.setText(this.relatorio.totalDePaginas() + "");
+		this.lbPaginaAtual.setText(this.indexPaginaAtual + "");
+	}
+
+	/**
+	 * Método usado para atualizar a altura e largura do Pane que recebe as
 	 * estruturas.
 	 */
 	private void atualizaAlturaLarguraPaneEstrutura() {
-		Pane desenho = ControllerRelatorio.relatorio.escolherPagina(ControllerRelatorio.indexPaginaAtual).getImagem();
+		Pane desenho = this.relatorio.escolherPagina(this.indexPaginaAtual).getImagem();
 		this.paneDesenhoEstrutura.setPrefSize(desenho.getWidth() * 1.1, desenho.getHeight() * 1.1);
 	}
 }
