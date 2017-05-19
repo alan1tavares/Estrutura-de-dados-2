@@ -45,17 +45,66 @@ public class Relatorio {
 		inserirPagina(pagina); // Insere a página na lista.
 
 	}
-	
-	public Pagina escolherPagina(int numero){
-		if(this.paginas == null)
+
+	/**
+	 * Retorna uma página a partir da numeração dela.
+	 * 
+	 * @param numero
+	 *            Numeração da página.
+	 * @return Pagina escolhida.
+	 */
+	public Pagina escolherPagina(int numero) {
+		if (this.paginas == null)
 			return null;
-		if(numero <= totalDePaginas())
+		if (numero <= totalDePaginas())
 			return this.paginas.get(numero);
 		return null;
 	}
-	
-	public int totalDePaginas(){
-		return this.paginas.size()-1;
+
+	/**
+	 * Retorna o total de páginas do relatório.
+	 * 
+	 * @return Total de páginas.
+	 */
+	public int totalDePaginas() {
+		return this.paginas.size() - 1;
+	}
+
+	/**
+	 * Retorna todas a páginas do relatório.
+	 * 
+	 * @return Retorna as páginas do relatório.
+	 */
+	public List<Pagina> getPaginas() {
+		return paginas;
+	}
+
+	/**
+	 * Retorna a maior largura da página que está no relatório.
+	 * 
+	 * @return Maior largura da página.
+	 */
+	public double getLarguraMaximaDaPagina() {
+		double largura = 0.0;
+		for (Pagina p : this.paginas) {
+			if (p.getImagem().getWidth() > largura)
+				largura = p.getImagem().getWidth();
+		}
+		return largura;
+	}
+
+	/**
+	 * Retorna a maior altura da página que está no relatório
+	 * 
+	 * @return Maior altura da página.
+	 */
+	public double getAlturaMaximaDaPgina() {
+		double altura = 0.0;
+		for (Pagina p : this.paginas) {
+			if (p.getImagem().getHeight() > altura)
+				altura = p.getImagem().getHeight();
+		}
+		return altura;
 	}
 
 	/*
@@ -69,9 +118,5 @@ public class Relatorio {
 	private void isNull(Object o) {
 		if (o == null)
 			throw new IllegalArgumentException("Objeto passado foi um valo nulo");
-	}
-	
-	public List<Pagina> getPaginas() {
-		return paginas;
 	}
 }

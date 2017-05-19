@@ -2,24 +2,27 @@ package br.com.ed2.gui.exportar.png;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
+import br.com.ed2.estruturas.relatorio.Relatorio;
 import br.com.ed2.gui.relatorio.ControllerRelatorio;
 import br.com.ed2.png.SalvarEstruturaPNG;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-public class ControllerExportaPng implements Initializable {
+/**
+ * Exporta como PNG uma view
+ * 
+ * @author Alan Tavares
+ */
+public class ControllerExportaPng {
 
 	private File file;
-	private Pane node;
+	private Relatorio relatorio;
 
 	@FXML
 	private TextField tfURL;
@@ -41,45 +44,69 @@ public class ControllerExportaPng implements Initializable {
 
 	public void salvarPNGS() {
 
-		String caminhoView = "/br/com/ed2/gui/relatorio/ViewRelatorio.fxml";
+		String caminhoView = "/br/com/ed2/gui/relatorio/ViewRelatorioPNG.fxml";
 		try {
 			// Carrega a view do relatória mas não exibe ela
 			FXMLLoader fxmlLoader = new FXMLLoader();
 			fxmlLoader.setLocation(getClass().getResource(caminhoView));
 			// Coloca a view em um pane
 			Pane pane = fxmlLoader.load();
-			// controllerRelatorio armazena o controller da view que foi carregada
+			// controllerRelatorio armazena o controller da view que foi
+			// carregada
 			ControllerRelatorio controllerRelatorio = fxmlLoader.getController();
-			double largura = controllerRelatorio.getPaneDesenhoEstrutura().getPrefWidth();
-			double altura = controllerRelatorio.getPaneDesenhoEstrutura().getPrefHeight();
+			// Povoa a view do relatorio
+			controllerRelatorio.setRelatorio(this.relatorio);
 			// Adiciona a Pane na scene
 			Scene sc = new Scene(pane);
-			// configura a alura e lagura
-			pane.setMaxSize(largura+1000, altura+1000);
-			pane.setPrefSize(largura, altura+200);
+
+			// TODO
+			controllerRelatorio.setTamanho(this.relatorio.getLarguraMaximaDaPagina(),
+					this.relatorio.getAlturaMaximaDaPgina());
+			System.out.println("Largura -> " + this.relatorio.getLarguraMaximaDaPagina());
+			System.out.println(controllerRelatorio.getBorderPane().getMaxHeight());
 
 			// Se existir algum caminho na lbl, então tente criar o objeto do
-			// tipo
-			// file com esse caminho
+			// tipo file com esse caminho
 			if (tfURL.getText() != null) {
-				controllerRelatorio.btProximo();
-				this.file = new File(tfURL.getText());
-				new SalvarEstruturaPNG().salvarComoPNG(sc, this.file);
+				int i = 0;
+
+				while (i <= relatorio.totalDePaginas()) {
+					controllerRelatorio.escolherPagina(i);
+					this.file = new File(tfURL.getText() + i + ".png");
+					// TODO descomentar depois
+					//escolheTamanhoImagem(pane, controllerRelatorio);
+					new SalvarEstruturaPNG().salvarComoPNG(sc, this.file);
+					i++;
+				}
+				System.out.println("Finish");
 			}
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public void setNode(Pane imagem) {
-		this.node = imagem;
+	/**
+	 * @param pane
+	 * @param controllerRelatorio
+	 */
+	private void escolheTamanhoImagem(Pane pane, ControllerRelatorio controllerRelatorio) {
+		double largura = controllerRelatorio.getPaneDesenhoEstrutura().getPrefWidth();
+		double altura = controllerRelatorio.getPaneDesenhoEstrutura().getPrefHeight();
+		// configura a altura e lagura
+
+		/// pane.setMaxSize(largura + 1000, altura + 1000);
+		// pane.setPrefSize(largura, altura + 200);
+
+		controllerRelatorio.setTamanho(2000, altura + 200);
+
+		// TODO apagar depois
+		System.out.println(toString() + " -> Largura " + largura);
+		System.out.println(toString() + " -> PrefLargura " + controllerRelatorio.getBorderPane().getWidth());
+		System.out.println(toString() + " -> MaxWidth " + pane.getMaxWidth());
 	}
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-
+	public void setRelatorio(Relatorio relatorio) {
+		this.relatorio = relatorio;
 	}
 }

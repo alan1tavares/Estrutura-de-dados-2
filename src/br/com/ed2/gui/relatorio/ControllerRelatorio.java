@@ -3,7 +3,6 @@ package br.com.ed2.gui.relatorio;
 import br.com.ed2.estruturas.relatorio.Relatorio;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
 /**
@@ -15,7 +14,7 @@ import javafx.scene.layout.Pane;
  * @author Alan Tavares
  * 
  */
-public class ControllerRelatorio /* implements Initializable */ {
+public class ControllerRelatorio {
 
 	// Atributos utilizado na view
 
@@ -28,31 +27,32 @@ public class ControllerRelatorio /* implements Initializable */ {
 	@FXML
 	private Pane paneDesenhoEstrutura;
 	@FXML
-	private BorderPane borderPane;
+	private Pane panePai;
 
 	// Atributos da "Normais"
 	// Indice que indica em qual passo está a View em relação ao que está no
 	// relatório.
 	private int indexPaginaAtual = 0;
 	private Relatorio relatorio;
-
-	// Variáveis para teste
-	// private String entrada = "46 39 22 5 25 36 3 45 1 43 8 28 57 47 10 21 48
-	// 4 53 32";
+	// Tamanho da imagem dafault
+	private final int ALTURA = 400;
+	private final int LARGURA = 800;
 
 	// Eventos de Botões da View {
 
 	/**
 	 * Evento do botão que avança para o proximo passo
 	 */
-	public void btProximo() {
+	public boolean btProximo() {
 		if (this.relatorio != null) {
 			if (this.indexPaginaAtual < this.relatorio.totalDePaginas()) {
 				this.indexPaginaAtual += 1;
-				atualizaPagina();
+				atualiza();
+				return true;
 			}
-			atualizaAlturaLarguraPaneEstrutura();
 		}
+		// Chegou ao fim
+		return false;
 	}
 
 	/**
@@ -62,10 +62,8 @@ public class ControllerRelatorio /* implements Initializable */ {
 		if (this.relatorio != null) {
 			if (this.indexPaginaAtual > 0) {
 				indexPaginaAtual -= 1;
-				atualizaPagina();
-
+				atualiza();
 			}
-			atualizaAlturaLarguraPaneEstrutura();
 		}
 	}
 
@@ -80,7 +78,7 @@ public class ControllerRelatorio /* implements Initializable */ {
 	 */
 	public Pane escolherPagina(int i) {
 		if (this.relatorio != null) {
-			boolean iValido = i < this.relatorio.totalDePaginas() && i >= 0;
+			boolean iValido = i <= this.relatorio.totalDePaginas() && i >= 0;
 			if (iValido) {
 				this.indexPaginaAtual = i;
 				atualiza();
@@ -109,8 +107,8 @@ public class ControllerRelatorio /* implements Initializable */ {
 	 * 
 	 * @return BorderPane
 	 */
-	public BorderPane getBorderPane() {
-		return borderPane;
+	public Pane getBorderPane() {
+		return panePai;
 	}
 
 	/**
@@ -155,11 +153,22 @@ public class ControllerRelatorio /* implements Initializable */ {
 
 		// Atualiza o desenho
 		this.paneDesenhoEstrutura.getChildren().clear();
+		// Adiciona a imagem daquele pane
 		this.paneDesenhoEstrutura.getChildren().add(this.relatorio.escolherPagina(this.indexPaginaAtual).getImagem());
 
 		// Atualiza o indicador da numeração das páginas
 		this.lbTotalDePaginas.setText(this.relatorio.totalDePaginas() + "");
 		this.lbPaginaAtual.setText(this.indexPaginaAtual + "");
+	}
+	
+	/**
+	 * 
+	 * @param alltura
+	 * @param largura
+	 */
+	public void setTamanho(double largura, double altura){
+		this.panePai.setPrefSize(largura, altura);
+		System.out.println(toString()+"-> largura "+this.panePai.getWidth());
 	}
 
 	/**
@@ -168,6 +177,14 @@ public class ControllerRelatorio /* implements Initializable */ {
 	 */
 	private void atualizaAlturaLarguraPaneEstrutura() {
 		Pane desenho = this.relatorio.escolherPagina(this.indexPaginaAtual).getImagem();
+		/*
+		 * if (desenho.getWidth() >= LARGURA || desenho.getHeight() >= ALTURA)
+		 */
 		this.paneDesenhoEstrutura.setPrefSize(desenho.getWidth() * 1.1, desenho.getHeight() * 1.1);
+
+		/*
+		 * else this.paneDesenhoEstrutura.setPrefSize(LARGURA * 1.1, ALTURA *
+		 * 1.1);
+		 */
 	}
 }

@@ -372,7 +372,7 @@ public class AvlTree<Type extends Comparable<? super Type>> implements PassoaAPa
 	private void colocaNoRelatorio(String str, int altura) {
 		// Monta o desenho da árvore e coloca em um Pane
 		Arvore2D arvore2D = new Arvore2D();
-		Pane desenho = arvore2D.arvorePreOrdem(preOrdem(), altura, 20);
+		Pane desenho = arvore2D.arvorePreOrdem(preOrdem(), altura, 14);
 		// --------------
 		this.relatorio.inserirPagina(new Pagina(str, desenho));
 	}

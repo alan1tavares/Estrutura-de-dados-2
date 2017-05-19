@@ -62,10 +62,10 @@ public class ControllerTelaPrincipal implements Initializable {
 	private Relatorio relatorio;
 	PassoaAPasso<Integer> estruturaEscolhida;
 	private Node bp;
+	// Onde vai ser carregado a view do relatorio
+	private FXMLLoader fxmlLoaderRelatorio;
 
-	/*
-	 * Métodos
-	 */
+	// Eventos de botões
 
 	public void botaoInserir() {
 		// Verifica se existe valores para serem inseridos
@@ -82,8 +82,9 @@ public class ControllerTelaPrincipal implements Initializable {
 				// }
 
 			this.relatorio = this.estruturaEscolhida.getRelatorio();
-			ControllerRelatorio.relatorio = this.relatorio;
 			inicializarJanelaDoRelaorio();
+			ControllerRelatorio controller = fxmlLoaderRelatorio.getController();
+			controller.setRelatorio(this.relatorio);
 
 		}
 
@@ -129,9 +130,10 @@ public class ControllerTelaPrincipal implements Initializable {
 			stage.setResizable(false);
 			// Desabilito a janela pricipal
 			this.conitanerPai.setDisable(true);
-
+			// Pega o controller
 			ControllerExportaPng controllerPNG = fxmlLoader.getController();
-			
+			// 
+			controllerPNG.setRelatorio(relatorio);
 			// Mostra a janela de exportar png e espero ela ser fechada e
 			// retornar para o chamador
 			stage.showAndWait();
@@ -152,7 +154,7 @@ public class ControllerTelaPrincipal implements Initializable {
 	}
 
 	/*
-	 * Métodos auxiliakres
+	 * Métodos auxiliares
 	 */
 
 	// Método usado para ativar os botões de inserir, deletar e buscar.
@@ -163,9 +165,13 @@ public class ControllerTelaPrincipal implements Initializable {
 	}
 
 	private void inicializarJanelaDoRelaorio() {
+		// Caminho da view
 		String caminho = "/br/com/ed2/gui/relatorio/ViewRelatorio.fxml";
+		// Carrega a view
+		this.fxmlLoaderRelatorio = new FXMLLoader(getClass().getResource(caminho));
+		
 		try {
-			bp = FXMLLoader.load(getClass().getResource(caminho));
+			bp = this.fxmlLoaderRelatorio.load();
 			containerDasEstruturas2D.getChildren().clear();
 			containerDasEstruturas2D.getChildren().add(bp);
 			AnchorPane.setTopAnchor(bp, 0.0);

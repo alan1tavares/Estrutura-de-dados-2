@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" fx:id="panePai" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="br.com.ed2.gui.relatorio.ControllerRelatorio">
+  <children>
+    <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <children>
+        <Label fx:id="lbRelatorio" text="Label">
+          <font>
+            <Font size="18.0" />
+          </font>
+          <VBox.margin>
+            <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+          </VBox.margin>
+        </Label>
+        <AnchorPane fx:id="paneDesenhoEstrutura" prefHeight="360.0" prefWidth="600.0" style="-fx-background-color: ghostwhite ;" VBox.vgrow="ALWAYS">
+          <padding>
+            <Insets />
+          </padding>
+          <VBox.margin>
+            <Insets bottom="5.0" top="5.0" />
+          </VBox.margin>
+        </AnchorPane>
+        <HBox alignment="CENTER" prefHeight="-1.0" prefWidth="-1.0">
+          <children>
+            <Label fx:id="lbPaginaAtual" text="00">
+              <font>
+                <Font size="14.0" fx:id="x1" />
+              </font>
+            </Label>
+            <Label font="$x1" text=" / " />
+            <Label fx:id="lbTotalDePaginas" font="$x1" text="00" />
+          </children>
+          <VBox.margin>
+            <Insets bottom="10.0" />
+          </VBox.margin>
+        </HBox>
+      </children>
+    </VBox>
+  </children>
+</AnchorPane>

@@ -49,5 +49,4 @@ public class Pagina {
 	public String getTexto() {
 		return texto;
 	}
-
 }
