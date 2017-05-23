@@ -1,10 +1,10 @@
-package br.com.ed2.estruturas.avl;
+package br.com.ed2.estruturas.arvore;
 
 import br.com.ed2.desenho.arvore.Arvore2D;
 import br.com.ed2.estruturas.PassoaAPasso;
 import br.com.ed2.estruturas.relatorio.Pagina;
 import br.com.ed2.estruturas.relatorio.Relatorio;
-import br.com.ed2.estruturas.relatorio.RotuloRelatorioAvl;
+import br.com.ed2.estruturas.relatorio.RotuloRelatorioArvore;
 import javafx.scene.layout.Pane;
 
 public class AvlTree<Type extends Comparable<? super Type>> implements PassoaAPasso<Type> {
@@ -40,12 +40,11 @@ public class AvlTree<Type extends Comparable<? super Type>> implements PassoaAPa
 	public void inserir(Type elemento) {
 
 		// String para colocar no relatório
-		this.auxStrRelatorio = RotuloRelatorioAvl.ENTRADA + elemento + RotuloRelatorioAvl.FINAL_TEXTO;
-
+		this.auxStrRelatorio = RotuloRelatorioArvore.ENTRADA + elemento + RotuloRelatorioArvore.FINAL_TEXTO;
+		//-
 		this.raiz = inserir(elemento, raiz); // Tenta inseirir o elemento na
 
 		if (this.relatorio != null)
-
 			colocaNoRelatorio(auxStrRelatorio);
 	}
 
@@ -126,7 +125,7 @@ public class AvlTree<Type extends Comparable<? super Type>> implements PassoaAPa
 			// Mostra o tipo de rotação que deverá fazer.
 			String str = "Efetuar Rotação dupla direita involvendo os elementos, " + k3.elemento + " "
 					+ k3.filhoDireto.elemento + " " + k3.filhoDireto.filhoEsquerdo.elemento
-					+ RotuloRelatorioAvl.FINAL_TEXTO;
+					+ RotuloRelatorioArvore.FINAL_TEXTO;
 			colocaNoRelatorio(str, this.raiz.altura + 2);
 		}
 
@@ -162,10 +161,10 @@ public class AvlTree<Type extends Comparable<? super Type>> implements PassoaAPa
 
 			// Coloca no relatório essa página.
 			// Mostra o tipo de rotação que deverá fazer.
-			String str = RotuloRelatorioAvl.ARVORE_DESBALANCEADA
+			String str = RotuloRelatorioArvore.ARVORE_DESBALANCEADA
 					+ "Efetuar Rotação dupla esquerda involvendo nos elementos, " + k3.elemento + " "
 					+ k3.filhoEsquerdo.elemento + " " + k3.filhoEsquerdo.filhoDireto.elemento
-					+ RotuloRelatorioAvl.FINAL_TEXTO;
+					+ RotuloRelatorioArvore.FINAL_TEXTO;
 			colocaNoRelatorio(str, raiz.altura + 2);
 		}
 
@@ -203,9 +202,9 @@ public class AvlTree<Type extends Comparable<? super Type>> implements PassoaAPa
 
 			// Coloca no relatório essa página.
 			// Mostra o tipo de rotação que deverá fazer
-			String str = RotuloRelatorioAvl.ARVORE_DESBALANCEADA
+			String str = RotuloRelatorioArvore.ARVORE_DESBALANCEADA
 					+ "Efetuar Rotação simples direita involvendo os elementos, " + k2.elemento + " "
-					+ k2.filhoDireto.elemento + RotuloRelatorioAvl.FINAL_TEXTO;
+					+ k2.filhoDireto.elemento + RotuloRelatorioArvore.FINAL_TEXTO;
 			colocaNoRelatorio(str, raiz.altura + 2);
 		}
 
@@ -236,9 +235,9 @@ public class AvlTree<Type extends Comparable<? super Type>> implements PassoaAPa
 
 			// Coloca no relatório essa página.
 			// Mostra o tipo de rotação que deverá fazer
-			String str = RotuloRelatorioAvl.ARVORE_DESBALANCEADA
+			String str = RotuloRelatorioArvore.ARVORE_DESBALANCEADA
 					+ "Efetuar Rotação simples esqueda involvendo os elementos: " + k2.elemento + " "
-					+ k2.filhoEsquerdo.elemento + RotuloRelatorioAvl.FINAL_TEXTO;
+					+ k2.filhoEsquerdo.elemento + RotuloRelatorioArvore.FINAL_TEXTO;
 			colocaNoRelatorio(str, this.raiz.altura + 2);
 
 		}
@@ -396,7 +395,7 @@ public class AvlTree<Type extends Comparable<? super Type>> implements PassoaAPa
 	 *            elemento onde a árvore está desbalanceada.
 	 */
 	private void colocaNoRelatoioQueAArvoreEstaDesbalanceadaNo(AvlNode<Type> k3) {
-		this.auxStrRelatorio += "\n" + RotuloRelatorioAvl.ARVORE_DESBALANCEADA + "no " + k3.elemento;
+		this.auxStrRelatorio += "\n" + RotuloRelatorioArvore.ARVORE_DESBALANCEADA + "no " + k3.elemento;
 		colocaNoRelatorio(this.auxStrRelatorio, raiz.altura + 2);
 	}
 }

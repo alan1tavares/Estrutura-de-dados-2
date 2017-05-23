@@ -1,6 +1,6 @@
 package br.com.ed2.estruturas.relatorio;
 
-public final class RotuloRelatorioAvl {
+public final class RotuloRelatorioArvore {
 	public static final String ENTRADA = "Inserido: "; // 
 	public static final String SAIDA = "Saida: ";
 	public static final String ALTURA = "Altura: ";

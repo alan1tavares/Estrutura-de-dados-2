@@ -1,4 +1,4 @@
-package br.com.ed2.estruturas.avl;
+package br.com.ed2.estruturas.arvore;
 
 import java.util.ArrayList;
 

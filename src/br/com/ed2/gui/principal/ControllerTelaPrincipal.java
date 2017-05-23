@@ -6,7 +6,8 @@ import java.util.ResourceBundle;
 
 import br.com.ed2.Main;
 import br.com.ed2.estruturas.PassoaAPasso;
-import br.com.ed2.estruturas.avl.AvlTree;
+import br.com.ed2.estruturas.arvore.AvlTree;
+import br.com.ed2.estruturas.arvore.SplayTree;
 import br.com.ed2.estruturas.relatorio.Relatorio;
 import br.com.ed2.gui.exportar.png.ControllerExportaPng;
 import br.com.ed2.gui.relatorio.ControllerRelatorio;
@@ -107,6 +108,15 @@ public class ControllerTelaPrincipal implements Initializable {
 		// Incializa variáveis
 		// Cria o modelo de árvore
 		this.estruturaEscolhida = new AvlTree<>(true);
+	}
+	
+	public void menuSplay(){
+		ativarBotoes();
+		textoTitulo.setText("Splay");
+
+		// Incializa variáveis
+		// Cria o modelo de árvore
+		this.estruturaEscolhida = new SplayTree<>(true);
 	}
 
 	// Barra de menu -> Arquivo -> Exporta -> PNG

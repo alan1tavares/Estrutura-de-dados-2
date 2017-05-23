@@ -1,4 +1,4 @@
-package br.com.ed2.estruturas.avl;
+package br.com.ed2.estruturas.arvore;
 
 public class TestaAvl {
 

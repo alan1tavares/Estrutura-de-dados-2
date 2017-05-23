@@ -108,6 +108,7 @@
         <Menu mnemonicParsing="false" text="Estruturas">
           <items>
             <MenuItem mnemonicParsing="false" onAction="#menuAvl" text="Avl" />
+            <MenuItem mnemonicParsing="false" onAction="#menuSplay" text="Splay" />
             <Menu mnemonicParsing="false" text="Hashing Aberta">
               <items>
                 <MenuItem mnemonicParsing="false" text="Lista" />
