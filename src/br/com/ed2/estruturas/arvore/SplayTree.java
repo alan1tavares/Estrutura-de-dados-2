@@ -41,8 +41,8 @@ public class SplayTree<Type extends Comparable<? super Type>> implements PassoaA
 			t.filhoEsquerdo = inserir(elemento, t.filhoEsquerdo);
 		else if (resultadoComparado > 0)
 			t.filhoDireto = inserir(elemento, t.filhoDireto);
-		// else
-		// TODO os elementos são iguais
+		else
+			this.auxStrRelatorio += "\nElemento ja existe na Árvore";
 
 		t.altura = Math.max(AvlTree.alturaDo(t.filhoEsquerdo), AvlTree.alturaDo(t.filhoDireto)) + 1;
 		return t;
@@ -57,8 +57,63 @@ public class SplayTree<Type extends Comparable<? super Type>> implements PassoaA
 
 	@Override
 	public void buscar(Type elemento) {
-		// TODO Auto-generated method stub
+		this.raiz = buscar(elemento, raiz);
+		
+	}
 
+	private AvlNode<Type> buscar(Type elemento, AvlNode<Type> t) {
+		if(t == null || t.elemento == elemento)
+			return t;
+		
+		// Pecorre até achar o elemento
+		if(elemento.compareTo(t.elemento) < 0)
+			t.filhoEsquerdo = buscar(elemento, t.filhoEsquerdo);
+		else
+			t.filhoDireto = buscar(elemento, t.filhoDireto);
+		
+		if(t.filhoEsquerdo != null && t.filhoEsquerdo.altura == 2){
+			AvlNode<Type> filhoEsquerdo = t.filhoEsquerdo;
+			if(filhoEsquerdo.filhoEsquerdo != null && filhoEsquerdo.filhoEsquerdo.elemento == elemento)
+				return zig_zig(t);
+			if(filhoEsquerdo.filhoDireto != null && filhoEsquerdo.filhoDireto.elemento == elemento)
+				return zag_zig(t);
+		}
+		
+		if(t.filhoDireto != null && t.filhoDireto.altura == 2){
+			AvlNode<Type> filhoDireito = t.filhoDireto;
+			if(filhoDireito.filhoDireto != null && filhoDireito.filhoDireto.elemento == elemento)
+				return zag_zag(t);
+			if(filhoDireito.filhoEsquerdo != null && filhoDireito.filhoEsquerdo.elemento == elemento)
+				return zig_zag(t);
+		}
+		
+		return t;
+	}
+
+	private AvlNode<Type> zag_zag(AvlNode<Type> t) {
+		AvlNode<Type> x = t;
+		AvlNode<Type> y = t.filhoDireto;
+		AvlNode<Type> z = t.filhoDireto.filhoDireto;
+		// Faz a rotação
+		x.filhoDireto = y.filhoEsquerdo;
+		y.filhoEsquerdo = x;
+		y.filhoDireto = z.filhoEsquerdo;
+		z.filhoEsquerdo = y;		
+		
+		return z;
+	}
+
+	private AvlNode<Type> zig_zig(AvlNode<Type> t) {
+		AvlNode<Type> z = t;
+		AvlNode<Type> y = t.filhoEsquerdo;
+		AvlNode<Type> x = t.filhoEsquerdo.filhoEsquerdo;
+		// Faz a rotação
+		z.filhoEsquerdo = y.filhoDireto;
+		y.filhoDireto = z;
+		y.filhoEsquerdo = x.filhoDireto;
+		x.filhoDireto = y;
+		
+		return x;
 	}
 
 	@Override
