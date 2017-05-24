@@ -15,9 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -56,6 +54,8 @@ public class ControllerTelaPrincipal implements Initializable {
 	@FXML
 	private TextField tfInserir;
 	@FXML
+	private TextField tfBuscar;
+	@FXML
 	private Pane containerDasEstruturas2D;
 	@FXML
 	private Pane conitanerPai;
@@ -91,6 +91,20 @@ public class ControllerTelaPrincipal implements Initializable {
 
 	}
 
+	public void botaoBuscar() {
+		// Verifica se existe valores para serem inseridos
+		if (tfBuscar.getText() != null) {
+			String string = tfBuscar.getText();
+			int valor = Integer.parseInt(string);
+			this.estruturaEscolhida.buscar(valor);
+
+			this.relatorio = this.estruturaEscolhida.getRelatorio();
+			inicializarJanelaDoRelaorio();
+			ControllerRelatorio controller = fxmlLoaderRelatorio.getController();
+			controller.setRelatorio(this.relatorio);
+		}
+	}
+
 	/*
 	 * Eventos do barra de menu
 	 */
@@ -109,8 +123,8 @@ public class ControllerTelaPrincipal implements Initializable {
 		// Cria o modelo de árvore
 		this.estruturaEscolhida = new AvlTree<>(true);
 	}
-	
-	public void menuSplay(){
+
+	public void menuSplay() {
 		ativarBotoes();
 		textoTitulo.setText("Splay");
 
@@ -142,7 +156,7 @@ public class ControllerTelaPrincipal implements Initializable {
 			this.conitanerPai.setDisable(true);
 			// Pega o controller
 			ControllerExportaPng controllerPNG = fxmlLoader.getController();
-			// 
+			//
 			controllerPNG.setRelatorio(relatorio);
 			// Mostra a janela de exportar png e espero ela ser fechada e
 			// retornar para o chamador
@@ -179,7 +193,7 @@ public class ControllerTelaPrincipal implements Initializable {
 		String caminho = "/br/com/ed2/gui/relatorio/ViewRelatorio.fxml";
 		// Carrega a view
 		this.fxmlLoaderRelatorio = new FXMLLoader(getClass().getResource(caminho));
-		
+
 		try {
 			bp = this.fxmlLoaderRelatorio.load();
 			containerDasEstruturas2D.getChildren().clear();

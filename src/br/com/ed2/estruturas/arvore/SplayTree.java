@@ -55,39 +55,143 @@ public class SplayTree<Type extends Comparable<? super Type>> implements PassoaA
 
 	}
 
+	private boolean achou = false;
+
 	@Override
 	public void buscar(Type elemento) {
 		this.raiz = buscar(elemento, raiz);
-		
+
+		if (this.raiz != null && this.raiz != elemento) {
+			if (this.raiz.filhoEsquerdo.elemento == elemento) {
+				// Relatorio
+				String str = "Efetuar zig nos elementos " + raiz.elemento.toString() + " "
+						+ raiz.filhoEsquerdo.elemento.toString();
+				colocaNoRelatorio(str, this.raiz.altura + 1);
+				
+				this.raiz = zig(this.raiz);
+			} else if (this.raiz.filhoDireto.elemento == elemento) {
+				// Relatorio
+				String str = "Efetuar zag nos elementos " + raiz.elemento.toString() + " "
+						+ raiz.filhoDireto.elemento.toString();
+				colocaNoRelatorio(str, this.raiz.altura + 1);
+				
+				this.raiz = zag(raiz);
+			}
+		}
+		colocaNoRelatorio("Busca");
 	}
 
 	private AvlNode<Type> buscar(Type elemento, AvlNode<Type> t) {
-		if(t == null || t.elemento == elemento)
+		if (t == null || t.elemento == elemento) {
+			achou = true;
 			return t;
-		
+		}
 		// Pecorre até achar o elemento
-		if(elemento.compareTo(t.elemento) < 0)
+		if (elemento.compareTo(t.elemento) < 0) {
 			t.filhoEsquerdo = buscar(elemento, t.filhoEsquerdo);
-		else
+		} else {
 			t.filhoDireto = buscar(elemento, t.filhoDireto);
-		
-		if(t.filhoEsquerdo != null && t.filhoEsquerdo.altura == 2){
+		}
+
+		if (t.filhoEsquerdo != null && t.altura >= 2) {
 			AvlNode<Type> filhoEsquerdo = t.filhoEsquerdo;
-			if(filhoEsquerdo.filhoEsquerdo != null && filhoEsquerdo.filhoEsquerdo.elemento == elemento)
+			if (filhoEsquerdo.filhoEsquerdo != null && filhoEsquerdo.filhoEsquerdo.elemento == elemento) {
+				// Relatorio
+				if (achou == true) {
+					String str = "Efetuar zig-zig nos elementos " + t.elemento.toString() + " "
+							+ filhoEsquerdo.elemento.toString() + " " + filhoEsquerdo.filhoEsquerdo.elemento.toString();
+					colocaNoRelatorio(str, this.raiz.altura + 1);
+				}
 				return zig_zig(t);
-			if(filhoEsquerdo.filhoDireto != null && filhoEsquerdo.filhoDireto.elemento == elemento)
+			}
+			if (filhoEsquerdo.filhoDireto != null && filhoEsquerdo.filhoDireto.elemento == elemento) {
+				// Relatorio
+				if (achou == true) {
+					String str = "Efetuar zag-zig nos elementos " + t.elemento.toString() + " "
+							+ filhoEsquerdo.elemento.toString() + " " + filhoEsquerdo.filhoDireto.elemento.toString();
+					colocaNoRelatorio(str, this.raiz.altura + 1);
+				}
 				return zag_zig(t);
+			}
 		}
-		
-		if(t.filhoDireto != null && t.filhoDireto.altura == 2){
+
+		if (t.filhoDireto != null && t.altura >= 2) {
 			AvlNode<Type> filhoDireito = t.filhoDireto;
-			if(filhoDireito.filhoDireto != null && filhoDireito.filhoDireto.elemento == elemento)
+			if (filhoDireito.filhoDireto != null && filhoDireito.filhoDireto.elemento == elemento) {
+				// Relatorio
+				if (achou == true) {
+					String str = "Efetuar zag-zag nos elementos " + t.elemento.toString() + " "
+							+ filhoDireito.elemento.toString() + " " + filhoDireito.filhoDireto.elemento.toString();
+					colocaNoRelatorio(str, this.raiz.altura + 1);
+				}
 				return zag_zag(t);
-			if(filhoDireito.filhoEsquerdo != null && filhoDireito.filhoEsquerdo.elemento == elemento)
+			}
+			if (filhoDireito.filhoEsquerdo != null && filhoDireito.filhoEsquerdo.elemento == elemento) {
+				// Relatorio
+				if (achou == true) {
+					String str = "Efetuar zig-zag nos elementos " + t.elemento.toString() + " "
+							+ filhoDireito.elemento.toString() + " " + filhoDireito.filhoEsquerdo.elemento.toString();
+					colocaNoRelatorio(str, this.raiz.altura + 1);
+				}
 				return zig_zag(t);
+			}
 		}
-		
+
 		return t;
+	}
+
+	private AvlNode<Type> zag(AvlNode<Type> t) {
+		AvlNode<Type> x = t;
+		AvlNode<Type> y = t.filhoDireto;
+		// Rotação
+		x.filhoDireto = y.filhoEsquerdo;
+		y.filhoEsquerdo = x;
+
+		atualizaAltura1Nivel(y, x);
+
+		return y;
+	}
+
+	private AvlNode<Type> zig(AvlNode<Type> t) {
+		AvlNode<Type> y = t;
+		AvlNode<Type> x = t.filhoEsquerdo;
+		// Rotação
+		y.filhoEsquerdo = x.filhoDireto;
+		x.filhoDireto = y;
+
+		atualizaAltura1Nivel(y, x);
+
+		return x;
+	}
+
+	private AvlNode<Type> zig_zag(AvlNode<Type> t) {
+		AvlNode<Type> x = t;
+		AvlNode<Type> z = t.filhoDireto;
+		AvlNode<Type> y = t.filhoDireto.filhoEsquerdo;
+		// Rotação
+		x.filhoDireto = y.filhoEsquerdo;
+		z.filhoEsquerdo = y.filhoDireto;
+		y.filhoEsquerdo = x;
+		y.filhoDireto = z;
+
+		atualizaAltura2Niveis(z, y, x);
+
+		return y;
+	}
+
+	private AvlNode<Type> zag_zig(AvlNode<Type> t) {
+		AvlNode<Type> z = t;
+		AvlNode<Type> x = t.filhoEsquerdo;
+		AvlNode<Type> y = t.filhoEsquerdo.filhoDireto;
+		// Rotação
+		x.filhoDireto = y.filhoEsquerdo;
+		z.filhoEsquerdo = y.filhoDireto;
+		y.filhoEsquerdo = x;
+		y.filhoDireto = z;
+
+		atualizaAltura2Niveis(z, y, x);
+
+		return y;
 	}
 
 	private AvlNode<Type> zag_zag(AvlNode<Type> t) {
@@ -98,8 +202,10 @@ public class SplayTree<Type extends Comparable<? super Type>> implements PassoaA
 		x.filhoDireto = y.filhoEsquerdo;
 		y.filhoEsquerdo = x;
 		y.filhoDireto = z.filhoEsquerdo;
-		z.filhoEsquerdo = y;		
-		
+		z.filhoEsquerdo = y;
+
+		atualizaAltura2Niveis(z, y, x);
+
 		return z;
 	}
 
@@ -112,8 +218,29 @@ public class SplayTree<Type extends Comparable<? super Type>> implements PassoaA
 		y.filhoDireto = z;
 		y.filhoEsquerdo = x.filhoDireto;
 		x.filhoDireto = y;
-		
+
+		atualizaAltura2Niveis(z, y, x);
+
 		return x;
+	}
+
+	/**
+	 * @param z
+	 * @param y
+	 * @param x
+	 */
+	private void atualizaAltura2Niveis(AvlNode<Type> z, AvlNode<Type> y, AvlNode<Type> x) {
+		atualizaAltura1Nivel(y, x);
+		z.altura = Math.max(AvlTree.alturaDo(z.filhoEsquerdo), AvlTree.alturaDo(z.filhoDireto)) + 1;
+	}
+
+	/**
+	 * @param y
+	 * @param x
+	 */
+	private void atualizaAltura1Nivel(AvlNode<Type> y, AvlNode<Type> x) {
+		x.altura = Math.max(AvlTree.alturaDo(x.filhoEsquerdo), AvlTree.alturaDo(x.filhoDireto)) + 1;
+		y.altura = Math.max(AvlTree.alturaDo(y.filhoEsquerdo), AvlTree.alturaDo(y.filhoDireto)) + 1;
 	}
 
 	@Override

@@ -70,8 +70,8 @@
                         <Insets left="5.0" />
                       </HBox.margin>
                     </Label>
-                    <TextField alignment="TOP_LEFT" prefHeight="25.0" prefWidth="168.0" HBox.hgrow="ALWAYS" HBox.margin="$x2" />
-                    <Button id="buscar" fx:id="btBuscar" disable="true" font="$x4" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="Buscar" HBox.margin="$x3" />
+                    <TextField fx:id="tfBuscar" alignment="TOP_LEFT" prefHeight="25.0" prefWidth="168.0" HBox.hgrow="ALWAYS" HBox.margin="$x2" />
+                    <Button id="buscar" fx:id="btBuscar" disable="true" font="$x4" mnemonicParsing="false" onAction="#botaoBuscar" prefHeight="25.0" prefWidth="69.0" text="Buscar" HBox.margin="$x3" />
                   </children>
                 </HBox>
               </children>
