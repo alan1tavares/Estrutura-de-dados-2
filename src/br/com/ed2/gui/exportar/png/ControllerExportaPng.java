@@ -63,7 +63,7 @@ public class ControllerExportaPng {
 			controllerRelatorio.setTamanho(this.relatorio.getLarguraMaximaDaPagina(),
 					this.relatorio.getAlturaMaximaDaPgina());
 			System.out.println("Largura -> " + this.relatorio.getLarguraMaximaDaPagina());
-			System.out.println(controllerRelatorio.getBorderPane().getMaxHeight());
+			System.out.println(controllerRelatorio.getBorderPane().getMaxHeight()+100);
 
 			// Se existir algum caminho na lbl, então tente criar o objeto do
 			// tipo file com esse caminho

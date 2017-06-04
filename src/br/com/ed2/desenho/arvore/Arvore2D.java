@@ -103,7 +103,7 @@ public class Arvore2D implements Desenho {
 		int comecoDaLinhaY = y + this.raioDasFolhas * 2;
 
 		// Atualiza a coordenada do Nó a ser inserido no eixo Y.
-		largura /= 2;
+		largura /= 10;
 		y += 50;
 
 		// Verifica qual lado da raiza é pra criar o nó.

@@ -123,7 +123,7 @@ public class AvlTree<Type extends Comparable<? super Type>> implements PassoaAPa
 
 			// Coloca no relatório essa página.
 			// Mostra o tipo de rotação que deverá fazer.
-			String str = "Efetuar Rotação dupla direita involvendo os elementos, " + k3.elemento + " "
+			String str = "Efetuar Rotação dupla direita envolvendo os elementos, " + k3.elemento + " "
 					+ k3.filhoDireto.elemento + " " + k3.filhoDireto.filhoEsquerdo.elemento
 					+ RotuloRelatorioArvore.FINAL_TEXTO;
 			colocaNoRelatorio(str, this.raiz.altura + 2);
@@ -162,7 +162,7 @@ public class AvlTree<Type extends Comparable<? super Type>> implements PassoaAPa
 			// Coloca no relatório essa página.
 			// Mostra o tipo de rotação que deverá fazer.
 			String str = RotuloRelatorioArvore.ARVORE_DESBALANCEADA
-					+ "Efetuar Rotação dupla esquerda involvendo nos elementos, " + k3.elemento + " "
+					+ "Efetuar Rotação dupla esquerda envolvendo nos elementos, " + k3.elemento + " "
 					+ k3.filhoEsquerdo.elemento + " " + k3.filhoEsquerdo.filhoDireto.elemento
 					+ RotuloRelatorioArvore.FINAL_TEXTO;
 			colocaNoRelatorio(str, raiz.altura + 2);
@@ -203,7 +203,7 @@ public class AvlTree<Type extends Comparable<? super Type>> implements PassoaAPa
 			// Coloca no relatório essa página.
 			// Mostra o tipo de rotação que deverá fazer
 			String str = RotuloRelatorioArvore.ARVORE_DESBALANCEADA
-					+ "Efetuar Rotação simples direita involvendo os elementos, " + k2.elemento + " "
+					+ "Efetuar Rotação simples direita envolvendo os elementos, " + k2.elemento + " "
 					+ k2.filhoDireto.elemento + RotuloRelatorioArvore.FINAL_TEXTO;
 			colocaNoRelatorio(str, raiz.altura + 2);
 		}
@@ -236,7 +236,7 @@ public class AvlTree<Type extends Comparable<? super Type>> implements PassoaAPa
 			// Coloca no relatório essa página.
 			// Mostra o tipo de rotação que deverá fazer
 			String str = RotuloRelatorioArvore.ARVORE_DESBALANCEADA
-					+ "Efetuar Rotação simples esqueda involvendo os elementos: " + k2.elemento + " "
+					+ "Efetuar Rotação simples esqueda envolvendo os elementos: " + k2.elemento + " "
 					+ k2.filhoEsquerdo.elemento + RotuloRelatorioArvore.FINAL_TEXTO;
 			colocaNoRelatorio(str, this.raiz.altura + 2);
 
