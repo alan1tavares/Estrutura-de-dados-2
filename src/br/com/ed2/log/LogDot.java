@@ -2,7 +2,7 @@ package br.com.ed2.log;
 
 public class LogDot {
 	private String log;
-	private String tipoDeGrafo = "graph name";
+	private String tipoDeGrafo = "digraph name";
 	private String descricao;
 	private String grafo;
 

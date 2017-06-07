@@ -18,11 +18,13 @@ public class FileDot {
 		this.log = log;
 	}
 
-	public void gerarArquivo() throws IOException {
-		FileOutputStream fileOutputStream = new FileOutputStream(this.caminhoDaSaida+""+this.nomeDoArquivo+".gz");
+	public String gerarArquivo() throws IOException {
+		String caminhoSaida = this.caminhoDaSaida+""+this.nomeDoArquivo+".gz";
+		FileOutputStream fileOutputStream = new FileOutputStream(caminhoSaida);
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream);
 		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
 		bufferedWriter.write(this.log.getLog());
-		bufferedWriter.close();		
+		bufferedWriter.close();
+		return caminhoSaida;
 	}
 }

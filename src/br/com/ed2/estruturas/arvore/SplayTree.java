@@ -4,12 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.ed2.estruturas.PassoaAPasso;
-import br.com.ed2.gui.desenho.arvore.Arvore2D;
 import br.com.ed2.log.LogDot;
-import br.com.ed2.relatorio.Pagina;
 import br.com.ed2.relatorio.Relatorio;
-import br.com.ed2.relatorio.RotuloRelatorioArvore;
-import javafx.scene.layout.Pane;
 
 /**
  * Algoritmo da árvore splay. Ela armazena o passo-a-passo em objeto do tipo
@@ -24,40 +20,38 @@ public class SplayTree<Type extends Comparable<? super Type>> implements PassoaA
 	private AvlNode<Type> raiz;
 
 	private Relatorio relatorio;
-	private List<LogDot> log;
+	private List<LogDot> log; // Dot
 
-	private String auxStrRelatorio = "";
+	private boolean flagRotacaoEfetuada = false;
+
+	int nulli = 0;
 
 	public SplayTree() {
 		this.log = new ArrayList<>();
 	}
 
 	public SplayTree(boolean possuiRelatorio) {
-		if (possuiRelatorio == true)
-			this.relatorio = new Relatorio();
 		this.log = new ArrayList<>();
 	}
 
+	/**
+	 * Método de inserção da splay. A inserção funciona como a de uma árvore
+	 * binária.
+	 */
 	@Override
 	public void inserir(Type elemento) {
-		// Relatorio
-		this.auxStrRelatorio = RotuloRelatorioArvore.ENTRADA + elemento + RotuloRelatorioArvore.FINAL_TEXTO;
 		LogDot ld = new LogDot();
 		this.log.add(ld); // Dot
 
 		this.raiz = inserir(elemento, raiz);
-		
-		this.log.get(this.log.size()-1).setGrafo(dotArvore()); // Dot
-		// Relatorio
-		if (this.relatorio != null)
-			colocaNoRelatorio(auxStrRelatorio);
-		this.auxStrRelatorio = "";
+
+		this.log.get(this.log.size() - 1).setGrafo(dotArvore()); // Dot
 
 	}
 
 	private AvlNode<Type> inserir(Type elemento, AvlNode<Type> t) {
 		if (t == null) {
-			this.log.get(this.log.size()-1).setDescricao("Inserido: " + elemento + " na arvore."); // Dot
+			this.log.get(this.log.size() - 1).setDescricao("Inserido: " + elemento + " na arvore."); // Dot
 			return new AvlNode<Type>(elemento);
 		}
 		int resultadoComparado = elemento.compareTo(t.elemento);
@@ -67,8 +61,7 @@ public class SplayTree<Type extends Comparable<? super Type>> implements PassoaA
 		else if (resultadoComparado > 0)
 			t.filhoDireto = inserir(elemento, t.filhoDireto);
 		else {
-			this.auxStrRelatorio += "\nElemento ja existe na Árvore";
-			this.log.get(this.log.size()-1).setDescricao(elemento + "ja existe na árvore."); // Dot
+			this.log.get(this.log.size() - 1).setDescricao(elemento + "ja existe na árvore."); // Dot
 		}
 
 		t.altura = Math.max(AvlTree.alturaDo(t.filhoEsquerdo), AvlTree.alturaDo(t.filhoDireto)) + 1;
@@ -82,146 +75,163 @@ public class SplayTree<Type extends Comparable<? super Type>> implements PassoaA
 
 	}
 
-	private boolean achou = false;
-
 	@Override
 	public void buscar(Type elemento) {
-		// Relatorio{
-		colocaNoRelatorio("Buscar o elemento " + elemento);
-		// }
+
+		LogDot ld = new LogDot(); // Dot
+		this.log.add(ld); // Dot
+		this.log.get(this.log.size() - 1).setDescricao("Buscar o elemento " + elemento + "."); // Dot
+		this.log.get(this.log.size() - 1).setGrafo(dotArvore()); // Dot
 
 		this.raiz = buscar(elemento, raiz);
 
-		// Relatorio{
-		if (this.auxStrRelatorio != "")
-			colocaNoRelatorio(this.auxStrRelatorio);
-		this.auxStrRelatorio = "";
-		// }
+		if (this.flagRotacaoEfetuada) {
+			ld = new LogDot(); // Dot
+			this.log.add(ld); // Dot
+			this.log.get(this.log.size() - 1).setDescricao("Resultado."); // Dot
+			this.log.get(this.log.size() - 1).setGrafo(dotArvore()); // Dot
+			this.flagRotacaoEfetuada = false;
+		}
 
 		if (this.raiz != null && this.raiz.elemento != elemento) {
 			if (this.raiz.filhoEsquerdo.elemento == elemento) {
+				// Zig
 
-				// Relatorio{
-				String str = "Efetuar zig envolvendo os elementos " + this.raiz.elemento + " "
-						+ this.raiz.filhoEsquerdo.elemento;
-				colocaNoRelatorio(str);
-				// }
+				ld = new LogDot(); // Dot
+				this.log.add(ld); // Dot
+				String descricao = "Efetuar zig envolvendo os elementos " + this.raiz.elemento + " "
+						+ this.raiz.filhoEsquerdo.elemento; // Dot
+				this.log.get(this.log.size() - 1).setDescricao(descricao + "."); // Dot
+				this.log.get(this.log.size() - 1).setGrafo(dotArvore()); // Dot
 
 				this.raiz = zig(this.raiz);
-			} else if (this.raiz.filhoDireto.elemento == elemento) {
 
-				// Relatorio{
-				String str = "Efetuar zag elvolvendo os elementos " + this.raiz.elemento + " "
-						+ this.raiz.filhoDireto.elemento;
-				colocaNoRelatorio(str);
-				// }
+				ld = new LogDot(); // Dot
+				this.log.add(ld); // Dot
+				this.log.get(this.log.size() - 1).setDescricao("Resultado."); // Dot
+				this.log.get(this.log.size() - 1).setGrafo(dotArvore()); // Dot
+			} else if (this.raiz.filhoDireto.elemento == elemento) {
+				// Zag
+
+				ld = new LogDot(); // Dot
+				this.log.add(ld); // Dot
+				String descricao = "Efetuar zag elvolvendo os elementos " + this.raiz.elemento + " "
+						+ this.raiz.filhoDireto.elemento; // Dot
+				this.log.get(this.log.size() - 1).setDescricao(descricao + "."); // Dot
+				this.log.get(this.log.size() - 1).setGrafo(dotArvore()); // Dot
 
 				this.raiz = zag(raiz);
+
+				ld = new LogDot(); // Dot
+				this.log.add(ld); // Dot
+				this.log.get(this.log.size() - 1).setDescricao("Resultado."); // Dot
+				this.log.get(this.log.size() - 1).setGrafo(dotArvore()); // Dot
+
 			}
-
-			// Relatorio{
-			if (this.auxStrRelatorio != "")
-				colocaNoRelatorio(this.auxStrRelatorio);
-			this.auxStrRelatorio = "";
-			// }
-
 		}
-
-		// Relatorio{
-		colocaNoRelatorio("Resultado");
-		// }
 	}
 
 	private AvlNode<Type> buscar(Type elemento, AvlNode<Type> t) {
-		// Se o elemento for encontrado
 		if (t == null) {
-			// Relatorio{
-			colocaNoRelatorio("Elemento " + elemento + " não encontrado");
-			// }
-			this.achou = false;
+			// Se o elemento não existe na árvore
+
+			LogDot ld = new LogDot(); // Dot
+			this.log.add(ld); // Dot
+			this.log.get(this.log.size() - 1).setDescricao("Elemento " + elemento + " não existe."); // Dot
+
 			return t;
 		}
-		// Se o elemento for encontrado
 		if (t.elemento == elemento) {
-			// Relatorio{
-			colocaNoRelatorio("Elemento " + elemento + " encontrado");
-			// }
-			this.achou = true;
+			// Se o elemento for encontrado
+
+			LogDot ld = new LogDot(); // Dot
+			this.log.add(ld); // Dot
+			this.log.get(this.log.size() - 1).setDescricao("Elemento " + elemento + " encontrado."); // Dot
+			this.log.get(this.log.size() - 1).setGrafo(dotArvore()); // Dot
+
 			return t;
 		}
 
 		// Pecorre até achar o elemento
 		if (elemento.compareTo(t.elemento) < 0) {
 			t.filhoEsquerdo = buscar(elemento, t.filhoEsquerdo);
+			if (this.flagRotacaoEfetuada) {
+				LogDot ld = new LogDot(); // Dot
+				this.log.add(ld); // Dot
+				this.log.get(this.log.size() - 1).setDescricao("Resultado."); // Dot
+				this.log.get(this.log.size() - 1).setGrafo(dotArvore()); // Dot
+				this.flagRotacaoEfetuada = false;
+			}
 		} else {
 			t.filhoDireto = buscar(elemento, t.filhoDireto);
+			if (this.flagRotacaoEfetuada) {
+				LogDot ld = new LogDot(); // Dot
+				this.log.add(ld); // Dot
+				this.log.get(this.log.size() - 1).setDescricao("Resultado."); // Dot
+				this.log.get(this.log.size() - 1).setGrafo(dotArvore()); // Dot
+				this.flagRotacaoEfetuada = false;
+			}
 		}
+
+		// Rotações
 
 		if (t.filhoEsquerdo != null && t.altura >= 2) {
 			AvlNode<Type> filhoEsquerdo = t.filhoEsquerdo;
 			if (filhoEsquerdo.filhoEsquerdo != null && filhoEsquerdo.filhoEsquerdo.elemento == elemento) {
+				// Zig-Zig
 
-				// Relatorio {
-				if (achou == true) {
-					String str = "Efetuar zig-zig envolvendo os elementos " + t.elemento + " " + filhoEsquerdo.elemento
-							+ " " + filhoEsquerdo.filhoEsquerdo.elemento;
-					colocaNoRelatorio(str);
-				}
-				// }
+				String descricao = "Efetuar zig-zig envolvendo os elementos " + t.elemento + " "
+						+ filhoEsquerdo.elemento + " " + filhoEsquerdo.filhoEsquerdo.elemento; // Dot
+				LogDot ld = new LogDot(); // Dot
+				this.log.add(ld); // Dot
+				this.log.get(this.log.size() - 1).setDescricao(descricao + "."); // Dot
+				this.log.get(this.log.size() - 1).setGrafo(dotArvore()); // Dot
+				this.flagRotacaoEfetuada = true;
 
 				return zig_zig(t);
 
 			} else if (filhoEsquerdo.filhoDireto != null && filhoEsquerdo.filhoDireto.elemento == elemento) {
+				// Zag-Zig
 
-				// Relatorio
-				if (achou == true) {
-					String str = "Efetuar zag-zig envolvendo os elementos " + t.elemento + " " + filhoEsquerdo.elemento
-							+ " " + filhoEsquerdo.filhoDireto.elemento;
-					colocaNoRelatorio(str);
-				}
-				// }
+				String descricao = "Efetuar zag-zig envolvendo os elementos " + t.elemento + " "
+						+ filhoEsquerdo.elemento + " " + filhoEsquerdo.filhoDireto.elemento; // Dot
+				LogDot ld = new LogDot(); // Dot
+				this.log.add(ld); // Dot
+				this.log.get(this.log.size() - 1).setDescricao(descricao + "."); // Dot
+				this.log.get(this.log.size() - 1).setGrafo(dotArvore()); // Dot
+				this.flagRotacaoEfetuada = true;
 
 				return zag_zig(t);
 			}
-
-			// Relatoiro
-			if (this.auxStrRelatorio != "")
-				colocaNoRelatorio(this.auxStrRelatorio);
-			this.auxStrRelatorio = "";
-			// }
 		}
 
 		if (t.filhoDireto != null && t.altura >= 2) {
 			AvlNode<Type> filhoDireito = t.filhoDireto;
 			if (filhoDireito.filhoDireto != null && filhoDireito.filhoDireto.elemento == elemento) {
+				// Zag-Zag
 
-				// Relatorio{
-				if (achou == true) {
-					String str = "Efetuar zag-zag envolvendo os elementos " + t.elemento + " " + filhoDireito.elemento
-							+ " " + filhoDireito.filhoDireto.elemento;
-					colocaNoRelatorio(str);
-				}
-				// }
+				String descricao = "Efetuar zag-zag envolvendo os elementos " + t.elemento + " " + filhoDireito.elemento
+						+ " " + filhoDireito.filhoDireto.elemento; // Dot
+				LogDot ld = new LogDot(); // Dot
+				this.log.add(ld); // Dot
+				this.log.get(this.log.size() - 1).setDescricao(descricao + "."); // Dot
+				this.log.get(this.log.size() - 1).setGrafo(dotArvore()); // Dot
+				this.flagRotacaoEfetuada = true;
 
 				return zag_zag(t);
 			} else if (filhoDireito.filhoEsquerdo != null && filhoDireito.filhoEsquerdo.elemento == elemento) {
+				// Zig-Zag
 
-				// Relatorio {
-				if (achou == true) {
-					String str = "Efetuar zig-zag elvolvendo os elementos " + t.elemento + " " + filhoDireito.elemento
-							+ " " + filhoDireito.filhoEsquerdo.elemento;
-					colocaNoRelatorio(str);
-				}
-				// }
+				String descricao = "Efetuar zig-zag elvolvendo os elementos " + t.elemento + " " + filhoDireito.elemento
+						+ " " + filhoDireito.filhoEsquerdo.elemento; // Dot
+				LogDot ld = new LogDot(); // Dot
+				this.log.add(ld); // Dot
+				this.log.get(this.log.size() - 1).setDescricao(descricao + "."); // Dot
+				this.log.get(this.log.size() - 1).setGrafo(dotArvore()); // Dot
+				this.flagRotacaoEfetuada = true;
 
 				return zig_zag(t);
 			}
-
-			// Relatoiro
-			if (this.auxStrRelatorio != "")
-				colocaNoRelatorio(this.auxStrRelatorio);
-			this.auxStrRelatorio = "";
-			// }
 		}
 
 		return t;
@@ -230,10 +240,6 @@ public class SplayTree<Type extends Comparable<? super Type>> implements PassoaA
 	private AvlNode<Type> zag(AvlNode<Type> t) {
 		AvlNode<Type> x = t;
 		AvlNode<Type> y = t.filhoDireto;
-
-		// Relatorio {
-		this.auxStrRelatorio = "Efetuado rotação zag";
-		// }
 
 		// Rotação zag
 		x.filhoDireto = y.filhoEsquerdo;
@@ -248,10 +254,6 @@ public class SplayTree<Type extends Comparable<? super Type>> implements PassoaA
 		AvlNode<Type> y = t;
 		AvlNode<Type> x = t.filhoEsquerdo;
 
-		// Relatorio {
-		this.auxStrRelatorio = "Efetuado rotação zig";
-		// }
-
 		// Rotação Zig
 		y.filhoEsquerdo = x.filhoDireto;
 		x.filhoDireto = y;
@@ -265,10 +267,6 @@ public class SplayTree<Type extends Comparable<? super Type>> implements PassoaA
 		AvlNode<Type> x = t;
 		AvlNode<Type> z = t.filhoDireto;
 		AvlNode<Type> y = t.filhoDireto.filhoEsquerdo;
-
-		// Relatorio{
-		this.auxStrRelatorio = "Efetuado a rotação zig-zag";
-		// }
 
 		// Rotação zig-zag
 		x.filhoDireto = y.filhoEsquerdo;
@@ -286,10 +284,6 @@ public class SplayTree<Type extends Comparable<? super Type>> implements PassoaA
 		AvlNode<Type> x = t.filhoEsquerdo;
 		AvlNode<Type> y = t.filhoEsquerdo.filhoDireto;
 
-		// Relatorio
-		this.auxStrRelatorio = "Efetuado rotação zag-zig";
-		// }
-
 		// Rotação zag-zig
 		x.filhoDireto = y.filhoEsquerdo;
 		z.filhoEsquerdo = y.filhoDireto;
@@ -306,10 +300,6 @@ public class SplayTree<Type extends Comparable<? super Type>> implements PassoaA
 		AvlNode<Type> y = t.filhoDireto;
 		AvlNode<Type> z = t.filhoDireto.filhoDireto;
 
-		// Relatorio {
-		this.auxStrRelatorio = "Efetuado rotação zag-zag";
-		// }
-
 		// Faz a rotação zag-zag
 		x.filhoDireto = y.filhoEsquerdo;
 		y.filhoEsquerdo = x;
@@ -325,10 +315,6 @@ public class SplayTree<Type extends Comparable<? super Type>> implements PassoaA
 		AvlNode<Type> z = t;
 		AvlNode<Type> y = t.filhoEsquerdo;
 		AvlNode<Type> x = t.filhoEsquerdo.filhoEsquerdo;
-
-		// Relatorio
-		this.auxStrRelatorio = "Efetuado rotação zig-zig";
-		// }
 
 		// Faz a rotação
 		z.filhoEsquerdo = y.filhoDireto;
@@ -394,36 +380,6 @@ public class SplayTree<Type extends Comparable<? super Type>> implements PassoaA
 		return a;
 	}
 
-	/**
-	 * Método auxiliar para colocar uma página no relatório. Este método associa
-	 * automaticamente a árvore com o texto passado.
-	 * 
-	 * @param str
-	 *            O texto a ser colcado no relatório
-	 */
-	private void colocaNoRelatorio(String str) {
-		// Monta o desenho da árvore e coloca em um Pane
-		colocaNoRelatorio(str, this.raiz.altura + 1);
-	}
-
-	/**
-	 * Método auxiliar para colocar uma página no relatório. Este método associa
-	 * automaticamente a árvore com o texto passado.
-	 * 
-	 * @param str
-	 *            O texto a ser colcado no relatório
-	 * @param altura
-	 *            A altura da árvore que vai ser desenhada dentro de uma pane e
-	 *            colocado depois no relatório associado a ou texto passado
-	 */
-	private void colocaNoRelatorio(String str, int altura) {
-		// Monta o desenho da árvore e coloca em um Pane
-		Arvore2D arvore2D = new Arvore2D();
-		Pane desenho = arvore2D.arvorePreOrdem(preOrdem(), altura, 14);
-		// --------------
-		this.relatorio.inserirPagina(new Pagina(str, desenho));
-	}
-
 	private String dotArvore() {
 		return dotArvore(this.raiz);
 	}
@@ -432,15 +388,28 @@ public class SplayTree<Type extends Comparable<? super Type>> implements PassoaA
 		String arvoreDot = "";
 		if (no != null) {
 			if (no.filhoEsquerdo != null)
-				arvoreDot += "\t"+no.elemento + " -- " + no.filhoEsquerdo.elemento + "\n" + dotArvore(no.filhoEsquerdo);
+				arvoreDot += "\t" + no.elemento + " -> " + no.filhoEsquerdo.elemento + "\n"
+						+ dotArvore(no.filhoEsquerdo);
+			else {
+				arvoreDot += "\tnull" + this.nulli + " [label=\"\",width=.1,style=invis];\n";
+				arvoreDot += "\t" + no.elemento + " -> null" + this.nulli + " [style=invis];\n"
+						+ dotArvore(no.filhoEsquerdo);
+				this.nulli++;
+			}
 			if (no.filhoDireto != null)
-				arvoreDot += "\t"+no.elemento + " -- " + no.filhoDireto.elemento + "\n" + dotArvore(no.filhoDireto);
-			 if(no == raiz && no.filhoEsquerdo == null && no.filhoDireto == null)
-				arvoreDot += "\t"+no.elemento+"\n";
+				arvoreDot += "\t" + no.elemento + " -> " + no.filhoDireto.elemento + "\n" + dotArvore(no.filhoDireto);
+			else {
+				arvoreDot += "\tnull" + this.nulli + " [label=\"\",width=.1,style=invis];\n";
+				arvoreDot += "\t" + no.elemento + " -> null" + this.nulli + " [style=invis];\n"
+						+ dotArvore(no.filhoDireto);
+				this.nulli++;
+			}
+			if (no == raiz && no.filhoEsquerdo == null && no.filhoDireto == null)
+				arvoreDot += "\t" + no.elemento + "\n";
 		}
 		return arvoreDot;
 	}
-	
+
 	public List<LogDot> getLog() {
 		return log;
 	}

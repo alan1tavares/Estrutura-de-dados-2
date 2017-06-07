@@ -171,6 +171,7 @@ public class ControllerTelaPrincipal implements Initializable {
 			ControllerExportaPng controllerPNG = fxmlLoader.getController();
 			//
 			controllerPNG.setRelatorio(relatorio);
+			controllerPNG.setLog(this.estruturaEscolhida.getLog());
 			// Mostra a janela de exportar png e espero ela ser fechada e
 			// retornar para o chamador
 			stage.showAndWait();

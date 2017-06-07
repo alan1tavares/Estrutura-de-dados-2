@@ -19,7 +19,11 @@ public class Graphviz {
 	}
 	
 	public void set(String arquivoDeEntrada, String arquivoDeSaida){
+		this.arquivoDeEntrada = arquivoDeEntrada;
+		this.arquivoDeSaida = arquivoDeSaida+".jpg";
 		atualizaParametros();
+		System.out.println(this.arquivoDeEntrada);
+		System.out.println(this.arquivoDeSaida);
 	}
 
 	public void salvarArquivo() throws IOException {

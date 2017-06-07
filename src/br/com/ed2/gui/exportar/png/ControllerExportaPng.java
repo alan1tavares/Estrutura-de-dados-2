@@ -2,9 +2,12 @@ package br.com.ed2.gui.exportar.png;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
+import br.com.ed2.arquivo.dot.ExportaPNGSDot;
 import br.com.ed2.arquivo.png.SalvarEstruturaPNG;
 import br.com.ed2.gui.relatorio.ControllerRelatorio;
+import br.com.ed2.log.LogDot;
 import br.com.ed2.relatorio.Relatorio;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +26,7 @@ public class ControllerExportaPng {
 
 	private File file;
 	private Relatorio relatorio;
+	private List<LogDot> log;
 
 	@FXML
 	private TextField tfURL;
@@ -41,48 +45,52 @@ public class ControllerExportaPng {
 		// Define o camiho da pasta escolhida dentro do textField
 		tfURL.setText(file.getPath());
 	}
-	
-	public void exportaPassoApassoPNG(){
-		
-	}
 
 	public void salvarPNGS() {
-
-		String caminhoView = "/br/com/ed2/gui/relatorio/ViewRelatorioPNG.fxml";
-		try {
-			// Carrega a view do relatória mas não exibe ela
-			FXMLLoader fxmlLoader = new FXMLLoader();
-			fxmlLoader.setLocation(getClass().getResource(caminhoView));
-			// Coloca a view em um pane
-			Pane pane = fxmlLoader.load();
-			// controllerRelatorio armazena o controller da view que foi
-			// carregada
-			ControllerRelatorio controllerRelatorio = fxmlLoader.getController();
-			// Povoa a view do relatorio
-			controllerRelatorio.setRelatorio(this.relatorio);
-			// Adiciona a Pane na scene
-			Scene sc = new Scene(pane);
-
-			controllerRelatorio.setTamanho(this.relatorio.getLarguraMaximaDaPagina(),
-					this.relatorio.getAlturaMaximaDaPgina());
-			// Se existir algum caminho na lbl, então tente criar o objeto do
-			// tipo file com esse caminho
-			if (tfURL.getText() != null) {
-				int i = 0;
-
-				while (i <= relatorio.totalDePaginas()) {
-					controllerRelatorio.escolherPagina(i);
-					this.file = new File(tfURL.getText() + i + ".png");
-					new SalvarEstruturaPNG().salvarComoPNG(sc, this.file);
-					i++;
-				}
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (this.log != null) {
+			ExportaPNGSDot exportaPNGSDot = new ExportaPNGSDot(this.log);
+			exportaPNGSDot.gerarPNGS(tfURL.getText());
 		}
+		// String caminhoView =
+		// "/br/com/ed2/gui/relatorio/ViewRelatorioPNG.fxml";
+		// try {
+		// // Carrega a view do relatória mas não exibe ela
+		// FXMLLoader fxmlLoader = new FXMLLoader();
+		// fxmlLoader.setLocation(getClass().getResource(caminhoView));
+		// // Coloca a view em um pane
+		// Pane pane = fxmlLoader.load();
+		// // controllerRelatorio armazena o controller da view que foi
+		// // carregada
+		// ControllerRelatorio controllerRelatorio = fxmlLoader.getController();
+		// // Povoa a view do relatorio
+		// controllerRelatorio.setRelatorio(this.relatorio);
+		// // Adiciona a Pane na scene
+		// Scene sc = new Scene(pane);
+		//
+		// controllerRelatorio.setTamanho(this.relatorio.getLarguraMaximaDaPagina(),
+		// this.relatorio.getAlturaMaximaDaPgina());
+		// // Se existir algum caminho na lbl, então tente criar o objeto do
+		// // tipo file com esse caminho
+		// if (tfURL.getText() != null) {
+		// int i = 0;
+		//
+		// while (i <= relatorio.totalDePaginas()) {
+		// controllerRelatorio.escolherPagina(i);
+		// this.file = new File(tfURL.getText() + i + ".png");
+		// new SalvarEstruturaPNG().salvarComoPNG(sc, this.file);
+		// i++;
+		// }
+		// }
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// }
 	}
 
 	public void setRelatorio(Relatorio relatorio) {
 		this.relatorio = relatorio;
+	}
+	
+	public void setLog(List<LogDot> log) {
+		this.log = log;
 	}
 }
