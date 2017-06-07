@@ -1,4 +1,4 @@
-package br.com.ed2.estruturas.relatorio;
+package br.com.ed2.relatorio;
 
 public final class RotuloRelatorioArvore {
 	public static final String ENTRADA = "Inserido: "; // 

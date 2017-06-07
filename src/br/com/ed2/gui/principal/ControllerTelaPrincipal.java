@@ -1,16 +1,22 @@
 package br.com.ed2.gui.principal;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import br.com.ed2.Main;
+import br.com.ed2.configuracao.Configuracao;
 import br.com.ed2.estruturas.PassoaAPasso;
 import br.com.ed2.estruturas.arvore.AvlTree;
 import br.com.ed2.estruturas.arvore.SplayTree;
-import br.com.ed2.estruturas.relatorio.Relatorio;
 import br.com.ed2.gui.exportar.png.ControllerExportaPng;
 import br.com.ed2.gui.relatorio.ControllerRelatorio;
+import br.com.ed2.log.LogDot;
+import br.com.ed2.relatorio.Relatorio;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -92,6 +98,13 @@ public class ControllerTelaPrincipal implements Initializable {
 	}
 
 	public void botaoBuscar() {
+		// TODO Teste
+		SplayTree st = (SplayTree) this.estruturaEscolhida;
+		List<LogDot> log = st.getLog();
+		for (LogDot logDot : log) {
+			System.out.println(logDot.getLog());
+		}
+
 		// Verifica se existe valores para serem inseridos
 		if (tfBuscar.getText() != null) {
 			String string = tfBuscar.getText();
@@ -133,7 +146,7 @@ public class ControllerTelaPrincipal implements Initializable {
 		this.estruturaEscolhida = new SplayTree<>(true);
 	}
 
-	// Barra de menu -> Arquivo -> Exporta -> PNG
+	// Barra de menu -> Arquivo/Exporta/PNG
 	/**
 	 * Chama a janela que ira salvar os passos da estrutura em vários arquivos
 	 * png em uma pasta escolhida. Cada passo será uma imagem
@@ -170,6 +183,23 @@ public class ControllerTelaPrincipal implements Initializable {
 			e.printStackTrace();
 		}
 
+	}
+
+	// Barra de Menu -> Arquivo/Configuração
+	/**
+	 * Chama a janela de configuração
+	 * 
+	 * @throws IOException
+	 */
+	public void configuracao() throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader();
+		fxmlLoader.setLocation(Main.class.getResource("/br/com/ed2/gui/configuracao/Configuracao.fxml"));
+
+		AnchorPane anchorPane = (AnchorPane) fxmlLoader.load();
+		Stage stage = new Stage();
+		Scene scene = new Scene(anchorPane);
+		stage.setScene(scene);
+		stage.show();
 	}
 
 	@Override

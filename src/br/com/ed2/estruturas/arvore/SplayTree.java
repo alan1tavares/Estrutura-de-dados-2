@@ -1,32 +1,54 @@
 package br.com.ed2.estruturas.arvore;
 
-import br.com.ed2.desenho.arvore.Arvore2D;
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.ed2.estruturas.PassoaAPasso;
-import br.com.ed2.estruturas.relatorio.Pagina;
-import br.com.ed2.estruturas.relatorio.Relatorio;
-import br.com.ed2.estruturas.relatorio.RotuloRelatorioArvore;
+import br.com.ed2.gui.desenho.arvore.Arvore2D;
+import br.com.ed2.log.LogDot;
+import br.com.ed2.relatorio.Pagina;
+import br.com.ed2.relatorio.Relatorio;
+import br.com.ed2.relatorio.RotuloRelatorioArvore;
 import javafx.scene.layout.Pane;
 
+/**
+ * Algoritmo da árvore splay. Ela armazena o passo-a-passo em objeto do tipo
+ * Relatorio.
+ * 
+ * @author Alan Tavares
+ *
+ * @param <Type>
+ */
 public class SplayTree<Type extends Comparable<? super Type>> implements PassoaAPasso<Type> {
 
 	private AvlNode<Type> raiz;
 
 	private Relatorio relatorio;
+	private List<LogDot> log;
 
 	private String auxStrRelatorio = "";
 
 	public SplayTree() {
+		this.log = new ArrayList<>();
 	}
 
 	public SplayTree(boolean possuiRelatorio) {
 		if (possuiRelatorio == true)
 			this.relatorio = new Relatorio();
+		this.log = new ArrayList<>();
 	}
 
 	@Override
 	public void inserir(Type elemento) {
+		// Relatorio
 		this.auxStrRelatorio = RotuloRelatorioArvore.ENTRADA + elemento + RotuloRelatorioArvore.FINAL_TEXTO;
+		LogDot ld = new LogDot();
+		this.log.add(ld); // Dot
+
 		this.raiz = inserir(elemento, raiz);
+		
+		this.log.get(this.log.size()-1).setGrafo(dotArvore()); // Dot
+		// Relatorio
 		if (this.relatorio != null)
 			colocaNoRelatorio(auxStrRelatorio);
 		this.auxStrRelatorio = "";
@@ -34,16 +56,20 @@ public class SplayTree<Type extends Comparable<? super Type>> implements PassoaA
 	}
 
 	private AvlNode<Type> inserir(Type elemento, AvlNode<Type> t) {
-		if (t == null)
+		if (t == null) {
+			this.log.get(this.log.size()-1).setDescricao("Inserido: " + elemento + " na arvore."); // Dot
 			return new AvlNode<Type>(elemento);
+		}
 		int resultadoComparado = elemento.compareTo(t.elemento);
 
 		if (resultadoComparado < 0)
 			t.filhoEsquerdo = inserir(elemento, t.filhoEsquerdo);
 		else if (resultadoComparado > 0)
 			t.filhoDireto = inserir(elemento, t.filhoDireto);
-		else
+		else {
 			this.auxStrRelatorio += "\nElemento ja existe na Árvore";
+			this.log.get(this.log.size()-1).setDescricao(elemento + "ja existe na árvore."); // Dot
+		}
 
 		t.altura = Math.max(AvlTree.alturaDo(t.filhoEsquerdo), AvlTree.alturaDo(t.filhoDireto)) + 1;
 		return t;
@@ -396,5 +422,26 @@ public class SplayTree<Type extends Comparable<? super Type>> implements PassoaA
 		Pane desenho = arvore2D.arvorePreOrdem(preOrdem(), altura, 14);
 		// --------------
 		this.relatorio.inserirPagina(new Pagina(str, desenho));
+	}
+
+	private String dotArvore() {
+		return dotArvore(this.raiz);
+	}
+
+	private String dotArvore(AvlNode<Type> no) {
+		String arvoreDot = "";
+		if (no != null) {
+			if (no.filhoEsquerdo != null)
+				arvoreDot += "\t"+no.elemento + " -- " + no.filhoEsquerdo.elemento + "\n" + dotArvore(no.filhoEsquerdo);
+			if (no.filhoDireto != null)
+				arvoreDot += "\t"+no.elemento + " -- " + no.filhoDireto.elemento + "\n" + dotArvore(no.filhoDireto);
+			 if(no == raiz && no.filhoEsquerdo == null && no.filhoDireto == null)
+				arvoreDot += "\t"+no.elemento+"\n";
+		}
+		return arvoreDot;
+	}
+	
+	public List<LogDot> getLog() {
+		return log;
 	}
 }

@@ -1,10 +1,10 @@
 package br.com.ed2.estruturas.arvore;
 
-import br.com.ed2.desenho.arvore.Arvore2D;
 import br.com.ed2.estruturas.PassoaAPasso;
-import br.com.ed2.estruturas.relatorio.Pagina;
-import br.com.ed2.estruturas.relatorio.Relatorio;
-import br.com.ed2.estruturas.relatorio.RotuloRelatorioArvore;
+import br.com.ed2.gui.desenho.arvore.Arvore2D;
+import br.com.ed2.relatorio.Pagina;
+import br.com.ed2.relatorio.Relatorio;
+import br.com.ed2.relatorio.RotuloRelatorioArvore;
 import javafx.scene.layout.Pane;
 
 public class AvlTree<Type extends Comparable<? super Type>> implements PassoaAPasso<Type> {

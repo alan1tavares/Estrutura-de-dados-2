@@ -1,4 +1,4 @@
-package br.com.ed2.desenho.arvore;
+package br.com.ed2.gui.desenho.arvore;
 
 import br.com.ed2.gui.estrutura.Desenho;
 import javafx.scene.layout.Pane;

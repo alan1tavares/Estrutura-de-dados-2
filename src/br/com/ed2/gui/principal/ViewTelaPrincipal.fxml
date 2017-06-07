@@ -103,6 +103,7 @@
               </items>
             </Menu>
             <MenuItem mnemonicParsing="false" text="Sair" />
+            <MenuItem mnemonicParsing="false" onAction="#configuracao" text="Configuração" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Estruturas">
@@ -123,11 +124,6 @@
               </items>
             </Menu>
             <MenuItem mnemonicParsing="false" text="Hashing Meio Aberta" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Delete" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Help">

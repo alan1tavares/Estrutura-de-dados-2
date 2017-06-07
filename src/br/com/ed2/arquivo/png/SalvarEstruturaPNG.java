@@ -1,4 +1,4 @@
-package br.com.ed2.png;
+package br.com.ed2.arquivo.png;
 
 import java.io.File;
 import java.io.IOException;

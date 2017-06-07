@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="221.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="br.com.ed2.gui.configuracao.ControllerPainelConfiguracao">
+  <children>
+    <VBox prefHeight="379.0" prefWidth="586.0" spacing="5.0" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="8.0">
+      <children>
+        <Label alignment="CENTER" prefWidth="586.0" text="Painel de Configuração" textAlignment="CENTER" textOverrun="ELLIPSIS" underline="false" wrapText="false" VBox.vgrow="SOMETIMES">
+          <font>
+            <Font name="System Bold" size="18.0" />
+          </font>
+          <VBox.margin>
+            <Insets left="1.0" right="1.0" />
+          </VBox.margin>
+        </Label>
+        <Label text="Caminho do DOT que está no Graphviz">
+          <font>
+            <Font size="14.0" />
+          </font>
+          <VBox.margin>
+            <Insets top="10.0" />
+          </VBox.margin>
+        </Label>
+        <TextField fx:id="camihoGraphvizDot" onMouseClicked="#selecionarArquivo" prefHeight="24.0" prefWidth="200.0" />
+        <HBox alignment="BOTTOM_RIGHT" prefHeight="83.0" prefWidth="586.0" spacing="10.0">
+          <children>
+            <Button mnemonicParsing="false" onAction="#cancelar" prefHeight="24.0" prefWidth="66.0" text="Cancelar" />
+            <Button mnemonicParsing="false" onAction="#aplicar" prefHeight="24.0" prefWidth="66.0" text="Aplicar" />
+          </children>
+        </HBox>
+      </children>
+    </VBox>
+  </children>
+</AnchorPane>

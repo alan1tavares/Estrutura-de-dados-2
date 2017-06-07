@@ -1,4 +1,4 @@
-package br.com.ed2.desenho.arvore;
+package br.com.ed2.gui.desenho.arvore;
 
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;

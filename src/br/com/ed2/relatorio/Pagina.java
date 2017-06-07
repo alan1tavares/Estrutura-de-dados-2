@@ -1,4 +1,4 @@
-package br.com.ed2.estruturas.relatorio;
+package br.com.ed2.relatorio;
 
 import javafx.scene.layout.Pane;
 

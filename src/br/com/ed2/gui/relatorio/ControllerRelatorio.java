@@ -1,6 +1,6 @@
 package br.com.ed2.gui.relatorio;
 
-import br.com.ed2.estruturas.relatorio.Relatorio;
+import br.com.ed2.relatorio.Relatorio;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
