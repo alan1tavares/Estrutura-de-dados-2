@@ -1,0 +1,51 @@
+digraph name{
+	L;
+	L[label = "Árvore desebalanceada no elemento 52.", shape = none];
+	15 -> 8
+	8 -> 2
+	null336 [label="",width=.1,style=invis];
+	2 -> null336 [style=invis];
+	null337 [label="",width=.1,style=invis];
+	2 -> null337 [style=invis];
+	8 -> 12
+	12 -> 9
+	null338 [label="",width=.1,style=invis];
+	9 -> null338 [style=invis];
+	null339 [label="",width=.1,style=invis];
+	9 -> null339 [style=invis];
+	null340 [label="",width=.1,style=invis];
+	12 -> null340 [style=invis];
+	15 -> 27
+	27 -> 18
+	18 -> 16
+	null341 [label="",width=.1,style=invis];
+	16 -> null341 [style=invis];
+	null342 [label="",width=.1,style=invis];
+	16 -> null342 [style=invis];
+	18 -> 21
+	21 -> 19
+	null343 [label="",width=.1,style=invis];
+	19 -> null343 [style=invis];
+	null344 [label="",width=.1,style=invis];
+	19 -> null344 [style=invis];
+	null345 [label="",width=.1,style=invis];
+	21 -> null345 [style=invis];
+	27 -> 51
+	51 -> 28
+	null346 [label="",width=.1,style=invis];
+	28 -> null346 [style=invis];
+	null347 [label="",width=.1,style=invis];
+	28 -> null347 [style=invis];
+	51 -> 52
+	null348 [label="",width=.1,style=invis];
+	52 -> null348 [style=invis];
+	52 -> 53
+	null349 [label="",width=.1,style=invis];
+	53 -> null349 [style=invis];
+	53 -> 63
+	null350 [label="",width=.1,style=invis];
+	63 -> null350 [style=invis];
+	null351 [label="",width=.1,style=invis];
+	63 -> null351 [style=invis];
+
+}

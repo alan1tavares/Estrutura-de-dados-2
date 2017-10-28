@@ -1,0 +1,45 @@
+digraph name{
+	L;
+	L[label = "16ja existe na árvore.", shape = none];
+	27 -> 18
+	18 -> 16
+	16 -> 2
+	null118 [label="",width=.1,style=invis];
+	2 -> null118 [style=invis];
+	2 -> 15
+	15 -> 8
+	null119 [label="",width=.1,style=invis];
+	8 -> null119 [style=invis];
+	8 -> 12
+	12 -> 9
+	null120 [label="",width=.1,style=invis];
+	9 -> null120 [style=invis];
+	null121 [label="",width=.1,style=invis];
+	9 -> null121 [style=invis];
+	null122 [label="",width=.1,style=invis];
+	12 -> null122 [style=invis];
+	null123 [label="",width=.1,style=invis];
+	15 -> null123 [style=invis];
+	null124 [label="",width=.1,style=invis];
+	16 -> null124 [style=invis];
+	18 -> 21
+	null125 [label="",width=.1,style=invis];
+	21 -> null125 [style=invis];
+	null126 [label="",width=.1,style=invis];
+	21 -> null126 [style=invis];
+	27 -> 51
+	51 -> 28
+	null127 [label="",width=.1,style=invis];
+	28 -> null127 [style=invis];
+	null128 [label="",width=.1,style=invis];
+	28 -> null128 [style=invis];
+	51 -> 52
+	null129 [label="",width=.1,style=invis];
+	52 -> null129 [style=invis];
+	52 -> 53
+	null130 [label="",width=.1,style=invis];
+	53 -> null130 [style=invis];
+	null131 [label="",width=.1,style=invis];
+	53 -> null131 [style=invis];
+
+}

@@ -1,0 +1,60 @@
+digraph name{
+	L;
+	L[label = "Efetuar rotação simples direita com os elementos 51 53.", shape = none];
+	15 -> 8
+	8 -> 2
+	null457 [label="",width=.1,style=invis];
+	2 -> null457 [style=invis];
+	2 -> 7
+	null458 [label="",width=.1,style=invis];
+	7 -> null458 [style=invis];
+	null459 [label="",width=.1,style=invis];
+	7 -> null459 [style=invis];
+	8 -> 12
+	12 -> 9
+	null460 [label="",width=.1,style=invis];
+	9 -> null460 [style=invis];
+	null461 [label="",width=.1,style=invis];
+	9 -> null461 [style=invis];
+	null462 [label="",width=.1,style=invis];
+	12 -> null462 [style=invis];
+	15 -> 27
+	27 -> 18
+	18 -> 16
+	null463 [label="",width=.1,style=invis];
+	16 -> null463 [style=invis];
+	null464 [label="",width=.1,style=invis];
+	16 -> null464 [style=invis];
+	18 -> 21
+	21 -> 19
+	null465 [label="",width=.1,style=invis];
+	19 -> null465 [style=invis];
+	null466 [label="",width=.1,style=invis];
+	19 -> null466 [style=invis];
+	21 -> 24
+	null467 [label="",width=.1,style=invis];
+	24 -> null467 [style=invis];
+	null468 [label="",width=.1,style=invis];
+	24 -> null468 [style=invis];
+	27 -> 51
+	51 -> 28
+	null469 [label="",width=.1,style=invis];
+	28 -> null469 [style=invis];
+	null470 [label="",width=.1,style=invis];
+	28 -> null470 [style=invis];
+	51 -> 53
+	53 -> 52
+	null471 [label="",width=.1,style=invis];
+	52 -> null471 [style=invis];
+	null472 [label="",width=.1,style=invis];
+	52 -> null472 [style=invis];
+	53 -> 63
+	null473 [label="",width=.1,style=invis];
+	63 -> null473 [style=invis];
+	63 -> 97
+	null474 [label="",width=.1,style=invis];
+	97 -> null474 [style=invis];
+	null475 [label="",width=.1,style=invis];
+	97 -> null475 [style=invis];
+
+}

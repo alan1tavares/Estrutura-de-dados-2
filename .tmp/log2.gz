@@ -1,0 +1,15 @@
+digraph name{
+	L;
+	L[label = "Inserido: 18 na arvore.", shape = none];
+	27 -> 18
+	null5 [label="",width=.1,style=invis];
+	18 -> null5 [style=invis];
+	null6 [label="",width=.1,style=invis];
+	18 -> null6 [style=invis];
+	27 -> 51
+	null7 [label="",width=.1,style=invis];
+	51 -> null7 [style=invis];
+	null8 [label="",width=.1,style=invis];
+	51 -> null8 [style=invis];
+
+}

@@ -1,0 +1,60 @@
+digraph name{
+	L;
+	L[label = "Elemento 18 encontrado.", shape = none];
+	12 -> 8
+	8 -> 2
+	null892 [label="",width=.1,style=invis];
+	2 -> null892 [style=invis];
+	2 -> 7
+	null893 [label="",width=.1,style=invis];
+	7 -> null893 [style=invis];
+	null894 [label="",width=.1,style=invis];
+	7 -> null894 [style=invis];
+	8 -> 9
+	null895 [label="",width=.1,style=invis];
+	9 -> null895 [style=invis];
+	null896 [label="",width=.1,style=invis];
+	9 -> null896 [style=invis];
+	12 -> 15
+	null897 [label="",width=.1,style=invis];
+	15 -> null897 [style=invis];
+	15 -> 16
+	null898 [label="",width=.1,style=invis];
+	16 -> null898 [style=invis];
+	16 -> 52
+	52 -> 18
+	null899 [label="",width=.1,style=invis];
+	18 -> null899 [style=invis];
+	18 -> 51
+	51 -> 27
+	27 -> 21
+	21 -> 19
+	null900 [label="",width=.1,style=invis];
+	19 -> null900 [style=invis];
+	null901 [label="",width=.1,style=invis];
+	19 -> null901 [style=invis];
+	21 -> 24
+	null902 [label="",width=.1,style=invis];
+	24 -> null902 [style=invis];
+	null903 [label="",width=.1,style=invis];
+	24 -> null903 [style=invis];
+	27 -> 28
+	null904 [label="",width=.1,style=invis];
+	28 -> null904 [style=invis];
+	null905 [label="",width=.1,style=invis];
+	28 -> null905 [style=invis];
+	null906 [label="",width=.1,style=invis];
+	51 -> null906 [style=invis];
+	52 -> 53
+	null907 [label="",width=.1,style=invis];
+	53 -> null907 [style=invis];
+	53 -> 63
+	null908 [label="",width=.1,style=invis];
+	63 -> null908 [style=invis];
+	63 -> 97
+	null909 [label="",width=.1,style=invis];
+	97 -> null909 [style=invis];
+	null910 [label="",width=.1,style=invis];
+	97 -> null910 [style=invis];
+
+}

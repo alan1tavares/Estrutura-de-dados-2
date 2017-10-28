@@ -1,0 +1,45 @@
+digraph name{
+	L;
+	L[label = "12 Ja existe.", shape = none];
+	15 -> 8
+	8 -> 2
+	null263 [label="",width=.1,style=invis];
+	2 -> null263 [style=invis];
+	null264 [label="",width=.1,style=invis];
+	2 -> null264 [style=invis];
+	8 -> 12
+	12 -> 9
+	null265 [label="",width=.1,style=invis];
+	9 -> null265 [style=invis];
+	null266 [label="",width=.1,style=invis];
+	9 -> null266 [style=invis];
+	null267 [label="",width=.1,style=invis];
+	12 -> null267 [style=invis];
+	15 -> 27
+	27 -> 18
+	18 -> 16
+	null268 [label="",width=.1,style=invis];
+	16 -> null268 [style=invis];
+	null269 [label="",width=.1,style=invis];
+	16 -> null269 [style=invis];
+	18 -> 21
+	null270 [label="",width=.1,style=invis];
+	21 -> null270 [style=invis];
+	null271 [label="",width=.1,style=invis];
+	21 -> null271 [style=invis];
+	27 -> 51
+	51 -> 28
+	null272 [label="",width=.1,style=invis];
+	28 -> null272 [style=invis];
+	null273 [label="",width=.1,style=invis];
+	28 -> null273 [style=invis];
+	51 -> 52
+	null274 [label="",width=.1,style=invis];
+	52 -> null274 [style=invis];
+	52 -> 53
+	null275 [label="",width=.1,style=invis];
+	53 -> null275 [style=invis];
+	null276 [label="",width=.1,style=invis];
+	53 -> null276 [style=invis];
+
+}

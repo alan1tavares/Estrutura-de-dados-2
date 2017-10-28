@@ -1,0 +1,60 @@
+digraph name{
+	L;
+	L[label = "Efetuar zag-zig envolvendo os elementos 18 15 16.", shape = none];
+	52 -> 18
+	18 -> 15
+	15 -> 12
+	12 -> 8
+	8 -> 2
+	null721 [label="",width=.1,style=invis];
+	2 -> null721 [style=invis];
+	2 -> 7
+	null722 [label="",width=.1,style=invis];
+	7 -> null722 [style=invis];
+	null723 [label="",width=.1,style=invis];
+	7 -> null723 [style=invis];
+	8 -> 9
+	null724 [label="",width=.1,style=invis];
+	9 -> null724 [style=invis];
+	null725 [label="",width=.1,style=invis];
+	9 -> null725 [style=invis];
+	null726 [label="",width=.1,style=invis];
+	12 -> null726 [style=invis];
+	15 -> 16
+	null727 [label="",width=.1,style=invis];
+	16 -> null727 [style=invis];
+	null728 [label="",width=.1,style=invis];
+	16 -> null728 [style=invis];
+	18 -> 51
+	51 -> 27
+	27 -> 21
+	21 -> 19
+	null729 [label="",width=.1,style=invis];
+	19 -> null729 [style=invis];
+	null730 [label="",width=.1,style=invis];
+	19 -> null730 [style=invis];
+	21 -> 24
+	null731 [label="",width=.1,style=invis];
+	24 -> null731 [style=invis];
+	null732 [label="",width=.1,style=invis];
+	24 -> null732 [style=invis];
+	27 -> 28
+	null733 [label="",width=.1,style=invis];
+	28 -> null733 [style=invis];
+	null734 [label="",width=.1,style=invis];
+	28 -> null734 [style=invis];
+	null735 [label="",width=.1,style=invis];
+	51 -> null735 [style=invis];
+	52 -> 53
+	null736 [label="",width=.1,style=invis];
+	53 -> null736 [style=invis];
+	53 -> 63
+	null737 [label="",width=.1,style=invis];
+	63 -> null737 [style=invis];
+	63 -> 97
+	null738 [label="",width=.1,style=invis];
+	97 -> null738 [style=invis];
+	null739 [label="",width=.1,style=invis];
+	97 -> null739 [style=invis];
+
+}

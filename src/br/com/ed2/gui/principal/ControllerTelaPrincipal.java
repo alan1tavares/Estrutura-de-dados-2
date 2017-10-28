@@ -88,10 +88,10 @@ public class ControllerTelaPrincipal implements Initializable {
 				// Alert "insira alguma coisa".
 				// }
 
-			this.relatorio = this.estruturaEscolhida.getRelatorio();
-			inicializarJanelaDoRelaorio();
-			ControllerRelatorio controller = fxmlLoaderRelatorio.getController();
-			controller.setRelatorio(this.relatorio);
+//			this.relatorio = this.estruturaEscolhida.getRelatorio();
+//			inicializarJanelaDoRelaorio();
+//			ControllerRelatorio controller = fxmlLoaderRelatorio.getController();
+//			controller.setRelatorio(this.relatorio);
 
 		}
 

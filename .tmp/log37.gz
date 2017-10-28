@@ -1,0 +1,57 @@
+digraph name{
+	L;
+	L[label = "24 inserido.", shape = none];
+	15 -> 8
+	8 -> 2
+	null401 [label="",width=.1,style=invis];
+	2 -> null401 [style=invis];
+	2 -> 7
+	null402 [label="",width=.1,style=invis];
+	7 -> null402 [style=invis];
+	null403 [label="",width=.1,style=invis];
+	7 -> null403 [style=invis];
+	8 -> 12
+	12 -> 9
+	null404 [label="",width=.1,style=invis];
+	9 -> null404 [style=invis];
+	null405 [label="",width=.1,style=invis];
+	9 -> null405 [style=invis];
+	null406 [label="",width=.1,style=invis];
+	12 -> null406 [style=invis];
+	15 -> 27
+	27 -> 18
+	18 -> 16
+	null407 [label="",width=.1,style=invis];
+	16 -> null407 [style=invis];
+	null408 [label="",width=.1,style=invis];
+	16 -> null408 [style=invis];
+	18 -> 21
+	21 -> 19
+	null409 [label="",width=.1,style=invis];
+	19 -> null409 [style=invis];
+	null410 [label="",width=.1,style=invis];
+	19 -> null410 [style=invis];
+	21 -> 24
+	null411 [label="",width=.1,style=invis];
+	24 -> null411 [style=invis];
+	null412 [label="",width=.1,style=invis];
+	24 -> null412 [style=invis];
+	27 -> 51
+	51 -> 28
+	null413 [label="",width=.1,style=invis];
+	28 -> null413 [style=invis];
+	null414 [label="",width=.1,style=invis];
+	28 -> null414 [style=invis];
+	51 -> 53
+	53 -> 52
+	null415 [label="",width=.1,style=invis];
+	52 -> null415 [style=invis];
+	null416 [label="",width=.1,style=invis];
+	52 -> null416 [style=invis];
+	53 -> 63
+	null417 [label="",width=.1,style=invis];
+	63 -> null417 [style=invis];
+	null418 [label="",width=.1,style=invis];
+	63 -> null418 [style=invis];
+
+}

@@ -1,0 +1,51 @@
+digraph name{
+	L;
+	L[label = "Inserido: 63 na arvore.", shape = none];
+	27 -> 18
+	18 -> 16
+	16 -> 2
+	null161 [label="",width=.1,style=invis];
+	2 -> null161 [style=invis];
+	2 -> 15
+	15 -> 8
+	null162 [label="",width=.1,style=invis];
+	8 -> null162 [style=invis];
+	8 -> 12
+	12 -> 9
+	null163 [label="",width=.1,style=invis];
+	9 -> null163 [style=invis];
+	null164 [label="",width=.1,style=invis];
+	9 -> null164 [style=invis];
+	null165 [label="",width=.1,style=invis];
+	12 -> null165 [style=invis];
+	null166 [label="",width=.1,style=invis];
+	15 -> null166 [style=invis];
+	null167 [label="",width=.1,style=invis];
+	16 -> null167 [style=invis];
+	18 -> 21
+	21 -> 19
+	null168 [label="",width=.1,style=invis];
+	19 -> null168 [style=invis];
+	null169 [label="",width=.1,style=invis];
+	19 -> null169 [style=invis];
+	null170 [label="",width=.1,style=invis];
+	21 -> null170 [style=invis];
+	27 -> 51
+	51 -> 28
+	null171 [label="",width=.1,style=invis];
+	28 -> null171 [style=invis];
+	null172 [label="",width=.1,style=invis];
+	28 -> null172 [style=invis];
+	51 -> 52
+	null173 [label="",width=.1,style=invis];
+	52 -> null173 [style=invis];
+	52 -> 53
+	null174 [label="",width=.1,style=invis];
+	53 -> null174 [style=invis];
+	53 -> 63
+	null175 [label="",width=.1,style=invis];
+	63 -> null175 [style=invis];
+	null176 [label="",width=.1,style=invis];
+	63 -> null176 [style=invis];
+
+}

@@ -1,7 +1,11 @@
 package br.com.ed2.estruturas.arvore;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.ed2.estruturas.PassoaAPasso;
 import br.com.ed2.gui.desenho.arvore.Arvore2D;
+import br.com.ed2.log.LogDot;
 import br.com.ed2.relatorio.Pagina;
 import br.com.ed2.relatorio.Relatorio;
 import br.com.ed2.relatorio.RotuloRelatorioArvore;
@@ -11,6 +15,10 @@ public class AvlTree<Type extends Comparable<? super Type>> implements PassoaAPa
 	private AvlNode<Type> raiz;
 
 	private Relatorio relatorio;
+	private List<LogDot> log; // Dot
+	int nulli = 0; // Dot
+	private boolean flagElementoInserido = false;
+	private boolean flagFezRotacao = false;
 
 	private static final int ALLOWED_IMBALANCE = 1;
 
@@ -28,24 +36,34 @@ public class AvlTree<Type extends Comparable<? super Type>> implements PassoaAPa
 	public AvlTree(boolean possuiRelatorio) {
 		if (possuiRelatorio == true)
 			this.relatorio = new Relatorio();
+		this.log = new ArrayList<LogDot>();
 	}
 
 	public AvlTree() {
-
 	}
 
 	// Métodos públicos
 
 	@Override
 	public void inserir(Type elemento) {
-
-		// String para colocar no relatório
-		this.auxStrRelatorio = RotuloRelatorioArvore.ENTRADA + elemento + RotuloRelatorioArvore.FINAL_TEXTO;
-		//-
 		this.raiz = inserir(elemento, raiz); // Tenta inseirir o elemento na
 
-		if (this.relatorio != null)
-			colocaNoRelatorio(auxStrRelatorio);
+		if (this.flagFezRotacao == true) { // Dot
+			LogDot ld = new LogDot(); // Dot
+			this.log.add(ld); // Dot
+			this.log.get(this.log.size() - 1).setDescricao("Resultado."); // Dot
+			this.log.get(this.log.size() - 1).setGrafo(dotArvore()); // Dot
+			this.flagFezRotacao = false;
+		}
+		
+		// Dot
+		if (this.raiz.elemento == elemento) {
+			LogDot ld = new LogDot(); // Dot
+			this.log.add(ld); // Dot
+			this.log.get(this.log.size() - 1).setDescricao(elemento + " inserido."); // Dot
+			this.log.get(this.log.size() - 1).setGrafo(dotArvore()); // Dot
+			this.flagElementoInserido = false;
+		}
 	}
 
 	// Métodos privado da árvore.
@@ -62,8 +80,10 @@ public class AvlTree<Type extends Comparable<? super Type>> implements PassoaAPa
 	 * @return Retorna a subárvore @param t balanceada.
 	 */
 	private AvlNode<Type> inserir(Type elemento, AvlNode<Type> t) {
-		if (t == null)
+		if (t == null) {
+			this.flagElementoInserido = true;
 			return new AvlNode<Type>(elemento);
+		}
 
 		int resultadoComparado = elemento.compareTo(t.elemento);
 
@@ -73,8 +93,30 @@ public class AvlTree<Type extends Comparable<? super Type>> implements PassoaAPa
 			t.filhoEsquerdo = inserir(elemento, t.filhoEsquerdo);
 		else if (resultadoComparado > 0)
 			t.filhoDireto = inserir(elemento, t.filhoDireto);
-		else
-			this.auxStrRelatorio += "\nElemento ja existe na Árvore";
+		else {
+			// Quando o elemento já existe na árvore.
+			LogDot ld = new LogDot(); // Dot
+			this.log.add(ld); // Dot
+			this.log.get(this.log.size() - 1).setDescricao(elemento + " Ja existe."); // Dot
+			this.log.get(this.log.size() - 1).setGrafo(dotArvore()); // Dot
+		}
+		
+		if (this.flagFezRotacao == true) { // Dot
+			LogDot ld = new LogDot(); // Dot
+			this.log.add(ld); // Dot
+			this.log.get(this.log.size() - 1).setDescricao("Resultado."); // Dot
+			this.log.get(this.log.size() - 1).setGrafo(dotArvore()); // Dot
+			this.flagFezRotacao = false;
+		}
+
+		// Dot
+		if (this.flagElementoInserido == true) {
+			LogDot ld = new LogDot(); // Dot
+			this.log.add(ld); // Dot
+			this.log.get(this.log.size() - 1).setDescricao(elemento + " inserido."); // Dot
+			this.log.get(this.log.size() - 1).setGrafo(dotArvore()); // Dot
+			this.flagElementoInserido = false;
+		}
 
 		// Balanceia o no
 		return balancear(t);
@@ -82,24 +124,75 @@ public class AvlTree<Type extends Comparable<? super Type>> implements PassoaAPa
 
 	private AvlNode<Type> balancear(AvlNode<Type> t) {
 		// Verifica se a árvore está pesando pra esquerda
-		if (alturaDo(t.filhoEsquerdo) - alturaDo(t.filhoDireto) > ALLOWED_IMBALANCE)
+		if (alturaDo(t.filhoEsquerdo) - alturaDo(t.filhoDireto) > ALLOWED_IMBALANCE) {
 			// Verifica se a rotação ira ocorrer pro lado de fora
 			// Se não é pro lado de dentro
-			if (alturaDo(t.filhoEsquerdo.filhoEsquerdo) >= alturaDo(t.filhoEsquerdo.filhoDireto))
+			if (alturaDo(t.filhoEsquerdo.filhoEsquerdo) >= alturaDo(t.filhoEsquerdo.filhoDireto)) {
+
+				LogDot ld = new LogDot(); // Dot
+				this.log.add(ld); // Dot
+				this.log.get(this.log.size() - 1).setDescricao("Árvore desebalanceada no elemento " + t.elemento + "."); // Dot
+				this.log.get(this.log.size() - 1).setGrafo(dotArvore()); // Dot
+
+				ld = new LogDot(); // Dot
+				this.log.add(ld); // Dot
+				this.log.get(this.log.size() - 1).setDescricao("Efetuar rotação simples esquerda com os elementos "
+						+ t.elemento + " " + t.filhoEsquerdo.elemento + "."); // Dot
+				this.log.get(this.log.size() - 1).setGrafo(dotArvore()); // Dot
+				this.flagFezRotacao = true;
+
 				t = rotacaoSimplesEsquerda(t, false);
-			else {
+			} else {
+				LogDot ld = new LogDot(); // Dot
+				this.log.add(ld); // Dot
+				this.log.get(this.log.size() - 1).setDescricao("Árvore desebalanceada no elemento " + t.elemento); // Dot
+				this.log.get(this.log.size() - 1).setGrafo(dotArvore()); // Dot
+
+				ld = new LogDot(); // Dot
+				this.log.add(ld); // Dot
+				this.log.get(this.log.size() - 1)
+						.setDescricao("Efetuar rotacação dupla esquerda com os elementos " + t.elemento + " "
+								+ t.filhoEsquerdo.elemento + " " + t.filhoEsquerdo.filhoDireto.elemento + "."); // Dot
+				this.log.get(this.log.size() - 1).setGrafo(dotArvore()); // Dot
+				this.flagFezRotacao = true; // Dot
+
 				t = rotacaoDuplaEsquerda(t);
 			}
-		else
+		} else
 		// Verifica se a árvore está pesando para direita
-		if (alturaDo(t.filhoDireto) - alturaDo(t.filhoEsquerdo) > ALLOWED_IMBALANCE)
+		if (alturaDo(t.filhoDireto) - alturaDo(t.filhoEsquerdo) > ALLOWED_IMBALANCE) {
 			// Verifica se a rotação ira ocorrer pro lado de fora
 			// Se não é pro lado de dentro
-			if (alturaDo(t.filhoDireto.filhoDireto) >= alturaDo(t.filhoDireto.filhoEsquerdo))
+			if (alturaDo(t.filhoDireto.filhoDireto) >= alturaDo(t.filhoDireto.filhoEsquerdo)) {
+				LogDot ld = new LogDot(); // Dot
+				this.log.add(ld); // Dot
+				this.log.get(this.log.size() - 1).setDescricao("Árvore desebalanceada no elemento " + t.elemento + "."); // Dot
+				this.log.get(this.log.size() - 1).setGrafo(dotArvore()); // Dot
+
+				ld = new LogDot(); // Dot
+				this.log.add(ld); // Dot
+				this.log.get(this.log.size() - 1).setDescricao("Efetuar rotação simples direita com os elementos "
+						+ t.elemento + " " + t.filhoDireto.elemento + "."); // Dot
+				this.log.get(this.log.size() - 1).setGrafo(dotArvore()); // Dot
+				this.flagFezRotacao = true; // Dot
+
 				t = rotacaoSimplesDireita(t, false);
-			else {
+			} else {
+				LogDot ld = new LogDot(); // Dot
+				this.log.add(ld); // Dot
+				this.log.get(this.log.size() - 1).setDescricao("Árvore desebalanceada no elemento " + t.elemento + "."); // Dot
+				this.log.get(this.log.size() - 1).setGrafo(dotArvore()); // Dot
+
+				ld = new LogDot(); // Dot
+				this.log.add(ld); // Dot
+				this.log.get(this.log.size() - 1).setDescricao("Efetuar rotação dupla direita com os elementos "
+						+ t.elemento + " " + t.filhoDireto.elemento + " " + t.filhoDireto.filhoEsquerdo.elemento + "."); // Dot
+				this.log.get(this.log.size() - 1).setGrafo(dotArvore()); // Dot
+				this.flagFezRotacao = true;
+
 				t = rotacaoDuplaDireita(t);
 			}
+		}
 
 		// Atualiza a altura
 		t.altura = Math.max(alturaDo(t.filhoEsquerdo), alturaDo(t.filhoDireto)) + 1;
@@ -116,18 +209,20 @@ public class AvlTree<Type extends Comparable<? super Type>> implements PassoaAPa
 	 */
 	private AvlNode<Type> rotacaoDuplaDireita(AvlNode<Type> k3) {
 		// Relatório
-		if (this.relatorio != null) {
-			// Coloca no relatorio essa página.
-			// Mostra que a árvore está desbaanceada no elemento k3.
-			colocaNoRelatoioQueAArvoreEstaDesbalanceadaNo(k3);
-
-			// Coloca no relatório essa página.
-			// Mostra o tipo de rotação que deverá fazer.
-			String str = "Efetuar Rotação dupla direita envolvendo os elementos, " + k3.elemento + " "
-					+ k3.filhoDireto.elemento + " " + k3.filhoDireto.filhoEsquerdo.elemento
-					+ RotuloRelatorioArvore.FINAL_TEXTO;
-			colocaNoRelatorio(str, this.raiz.altura + 2);
-		}
+		// if (this.relatorio != null) {
+		// // Coloca no relatorio essa página.
+		// // Mostra que a árvore está desbaanceada no elemento k3.
+		// colocaNoRelatoioQueAArvoreEstaDesbalanceadaNo(k3);
+		//
+		// // Coloca no relatório essa página.
+		// // Mostra o tipo de rotação que deverá fazer.
+		// String str = "Efetuar Rotação dupla direita envolvendo os elementos,
+		// " + k3.elemento + " "
+		// + k3.filhoDireto.elemento + " " +
+		// k3.filhoDireto.filhoEsquerdo.elemento
+		// + RotuloRelatorioArvore.FINAL_TEXTO;
+		// colocaNoRelatorio(str, this.raiz.altura + 2);
+		// }
 
 		// Algoritmo de rotação
 		k3.filhoDireto = rotacaoSimplesEsquerda(k3.filhoDireto, true);
@@ -135,11 +230,11 @@ public class AvlTree<Type extends Comparable<? super Type>> implements PassoaAPa
 		// --------------------
 
 		// Relatório
-		if (this.relatorio != null) {
-			// Coloca no relaótrio essa página.
-			// Mostra como ficou depois da retoação ter seido efetuada.
-			this.auxStrRelatorio = "Rotação dupla direita realizada";
-		}
+		// if (this.relatorio != null) {
+		// // Coloca no relaótrio essa página.
+		// // Mostra como ficou depois da retoação ter seido efetuada.
+		// this.auxStrRelatorio = "Rotação dupla direita realizada";
+		// }
 		// Retorna a subárvore
 		return rotacaoSimplesDireita;
 	}
@@ -153,20 +248,22 @@ public class AvlTree<Type extends Comparable<? super Type>> implements PassoaAPa
 	 */
 	private AvlNode<Type> rotacaoDuplaEsquerda(AvlNode<Type> k3) {
 
-		// Relatorio
-		if (this.relatorio != null) {
-			// Coloca no relatorio essa página.
-			// Mostra que a árvore está desbaanceada no elemento k3.
-			colocaNoRelatoioQueAArvoreEstaDesbalanceadaNo(k3);
-
-			// Coloca no relatório essa página.
-			// Mostra o tipo de rotação que deverá fazer.
-			String str = RotuloRelatorioArvore.ARVORE_DESBALANCEADA
-					+ "Efetuar Rotação dupla esquerda envolvendo nos elementos, " + k3.elemento + " "
-					+ k3.filhoEsquerdo.elemento + " " + k3.filhoEsquerdo.filhoDireto.elemento
-					+ RotuloRelatorioArvore.FINAL_TEXTO;
-			colocaNoRelatorio(str, raiz.altura + 2);
-		}
+		// // Relatorio
+		// if (this.relatorio != null) {
+		// // Coloca no relatorio essa página.
+		// // Mostra que a árvore está desbaanceada no elemento k3.
+		// colocaNoRelatoioQueAArvoreEstaDesbalanceadaNo(k3);
+		//
+		// // Coloca no relatório essa página.
+		// // Mostra o tipo de rotação que deverá fazer.
+		// String str = RotuloRelatorioArvore.ARVORE_DESBALANCEADA
+		// + "Efetuar Rotação dupla esquerda envolvendo nos elementos, " +
+		// k3.elemento + " "
+		// + k3.filhoEsquerdo.elemento + " " +
+		// k3.filhoEsquerdo.filhoDireto.elemento
+		// + RotuloRelatorioArvore.FINAL_TEXTO;
+		// colocaNoRelatorio(str, raiz.altura + 2);
+		// }
 
 		// Algoritmo de rotação
 		k3.filhoEsquerdo = rotacaoSimplesDireita(k3.filhoEsquerdo, true);
@@ -174,11 +271,11 @@ public class AvlTree<Type extends Comparable<? super Type>> implements PassoaAPa
 		// --------------------
 
 		// Relatório
-		if (this.relatorio != null) {
-			// Coloca no relaótrio essa página.
-			// Mostra como ficou depois da retoação ter seido efetuada.
-			this.auxStrRelatorio = "Rotação dupla esquerda realizada";
-		}
+		// if (this.relatorio != null) {
+		// // Coloca no relaótrio essa página.
+		// // Mostra como ficou depois da retoação ter seido efetuada.
+		// this.auxStrRelatorio = "Rotação dupla esquerda realizada";
+		// }
 		// Retorna a subárvore
 		return rotacaoSimplesEsquerda;
 	}
@@ -194,19 +291,20 @@ public class AvlTree<Type extends Comparable<? super Type>> implements PassoaAPa
 	 */
 	private AvlNode<Type> rotacaoSimplesDireita(AvlNode<Type> k2, boolean b) {
 
-		// Relatorio
-		if (this.relatorio != null && b == false) {
-			// Coloca no relatorio essa página.
-			// Mostra que a árvore está desbaanceada no elemento k3.
-			colocaNoRelatoioQueAArvoreEstaDesbalanceadaNo(k2);
-
-			// Coloca no relatório essa página.
-			// Mostra o tipo de rotação que deverá fazer
-			String str = RotuloRelatorioArvore.ARVORE_DESBALANCEADA
-					+ "Efetuar Rotação simples direita envolvendo os elementos, " + k2.elemento + " "
-					+ k2.filhoDireto.elemento + RotuloRelatorioArvore.FINAL_TEXTO;
-			colocaNoRelatorio(str, raiz.altura + 2);
-		}
+		// // Relatorio
+		// if (this.relatorio != null && b == false) {
+		// // Coloca no relatorio essa página.
+		// // Mostra que a árvore está desbaanceada no elemento k3.
+		// colocaNoRelatoioQueAArvoreEstaDesbalanceadaNo(k2);
+		//
+		// // Coloca no relatório essa página.
+		// // Mostra o tipo de rotação que deverá fazer
+		// String str = RotuloRelatorioArvore.ARVORE_DESBALANCEADA
+		// + "Efetuar Rotação simples direita envolvendo os elementos, " +
+		// k2.elemento + " "
+		// + k2.filhoDireto.elemento + RotuloRelatorioArvore.FINAL_TEXTO;
+		// colocaNoRelatorio(str, raiz.altura + 2);
+		// }
 
 		// Algoritmo de rotação
 		AvlNode<Type> k1 = k2.filhoDireto;
@@ -217,30 +315,31 @@ public class AvlTree<Type extends Comparable<? super Type>> implements PassoaAPa
 		// ---------------------
 
 		// Relatorio
-		if (this.relatorio != null && b == false) {
-			// Coloca no relaótrio essa página.
-			// Mostra como ficou depois da retoação ter seido efetuada.
-			this.auxStrRelatorio = "Rotação simples direita realizada";
-		}
+		// if (this.relatorio != null && b == false) {
+		// // Coloca no relaótrio essa página.
+		// // Mostra como ficou depois da retoação ter seido efetuada.
+		// this.auxStrRelatorio = "Rotação simples direita realizada";
+		// }
 		// Retorna a subárvore
 		return k1;
 	}
 
 	private AvlNode<Type> rotacaoSimplesEsquerda(AvlNode<Type> k2, boolean b) {
 		// Relatorio
-		if (this.relatorio != null && b == false) {
-			// Coloca no relatorio essa página.
-			// Mostra que a árvore está desbaanceada no elemento k3.
-			colocaNoRelatoioQueAArvoreEstaDesbalanceadaNo(k2);
-
-			// Coloca no relatório essa página.
-			// Mostra o tipo de rotação que deverá fazer
-			String str = RotuloRelatorioArvore.ARVORE_DESBALANCEADA
-					+ "Efetuar Rotação simples esqueda envolvendo os elementos: " + k2.elemento + " "
-					+ k2.filhoEsquerdo.elemento + RotuloRelatorioArvore.FINAL_TEXTO;
-			colocaNoRelatorio(str, this.raiz.altura + 2);
-
-		}
+		// if (this.relatorio != null && b == false) {
+		// // Coloca no relatorio essa página.
+		// // Mostra que a árvore está desbaanceada no elemento k3.
+		// colocaNoRelatoioQueAArvoreEstaDesbalanceadaNo(k2);
+		//
+		// // Coloca no relatório essa página.
+		// // Mostra o tipo de rotação que deverá fazer
+		// String str = RotuloRelatorioArvore.ARVORE_DESBALANCEADA
+		// + "Efetuar Rotação simples esqueda envolvendo os elementos: " +
+		// k2.elemento + " "
+		// + k2.filhoEsquerdo.elemento + RotuloRelatorioArvore.FINAL_TEXTO;
+		// colocaNoRelatorio(str, this.raiz.altura + 2);
+		//
+		// }
 
 		// Agortimo de rotação
 		AvlNode<Type> k1 = k2.filhoEsquerdo;
@@ -253,12 +352,12 @@ public class AvlTree<Type extends Comparable<? super Type>> implements PassoaAPa
 		// k1 é o pai
 		// --------------------
 
-		// Relatório
-		if (this.relatorio != null && b == false) {
-			// Coloca no relaótrio essa página.
-			// Mostra como ficou depois da retoação ter seido efetuada.
-			this.auxStrRelatorio = "Rotação simples esquerda realizada";
-		}
+		// // Relatório
+		// if (this.relatorio != null && b == false) {
+		// // Coloca no relaótrio essa página.
+		// // Mostra como ficou depois da retoação ter seido efetuada.
+		// this.auxStrRelatorio = "Rotação simples esquerda realizada";
+		// }
 		return k1;
 	}
 
@@ -397,5 +496,40 @@ public class AvlTree<Type extends Comparable<? super Type>> implements PassoaAPa
 	private void colocaNoRelatoioQueAArvoreEstaDesbalanceadaNo(AvlNode<Type> k3) {
 		this.auxStrRelatorio += "\n" + RotuloRelatorioArvore.ARVORE_DESBALANCEADA + "no " + k3.elemento;
 		colocaNoRelatorio(this.auxStrRelatorio, raiz.altura + 2);
+	}
+
+	@Override
+	public List<LogDot> getLog() {
+		return this.log;
+	}
+
+	private String dotArvore() {
+		return dotArvore(this.raiz);
+	}
+
+	private String dotArvore(AvlNode<Type> no) {
+		String arvoreDot = "";
+		if (no != null) {
+			if (no.filhoEsquerdo != null)
+				arvoreDot += "\t" + no.elemento + " -> " + no.filhoEsquerdo.elemento + "\n"
+						+ dotArvore(no.filhoEsquerdo);
+			else {
+				arvoreDot += "\tnull" + this.nulli + " [label=\"\",width=.1,style=invis];\n";
+				arvoreDot += "\t" + no.elemento + " -> null" + this.nulli + " [style=invis];\n"
+						+ dotArvore(no.filhoEsquerdo);
+				this.nulli++;
+			}
+			if (no.filhoDireto != null)
+				arvoreDot += "\t" + no.elemento + " -> " + no.filhoDireto.elemento + "\n" + dotArvore(no.filhoDireto);
+			else {
+				arvoreDot += "\tnull" + this.nulli + " [label=\"\",width=.1,style=invis];\n";
+				arvoreDot += "\t" + no.elemento + " -> null" + this.nulli + " [style=invis];\n"
+						+ dotArvore(no.filhoDireto);
+				this.nulli++;
+			}
+			if (no == raiz && no.filhoEsquerdo == null && no.filhoDireto == null)
+				arvoreDot += "\t" + no.elemento + "\n";
+		}
+		return arvoreDot;
 	}
 }

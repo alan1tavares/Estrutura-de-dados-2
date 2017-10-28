@@ -1,0 +1,42 @@
+digraph name{
+	L;
+	L[label = "Efetuar rotação simples esquerda com os elementos 27 15.", shape = none];
+	27 -> 15
+	15 -> 8
+	8 -> 2
+	null223 [label="",width=.1,style=invis];
+	2 -> null223 [style=invis];
+	null224 [label="",width=.1,style=invis];
+	2 -> null224 [style=invis];
+	8 -> 12
+	12 -> 9
+	null225 [label="",width=.1,style=invis];
+	9 -> null225 [style=invis];
+	null226 [label="",width=.1,style=invis];
+	9 -> null226 [style=invis];
+	null227 [label="",width=.1,style=invis];
+	12 -> null227 [style=invis];
+	15 -> 18
+	18 -> 16
+	null228 [label="",width=.1,style=invis];
+	16 -> null228 [style=invis];
+	null229 [label="",width=.1,style=invis];
+	16 -> null229 [style=invis];
+	18 -> 21
+	null230 [label="",width=.1,style=invis];
+	21 -> null230 [style=invis];
+	null231 [label="",width=.1,style=invis];
+	21 -> null231 [style=invis];
+	27 -> 51
+	51 -> 28
+	null232 [label="",width=.1,style=invis];
+	28 -> null232 [style=invis];
+	null233 [label="",width=.1,style=invis];
+	28 -> null233 [style=invis];
+	51 -> 52
+	null234 [label="",width=.1,style=invis];
+	52 -> null234 [style=invis];
+	null235 [label="",width=.1,style=invis];
+	52 -> null235 [style=invis];
+
+}
